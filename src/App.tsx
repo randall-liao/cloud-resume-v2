@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import OriginStory from './components/OriginStory';
 import CommitHistory from './components/CommitHistory';
+import Education from './components/Education';
 import Certifications from './components/Certifications';
 import Interests from './components/Interests'; // Renamed from PrecisionCooking block
 import Footer from './components/Footer';
@@ -45,6 +46,7 @@ function App() {
         <Hero />
         <OriginStory />
         <CommitHistory />
+        <Education />
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Certifications />
             <Interests />
