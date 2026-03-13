@@ -1,5 +1,5 @@
 # Design System: React Cloud Resume
-**Project ID:** react-cloud-resume-v2
+**Project ID:** cloud-resume-v2
 
 ## 1. Visual Theme & Atmosphere
 The design aesthetic is best described as "The Engineer's Dashboard." The mood is highly technical, utilitarian, and developer-centric, balancing a refined, airy Light Mode with a deep, immersive Dark Mode. It utilizes high-contrast syntax highlighting, glass/surface layers, and a console-like feel for a premium engineering presentation.

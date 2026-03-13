@@ -11,18 +11,18 @@ When a task is complete and the user is ready to end the conversation, ensure th
 // turbo
 1. **Verify No Outstanding Uncommitted Changes:** Check the current git status to see if any work was left unstaged.
    ```bash
-   git status
+   git status --short
    ```
 
-2. **Draft Commit Message & Commit Work:** If `git status` shows uncommitted files relevant to the conversation, first *draft a high-quality commit message* strictly following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification (e.g., `feat:`, `fix:`, `chore:`, `refactor:`). The message must be derived from the specific context of the conversation. Then execute the commit:
+2. **Stage only relevant files and commit work:** If `git status` shows uncommitted files relevant to the conversation, first *draft a high-quality commit message* strictly following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification (e.g., `feat:`, `fix:`, `chore:`, `refactor:`). Stage only the files that belong to the current task rather than blindly using `git add .`.
    ```bash
-   git add .
+   git add <relevant-files>
    git commit -m "type: descriptive message based on context"
    ```
 
-3. **Verify Dev Server/Build Integrity (Optional but Recommended):** Ensure that the final changes did not break the build.
+3. **Run the validation stack:** Ensure the final changes did not break the docs map, lint, build, or static artifact contract.
    ```bash
-   npm run build
+   npm run validate
    ```
 
 // turbo-all
@@ -37,10 +37,7 @@ When a task is complete and the user is ready to end the conversation, ensure th
    gh pr create --title "<Generated Title>" --body "<Generated Body>"
    ```
 
-6. **Kill Stale Background Processes:** If you started any persistent background tasks (like an `npm run dev` server) specifically for this conversation, terminate them so they don't consume resources or block ports for future sessions.
-   ```bash
-   pkill -f "npm run dev"
-   ```
+6. **Stop only the processes you started for this task:** Do not blanket-kill unrelated dev servers in the worktree. Terminate only the specific process IDs or sessions created during the conversation.
 
 7. **Provide Final Summary:**
    - Briefly summarize the goals achieved during the conversation.
