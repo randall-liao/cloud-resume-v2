@@ -94,20 +94,6 @@
 - Blocks: Truthful cloud-resume backend storytelling and any real contract between frontend and future services.
 - Implementation complexity: Medium.
 
-## Test Coverage Gaps
-
-**UI behavior coverage:**
-- What's not tested: Footer scroll visibility, deeper section-specific interactions, and any browser-only behavior outside the current smoke path.
-- Risk: Refactors can silently break visible behavior while the baseline smoke tests still pass.
-- Priority: High.
-- Difficulty to test: Low to medium now that Vitest and React Testing Library are in place.
-
-**Shared package coverage:**
-- What's not tested: Contract parsing in `packages/contracts` and theme helpers in `packages/frontend-core`.
-- Risk: Package regressions may be discovered only after app integration or review.
-- Priority: High.
-- Difficulty to test: Low.
-
 ---
 *Concerns audit: 2026-03-13*
 *Update as issues are fixed or new ones discovered*
