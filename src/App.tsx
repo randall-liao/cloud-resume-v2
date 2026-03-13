@@ -9,20 +9,25 @@ import Interests from './components/Interests'; // Renamed from PrecisionCooking
 import Footer from './components/Footer';
 import resumeData from './data/resume.json';
 
+import { themeManager } from './utils/themeManager';
+
 function App() {
   // 🎓 LEARNING NOTE (State & Side Effects):
-  // 1. `darkMode` is local STATE. Think of it as a single row in an in-memory DB.
+  // 1. `darkMode` is local STATE initialized from our OOP ThemeManager.
   // 2. `setDarkMode` is the mutation function.
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState<boolean>(() => themeManager.getInitialTheme());
 
   // 🎓 LEARNING NOTE (Hooks):
   // `useEffect` allows you to sync your React state with external systems. 
   // In this case, whenever the "Database" (darkMode) changes, we trigger a "Side-Effect" 
-  // to update the external browser DOM class list.
+  // to update the external browser DOM class list and persist the state.
   useEffect(() => {
     // Dynamic document title from our resume.json
     document.title = `${resumeData.header.name} | Cloud Architect Dashboard`;
     
+    // Save state via OOP manager
+    themeManager.saveTheme(darkMode);
+
     if (darkMode) {
       document.documentElement.classList.add('dark');
     } else {
