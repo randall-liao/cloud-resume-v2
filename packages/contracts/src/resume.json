@@ -1,0 +1,99 @@
+{
+  "header": {
+    "name": "Randall",
+    "socialLinks": [
+      { "icon": "fab fa-github", "url": "https://github.com/randall-liao" },
+      { "icon": "fab fa-linkedin", "url": "https://www.linkedin.com/in/randall-y-liao" }
+    ]
+  },
+  "hero": {
+    "status": "Ready to Work",
+    "headlinePrefix": "Building Resilient",
+    "headlineHighlight": "Cloud Systems",
+    "description": "Software Engineer specializing in distributed systems, backend architectures, and high-throughput data pipelines.",
+    "primaryButton": { "text": "View Projects", "url": "https://github.com/randall-liao" },
+    "secondaryButton": { "text": "Contact Me", "url": "https://www.linkedin.com/in/randall-y-liao" },
+    "ideSnippet": {
+      "filename": "profile.json",
+      "code": {
+        "name": "Randall Liao",
+        "role": "Software Engineer",
+        "location": "Toronto, ON",
+        "stack": ["Java", "Python", "Cloud Systems", "Microservices"],
+        "status": "Ready to deploy"
+      }
+    }
+  },
+  "originStory": {
+    "title": "Continuous Growth & Cloud Architectures",
+    "icon": "cloud_queue",
+    "content": "From transforming monolithic banking systems to process millions of transactions, to optimizing bioinformatics pipelines on Kubernetes at UofT, I strive to engineer reliable and scalable cloud-native solutions."
+  },
+  "experience": [
+    {
+      "company": "University Of Toronto",
+      "role": "Research Assistant",
+      "period": "Sep 2024 - Jan 2025",
+      "description": "Developed a cloud-native tool for pharmacogenetic analysis on Google Cloud using GKE. Reduced deployment time from 50 minutes to 3 seconds with Cloud Code and Skaffold.",
+      "technologies": ["Python", "Kubernetes", "GCP", "GitLab CI/CD"]
+    },
+    {
+      "company": "University Of Toronto",
+      "role": "Teaching Assistant",
+      "period": "Dec 2023 - Jan 2025",
+      "description": "Mentored student teams on Java and Python software design, OOD, and testing. Led lab sessions on C programming and systems-level development.",
+      "technologies": ["Java", "Python", "C", "System Programming"]
+    },
+    {
+      "company": "Shenzhen Rural Commercial Bank",
+      "role": "Software Development Engineer",
+      "period": "Jul 2020 - Aug 2023",
+      "description": "Led a team of six in an agile project. Migrated a monolithic application to a containerized microservices architecture. Engineered a real-time data push notification pipeline for 300,000+ daily events.",
+      "technologies": ["Java", "Spring Boot", "Oracle", "Kafka", "Kubernetes"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Toronto",
+      "degree": "Master of Engineering in Electrical and Computer Engineering",
+      "graduationDate": "Jan 2025",
+      "icon": "school",
+      "color": "#1976D2"
+    },
+    {
+      "institution": "Rutgers, The State University of New Jersey",
+      "degree": "Bachelor of Science in Management Information System",
+      "graduationDate": "May 2020",
+      "icon": "school",
+      "color": "#D32F2F"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified",
+      "subtitle": "Solutions Architect",
+      "validationId": "cf3fc6ea-c18c-4bcb-95f4-a58d0cc770de",
+      "icon": "fab fa-aws",
+      "color": "#FF9900",
+      "url": "https://www.credly.com/badges/cf3fc6ea-c18c-4bcb-95f4-a58d0cc770de/linked_in_profile"
+    }
+  ],
+  "interests": [
+    {
+      "title": "Invention",
+      "subtitle": "Flexible Portable Yogurt Fermentation Device",
+      "icon": "emoji_objects",
+      "description": "Patented a flexible portable yogurt fermentation device (CN201721005435.0). Applying engineering problem-solving to everyday challenges with practical innovations.",
+      "metrics": [
+        { "label": "Patent ID", "value": "CN201721005435.0" },
+        { "label": "Status", "value": "Granted" }
+      ],
+      "status": "PATENTED"
+    }
+  ],
+  "footer": {
+    "systemStatus": "Healthy",
+    "region": "ca-central-1",
+    "latency": "14ms"
+  }
+}

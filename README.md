@@ -1,87 +1,78 @@
-# Cloud Resume - React Frontend (v2)
+# cloud-resume-v2
 
-This repository contains the frontend source code for my [Overengineered Cloud Resume](https://randalldev.link/).
+This repository is now a workspace-oriented monorepo for `cloud-resume-v2`. Today it contains one active frontend app at `apps/web`, and the root layout is being prepared for future shared packages plus serverless, contract, and infrastructure domains.
 
-As a Backend & Cloud Systems Engineer, my goal for this frontend was strict architectural simplicity and zero compute costs. This application is a **100% Client-Side Rendered (CSR)** Single Page Application (SPA), designed to be compiled into static assets and hosted on **AWS S3** behind an **Amazon CloudFront CDN**.
+For coding agents, start with [AGENTS.md](AGENTS.md). The documentation system of record lives under [docs/](docs/README.md).
 
-## 🏗️ Architecture & Tech Stack
+## Architecture & Stack
 
-This project is built with performance, type safety, and "Engineer's Dashboard" aesthetics in mind.
+- React 18
+- TypeScript 5
+- Vite 4
+- Tailwind CSS v4
+- Static deployment target: AWS S3 behind CloudFront
+- Scroll-first single page UI with local component state only
 
-- **Core:** [React 18+](https://react.dev/)
-- **Language:** [TypeScript](https://www.typescriptlang.org/) (Strict typing enforced)
-- **Build Tool:** [Vite](https://vitejs.dev/) (Lightning-fast ESM-based development & optimized production bundling)
-- **Styling Framework:** [Tailwind CSS v4](https://tailwindcss.com/) (Utility-first CSS for rapid UI development)
-- **Styling:** Custom "Dark Mode" theme with console-like aesthetics.
-- **Routing:** None. This is a pure Single Page Application (SPA) with scroll-based navigation.
+## Current Status
 
-## ✨ Key Features
+- The active web app is fully client-rendered and builds to static assets in `apps/web/dist/`.
+- Dark mode is persisted through `localStorage` via `@cloud-resume-v2/frontend-core`.
+- Resume content is sourced through the typed `@cloud-resume-v2/contracts` package.
+- The footer visitor count is still a static placeholder. Live API integration is planned but not implemented yet.
 
-- **Zero-Cost Hosting:** No server-side rendering (SSR), no Node.js server maintenance.
-- **Serverless Integration:** Fetches live data (Visitor Count) from an AWS API Gateway + Lambda + DynamoDB backend using native `fetch`.
-- **Fully Responsive:** Mobile-first layout dynamically adjusting with Tailwind's utility classes.
-- **Theme Switching:** Persistent "Dark Mode" support utilizing CSS classes and React state.
-- **AI-Native Development:** Includes an `AGENT.md` configuration to guide AI coding assistants (Google Antigravity, Gemini CLI, Stitch) on architectural constraints.
-
-## 🚀 Getting Started
-
-To run this project locally on your machine:
+## Getting Started
 
 ### Prerequisites
-- Node.js (v18+ recommended)
-- npm or yarn
 
-### Installation
+- Node.js 18+
+- npm
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/randall-liao/react-frontend-cloud-resume.git
-   cd react-cloud-resume-v2
-   ```
+### Local Development
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
-   The app will run at `http://localhost:5173` (by default).
-
-## 📜 Scripts
-
-- `npm run dev`: Starts the local development server with HMR.
-- `npm run build`: Compiles the project for production (outputs to `dist/`).
-- `npm run preview`: Locally previews the production build.
-- `npm run lint`: Runs ESLint to check for code quality issues.
-
-## 📂 Project Structure
-
-```text
-react-cloud-resume-v2/
-├── src/
-│   ├── components/       # Reusable UI components (Hero, CommitHistory, Certifications, etc)
-│   ├── App.tsx           # Main application layout and theme provider
-│   ├── main.tsx          # Entry point
-│   ├── index.css         # Global Tailwind CSS directives
-│   └── ...
-├── public/               # Static assets
-├── AGENT.md              # Rules for AI-assisted development
-├── package.json          # Dependencies and scripts
-└── vite.config.ts        # Vite configuration
+```bash
+npm install
+npm run dev
 ```
 
-## ☁️ Deployment
+The app runs at `http://localhost:5173`.
 
-This project is designed for **AWS S3 Static Website Hosting**.
+`npm run validate` runs the full local gate set: docs validation, lint, build, and static artifact validation.
 
-1. Run the build script:
-   ```bash
-   npm run build
-   ```
-2. Upload the contents of the `dist/` folder to your S3 bucket.
-3. Configure CloudFront to serve the S3 bucket content.
+## Scripts
+
+- `npm run dev` starts the Vite dev server.
+- `npm run docs:validate` validates `AGENTS.md`, required docs, and markdown links.
+- `npm run lint` runs ESLint for the active web workspace.
+- `npm run build` type-checks and builds the active web workspace.
+- `npm run preview` previews the production build for the active web workspace.
+- `npm run validate` runs the full local validation flow.
+- `bash scripts/validate-dist.sh apps/web/dist` verifies the built artifact is suitable for S3/CloudFront hosting.
+
+## Project Structure
+
+```text
+cloud-resume-v2/
+├── AGENTS.md            # Canonical agent entrypoint
+├── AGENT.md             # Compatibility shim for legacy tooling
+├── apps/
+│   └── web/             # Active Vite/React frontend app
+├── packages/            # Shared package space
+│   ├── contracts/       # Typed resume content and shared contract boundary
+│   └── frontend-core/   # Shared browser-facing frontend utilities
+├── services/            # Future serverless/backend domains
+├── infra/               # Future IaC domains
+├── docs/                # System of record for architecture, standards, quality, and plans
+├── .agent/              # Repo-local workflows and imported skills
+├── scripts/             # Validation and helper scripts
+├── package.json         # Workspace root metadata and scripts
+└── package-lock.json    # Workspace lockfile for npm
+```
+
+## Deployment
+
+```bash
+npm run build
+bash scripts/validate-dist.sh apps/web/dist
+```
+
+Upload the contents of `apps/web/dist/` to the S3 bucket and serve them through CloudFront.
