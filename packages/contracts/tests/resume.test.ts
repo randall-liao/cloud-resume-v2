@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { parseResumeDocument } from './resume';
-import validResumeData from './resume.json';
+import { parseResumeDocument } from '../src/resume';
+import validResumeData from '../src/resume.json';
 
 describe('parseResumeDocument', () => {
   it('parses valid resume data correctly', () => {

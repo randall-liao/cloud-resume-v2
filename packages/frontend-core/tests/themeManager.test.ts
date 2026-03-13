@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
-import { themeManager, applyThemePreference } from './themeManager';
+import { themeManager, applyThemePreference } from '../src/themeManager';
 
 describe('ThemeManager', () => {
   let matchMediaMock: ReturnType<typeof vi.fn>;

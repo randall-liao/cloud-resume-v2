@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { resumeData } from '@cloud-resume-v2/contracts';
-import Footer from './Footer';
+import Footer from '../../src/components/Footer';
 
 describe('Footer', () => {
   const scrollY = 0;

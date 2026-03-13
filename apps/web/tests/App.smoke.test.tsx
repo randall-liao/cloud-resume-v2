@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { resumeData } from '@cloud-resume-v2/contracts';
-import App from '../App';
+import App from '../src/App';
 
 describe('App smoke', () => {
   it('renders key resume content from the shared contracts package', async () => {
