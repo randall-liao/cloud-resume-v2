@@ -80,7 +80,16 @@ autoProxy=true
 If connection fails:
 1.  **Firewall**: Run `setup-windows.ps1` as Administrator again to reset rules.
 2.  **Chrome**: Ensure **ALL** Chrome instances (including background processes) were closed before launching the debug instance.
-3.  **Fallback**: If Mirrored Mode is not an option, use `socat` to forward the Windows LAN IP (found via `ipconfig`) to WSL `localhost`.
+3.  **Connection Timed Out (`curl: (28) Failed to connect to localhost port 9222`)**:
+    If you see this error when running `diagnose-wsl.sh`:
+    *   **Cause**: The bridge is not configured properly on the Windows host, Chrome is not running with the correct flags, or WSL Mirrored Networking is not active.
+    *   **Fix**: 
+        1. On your Windows host, open PowerShell as **Administrator**.
+        2. Run the setup script: `.\.agent\skills\wsl-browser-bridge\scripts\setup-windows.ps1`
+        3. This configures the Windows firewall and launches a fresh Chrome window listening on port `9222`.
+        4. Keep that Chrome window open.
+        5. Re-run `./.agent/skills/wsl-browser-bridge/scripts/diagnose-wsl.sh` in WSL.
+4.  **Fallback**: If Mirrored Mode is not an option, use `socat` to forward the Windows LAN IP (found via `ipconfig`) to WSL `localhost`.
     ```bash
     # Find Windows IP
     WIN_IP=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}')

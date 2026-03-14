@@ -1,24 +1,21 @@
-import { vi } from 'vitest';
+import { afterEach, vi } from 'vitest';
 
-// Mock localStorage
-const localStorageMock = (() => {
-  let store: Record<string, string> = {};
-  return {
-    getItem: vi.fn((key: string) => store[key] || null),
-    setItem: vi.fn((key: string, value: string) => {
-      store[key] = value.toString();
-    }),
-    clear: vi.fn(() => {
-      store = {};
-    }),
-    removeItem: vi.fn((key: string) => {
-      delete store[key];
-    }),
-  };
-})();
+let storage = new Map<string, string>();
 
 Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
+  writable: true,
+  value: {
+    getItem: vi.fn((key: string) => storage.get(key) ?? null),
+    setItem: vi.fn((key: string, value: string) => {
+      storage.set(key, value);
+    }),
+    removeItem: vi.fn((key: string) => {
+      storage.delete(key);
+    }),
+    clear: vi.fn(() => {
+      storage.clear();
+    }),
+  },
 });
 
 // Mock matchMedia
@@ -34,4 +31,11 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
+});
+
+afterEach(() => {
+  storage = new Map<string, string>();
+  if (window.localStorage && typeof window.localStorage.clear === 'function') {
+    window.localStorage.clear();
+  }
 });
