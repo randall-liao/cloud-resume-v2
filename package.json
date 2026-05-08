@@ -17,5 +17,13 @@
     "preview": "npm run preview --workspace @cloud-resume-v2/web --",
     "test": "npm run test --workspaces --if-present -- --run",
     "validate": "npm run docs:validate && npm run lint && npm run build && npm run test && bash scripts/validate-dist.sh apps/web/dist"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.2",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "typescript": "^5.0.2"
   }
 }
