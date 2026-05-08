@@ -24,7 +24,7 @@ The active runtime app lives in `apps/web`. Shared frontend boundaries live in `
 
 | Need | File |
 | --- | --- |
-| Documentation map and update rules | [`docs/README.md`](docs/README.md) |
+| Documentation map and update rules | [`docs/AGENTS.md`](docs/AGENTS.md) |
 | Runtime architecture and repository layout | [`docs/architecture.md`](docs/architecture.md) |
 | Workspace boundary rules | [`docs/monorepo.md`](docs/monorepo.md) |
 | Git subtree workflow and ownership handoff rules | [`docs/git_subtree.md`](docs/git_subtree.md) |
@@ -62,3 +62,19 @@ Treat Remotion, shadcn, and WSL bridge skills as opt-in tooling. They are not pa
 ## Compatibility
 
 [`AGENT.md`](AGENT.md) remains as a short shim for tools that still probe the legacy filename. The canonical entrypoint is this file.
+
+
+## Subdomain Agents
+
+- [Infra Domain](./infra/AGENTS.md)
+- [.Agent Skills Shadcn-Ui Domain](./.agent/skills/shadcn-ui/AGENTS.md)
+- [.Agent Skills Stitch-Loop Domain](./.agent/skills/stitch-loop/AGENTS.md)
+- [.Agent Skills Enhance-Prompt Domain](./.agent/skills/enhance-prompt/AGENTS.md)
+- [.Agent Skills React-Components Domain](./.agent/skills/react-components/AGENTS.md)
+- [.Agent Skills Remotion Domain](./.agent/skills/remotion/AGENTS.md)
+- [.Agent Skills Design-Md Domain](./.agent/skills/design-md/AGENTS.md)
+- [Services Domain](./services/AGENTS.md)
+- [Packages Domain](./packages/AGENTS.md)
+- [Packages Frontend-Core Domain](./packages/frontend-core/AGENTS.md)
+- [Packages Contracts Domain](./packages/contracts/AGENTS.md)
+- [Apps Domain](./apps/AGENTS.md)

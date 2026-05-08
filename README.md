@@ -2,7 +2,7 @@
 
 This repository is now a workspace-oriented monorepo for `cloud-resume-v2`. Today it contains one active frontend app at `apps/web`, and the root layout is being prepared for future shared packages plus serverless, contract, and infrastructure domains.
 
-For coding agents, start with [AGENTS.md](AGENTS.md). The documentation system of record lives under [docs/](docs/README.md).
+For coding agents, start with [AGENTS.md](AGENTS.md). The documentation system of record lives under [docs/](docs/AGENTS.md).
 
 ## Architecture & Stack
 

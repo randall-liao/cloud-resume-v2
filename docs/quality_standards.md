@@ -36,6 +36,8 @@ This file describes what good code looks like in `cloud-resume-v2`. For the mech
 
 ## 5. Repository Rules
 
+- **Agent-First Documentation**: There must be exactly one `README.md` file in the entire repository, located at the root. Subdirectories must use `AGENTS.md`.
+- **Documentation Completeness**: The root `AGENTS.md` must link to all subdomain `AGENTS.md` files, and no `.md` files should be orphaned (unlinked).
 - Start from [AGENTS.md](../AGENTS.md), not ad hoc repo exploration.
 - Keep root scripts workspace-aware. The active app currently lives in `apps/web`.
 - Keep plans in `docs/plans/` when work is large enough to need explicit tracking.
@@ -46,6 +48,7 @@ This file describes what good code looks like in `cloud-resume-v2`. For the mech
 | Command | Purpose |
 | --- | --- |
 | `npm run docs:validate` | Validates `AGENTS.md`, core docs, and markdown links |
+| `python3 scripts/lint_agents.py` | Enforces the Agent-First boundaries (Root README, AGENTS map completeness, no dead or orphaned links) |
 | `npm run lint` | Enforces TypeScript and architectural lint rules for the active web workspace |
 | `npm run build:packages` | Type-checks the shared workspace packages explicitly |
 | `npm run build:web` | Type-checks and builds the active web workspace |
@@ -71,6 +74,7 @@ See [plans/agent_gap_analysis.md](plans/agent_gap_analysis.md) for the backlog. 
 - [ ] Shared content and theme changes route through package boundaries, not app-local leaf files
 - [ ] `npm run test` passes when UI behavior or shared contracts are touched
 - [ ] Docs updated if repo structure or constraints changed
+- [ ] Agent-First bounds maintained (Subdirectory `README.md`s renamed to `AGENTS.md`, properly linked in root `AGENTS.md`, no orphaned markdown files)
 - [ ] `npm run validate` passes locally
 
 For a repo-shaped review prompt, use [`.agent/skills/code_review/SKILL.md`](../.agent/skills/code_review/SKILL.md).

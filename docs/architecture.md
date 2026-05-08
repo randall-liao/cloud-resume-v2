@@ -142,11 +142,14 @@ Unused MUI and Emotion packages were removed during the Phase 1 audit remediatio
 Phase 1 and Phase 2 foundations in this repo mean:
 
 - `AGENTS.md` is the canonical short map for agents.
+- **Agent-First Documentation Architecture**: Subdomain directories contain `AGENTS.md` instead of `README.md` to cleanly separate human vs LLM documentation. The single root `README.md` remains strictly for human developers.
+- The root `AGENTS.md` serves as a complete index map and must contain a relative link to every subdomain `AGENTS.md` file.
 - `docs/` holds the source-of-truth architecture, standards, quality, and plans.
 - `apps/web` is the only active application workspace.
 - `packages/contracts` owns typed resume content and shared document contracts.
 - `packages/frontend-core` owns shared browser-facing frontend runtime helpers.
 - `scripts/validate-docs.mjs` validates required docs and markdown links.
+- `scripts/lint_agents.py` continuously verifies the architectural boundaries (exactly one `README.md`, map completeness, dead link prevention, and zero orphaned markdown files).
 - CI enforces docs validation, workspace lint/build success, smoke tests, and static artifact validation.
 - Plans in `docs/plans/` are kept as first-class artifacts instead of out-of-band notes.
 
