@@ -7,7 +7,7 @@ const requiredFiles = [
   'AGENT.md',
   'README.md',
   'DESIGN.md',
-  'docs/README.md',
+  'docs/AGENTS.md',
   'docs/architecture.md',
   'docs/git_subtree.md',
   'docs/monorepo.md',
