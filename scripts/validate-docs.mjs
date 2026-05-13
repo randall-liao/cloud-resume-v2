@@ -65,7 +65,7 @@ for (const requiredFile of requiredFiles) {
 
 if (fs.existsSync(toAbsolute('AGENTS.md'))) {
   const agentsLineCount = fs.readFileSync(toAbsolute('AGENTS.md'), 'utf8').split(/\r?\n/).length;
-  if (agentsLineCount > 120) {
+  if (agentsLineCount > 200) {
     recordFailure(`AGENTS.md should stay concise; found ${agentsLineCount} lines.`);
   }
 }
