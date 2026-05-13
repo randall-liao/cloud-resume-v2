@@ -21,7 +21,12 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Node dependencies
         run: npm ci
 
       - name: Validate docs map
@@ -29,25 +34,17 @@ jobs:
         # AGENT NOTE: This checks that AGENTS.md exists, the required docs exist,
         # and markdown links resolve from their real file locations.
 
-      - name: Lint (ESLint)
-        run: npm run lint
-        # AGENT NOTE: If this fails, run `npm run lint` locally and fix all
-        # zero-warning threshold violations before re-pushing.
+      - name: Lint all workspaces
+        run: npx turbo run lint
+        # AGENT NOTE: Uses turborepo to lint across all workspaces.
 
-      - name: Build shared packages
-        run: npm run build:packages
-        # AGENT NOTE: This validates the package boundaries under packages/
-        # before relying on app integration to catch regressions.
+      - name: Build all workspaces
+        run: npx turbo run build
+        # AGENT NOTE: Uses turborepo to build across all workspaces.
 
-      - name: Build web app
-        run: npm run build:web
-        # AGENT NOTE: If this fails, the production frontend build is broken.
-        # Run `npm run build:web` locally to see the same failure mode.
-
-      - name: Run smoke tests
-        run: npm run test
-        # AGENT NOTE: This is the baseline UI protection path for app boot,
-        # shared content rendering, and theme behavior.
+      - name: Run tests across all workspaces
+        run: npx turbo run test && python3 scripts/test_agents_scripts.py
+        # AGENT NOTE: Uses turborepo to test across all workspaces.
 
       - name: Validate dist artifact
         run: bash scripts/validate-dist.sh apps/web/dist
