@@ -19,7 +19,6 @@ Use this only for domains with clear ownership and an independent lifecycle. If 
 Do not use subtree for:
 
 - `docs/`
-- `.planning/`
 - tiny helper-only directories
 - directories that exist only as placeholders with no active lifecycle
 
