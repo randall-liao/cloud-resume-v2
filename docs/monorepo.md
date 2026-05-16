@@ -21,7 +21,6 @@ This repository is intentionally light right now. Only the frontend app is imple
 | `services/` | Future backend or serverless runtime code | Reserved |
 | `infra/` | Future IaC and deployment definitions | Reserved |
 | `docs/` | Canonical architecture and operating knowledge | Active |
-| `.planning/` | Planning, execution, and memory artifacts | Active |
 
 ## Dependency Direction
 
@@ -31,7 +30,6 @@ Use these rules unless a future doc explicitly narrows them further:
 2. `packages/` must not depend on `apps/`.
 3. `services/` may depend on `packages/` and `packages/contracts/`.
 4. `infra/` must not become a runtime dependency of `apps/` or `services/`.
-5. `docs/` and `.planning/` describe domains but are not import targets.
 
 ## Agent Ownership Model
 
@@ -63,7 +61,6 @@ For the operational workflow, command examples, and sync rules, use [git_subtree
 ### Bad subtree candidates
 
 - `docs/` by itself
-- `.planning/`
 - tiny helper-only folders with no independent lifecycle
 
 The test is simple: if a directory does not have stable ownership and a coherent release cadence, it is a bad subtree boundary.
