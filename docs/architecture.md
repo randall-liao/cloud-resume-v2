@@ -15,7 +15,7 @@ Browser
 
 The current frontend ships only static assets. There is no server-side runtime in this repository.
 
-The visitor counter API is planned but not implemented in the current UI. `.env.example` exists as scaffold for that future work only.
+The visitor counter API is planned but not implemented in the current UI. A feature flag `enableVisitorCounter` is defined in `apps/web/src/config/features.ts` (disabled by default) to control the display of the counter. `.env.example` exists as scaffold for that future API work.
 
 ## 2. Repository Map
 
@@ -79,7 +79,7 @@ The runtime is simple and mostly static:
 - `apps/web/src/main.tsx` mounts `App`.
 - `apps/web/src/App.tsx` owns dark-mode state, sets the document title, applies the `dark` class through `@cloud-resume-v2/frontend-core`, and composes the page sections.
 - Presentational components read typed content from `@cloud-resume-v2/contracts`.
-- `apps/web/src/components/Footer.tsx` currently renders a static visitor count placeholder (`843`). No fetch call exists yet.
+- `apps/web/src/components/Footer.tsx` conditionally renders a static visitor count placeholder (`843`) based on the `enableVisitorCounter` feature flag in `apps/web/src/config/features.ts`. No fetch call exists yet.
 
 ```text
 @cloud-resume-v2/contracts
