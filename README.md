@@ -18,7 +18,7 @@ For coding agents, start with [AGENTS.md](AGENTS.md). The documentation system o
 - The active web app is fully client-rendered and builds to static assets in `apps/web/dist/`.
 - Dark mode is persisted through `localStorage` via `@cloud-resume-v2/frontend-core`.
 - Resume content is sourced through the typed `@cloud-resume-v2/contracts` package.
-- The footer visitor count is still a static placeholder. Live API integration is planned but not implemented yet.
+- The footer visitor count is a static placeholder, controlled by a feature flag `enableVisitorCounter` in `apps/web/src/config/features.ts` (disabled by default). Live API integration is planned but not implemented yet.
 
 ## Getting Started
 

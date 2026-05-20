@@ -1,7 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { resumeData } from '@cloud-resume-v2/contracts';
+import { FEATURES } from '../../src/config/features';
 import Footer from '../../src/components/Footer';
+
 
 describe('Footer', () => {
   const scrollY = 0;
@@ -30,18 +32,28 @@ describe('Footer', () => {
     vi.restoreAllMocks();
   });
 
-  it('renders footer content correctly', () => {
+  it('renders footer content correctly with visitor counter disabled by default', () => {
+    FEATURES.enableVisitorCounter = false;
     render(<Footer />);
 
     // Verify key elements from resumeData are rendered
     expect(screen.getByText('System:')).toBeInTheDocument();
     expect(screen.getByText(resumeData.footer.systemStatus)).toBeInTheDocument();
     expect(screen.getByText(resumeData.footer.region)).toBeInTheDocument();
-    expect(screen.getByText(resumeData.footer.latency)).toBeInTheDocument();
 
-    // Check static or decorated parts
+    // Check that visitor counter is NOT rendered
+    expect(screen.queryByText('Visitors:')).not.toBeInTheDocument();
+    expect(screen.queryByText('843')).not.toBeInTheDocument();
+    expect(screen.queryByText('DynamoDB Live Count')).not.toBeInTheDocument();
+  });
+
+  it('renders visitor counter when the feature flag is enabled', () => {
+    FEATURES.enableVisitorCounter = true;
+    render(<Footer />);
+
+    // Check that visitor counter IS rendered
     expect(screen.getByText('Visitors:')).toBeInTheDocument();
-    expect(screen.getByText('843')).toBeInTheDocument(); // Hardcoded mock value
+    expect(screen.getByText('843')).toBeInTheDocument();
     expect(screen.getByText('DynamoDB Live Count')).toBeInTheDocument();
   });
 

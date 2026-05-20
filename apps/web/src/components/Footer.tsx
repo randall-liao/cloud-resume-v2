@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { resumeData } from '@cloud-resume-v2/contracts';
+import { FEATURES } from '../config/features';
+
 
 export default function Footer() {
   const [isVisible, setIsVisible] = useState(true);
@@ -36,18 +38,19 @@ export default function Footer() {
             <span className="material-icons text-[14px] mr-1 text-slate-400 dark:text-primary">dns</span>
             <span className="text-slate-600 dark:text-slate-400">{footer.region}</span>
           </div>
-          <div className="flex items-center group cursor-pointer relative hover:bg-slate-50 dark:hover:bg-white/5 px-2 py-1 rounded transition-colors">
-            <span className="material-icons text-[14px] mr-1 text-orange-500 dark:text-orange-400">visibility</span>
-            <span className="text-slate-600 dark:text-slate-400">Visitors: <span className="text-slate-900 dark:text-white font-bold">843</span></span>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 bg-slate-800 dark:bg-black text-white text-center rounded py-1 px-2 text-[10px] hidden group-hover:block opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
-              DynamoDB Live Count
+          {FEATURES.enableVisitorCounter && (
+            <div className="flex items-center group cursor-pointer relative hover:bg-slate-50 dark:hover:bg-white/5 px-2 py-1 rounded transition-colors">
+              <span className="material-icons text-[14px] mr-1 text-orange-500 dark:text-orange-400">visibility</span>
+              <span className="text-slate-600 dark:text-slate-400">Visitors: <span className="text-slate-900 dark:text-white font-bold">843</span></span>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 bg-slate-800 dark:bg-black text-white text-center rounded py-1 px-2 text-[10px] hidden group-hover:block opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+                DynamoDB Live Count
+              </div>
             </div>
-          </div>
+          )}
+
         </div>
         <div className="flex items-center">
-          <span className="mr-2 hidden sm:inline text-slate-400">Latency:</span>
-          <span className="text-blue-600 dark:text-blue-400 font-semibold">{footer.latency}</span>
-          <div className="ml-4 pl-4 border-l border-slate-200 dark:border-slate-700 hidden sm:block text-slate-400">
+          <div className="hidden sm:block text-slate-400">
             Built with <i className="fab fa-react mx-1 text-blue-500"></i> &amp; Tailwind
           </div>
         </div>
