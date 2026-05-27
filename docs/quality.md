@@ -6,54 +6,53 @@
 > - 🟠 C: workable but needs care
 > - 🔴 D: do not extend without repair
 >
-> Last Updated: 2026-03-13
+> Last Updated: 2026-05-26
 
 ## Product Domains
 
 ### `apps/web/src/components/` — UI Presentation Layer
-**Grade: 🟢 A-**
+**Grade: 🟢 A**
 
 | Dimension | Status | Notes |
 | --- | --- | --- |
 | Modularity | ✅ Good | Each section lives in its own file |
 | Styling consistency | ✅ Good | Tailwind-first with limited computed inline styles |
 | Type safety | ✅ Better | Components now consume typed content from `@cloud-resume-v2/contracts` |
-| Test coverage | ✅ Baseline | Smoke tests cover app boot, shared content rendering, and theme toggling |
-| Hardcoded UI chrome | ⚠️ Present | Section labels and footer chrome still include hardcoded copy |
-| Async correctness | ⚠️ Pending | Visitor count remains static placeholder UI, not a real integration |
+| Test coverage | ✅ Good | Vitest + RTL suite covers app boot, footer behavior, and component rendering |
+| Hardcoded UI chrome | ⚠️ Present | Section labels still include hardcoded copy |
+| Async correctness | ✅ Resolved | Visitor count is controlled via a fail-safe feature flag `enableVisitorCounter` |
 
 **Known Debt**
 
-- `Footer.tsx` still hardcodes visitor count `843`.
 - `Hero.tsx` contains a dense inline IDE snippet that could be extracted if the section grows.
 
 ### `packages/contracts/` — Shared Content Contract Layer
-**Grade: 🟢 A-**
+**Grade: 🟢 A**
 
 | Dimension | Status | Notes |
 | --- | --- | --- |
-| Central content file | ✅ Good | Core resume content now lives in `packages/contracts/src/resume.json` |
+| Central content file | ✅ Good | Core resume content lives in `packages/contracts/src/resume.json` |
 | Type safety | ✅ Good | `ResumeDocument` and related interfaces define the public contract |
 | Boundary parsing | ✅ Good | `resume.ts` parses the content at the package boundary |
-| Test coverage | ❌ Missing | No direct tests around the package yet |
+| Test coverage | ✅ Good | Focused unit tests cover parsing boundaries and schema validation |
 
 **Known Debt**
 
-- Add regression tests around the contracts package so parsing failures are caught earlier than full-app builds.
+- None
 
 ### `packages/frontend-core/` — Shared Frontend Runtime Layer
-**Grade: 🟡 B**
+**Grade: 🟢 A**
 
 | Dimension | Status | Notes |
 | --- | --- | --- |
-| Correctness | ✅ Good | Theme persistence and DOM application now live behind a package API |
+| Correctness | ✅ Good | Theme persistence and DOM application live behind a package API |
 | Boundary parsing | ✅ Good | Stored theme values are parsed before use |
 | Simplicity | ⚠️ Mixed | The class-based helper remains slightly heavier than a plain-function API |
-| Test coverage | ❌ Missing | No tests |
+| Test coverage | ✅ Good | Unit tests cover theme toggling, localStorage persistence, and DOM class changes |
 
 **Known Debt**
 
-- Add focused tests around theme persistence and DOM class application.
+- None
 
 ### `CI/CD Pipeline` — Automation Layer
 **Grade: 🟢 A-**
@@ -92,10 +91,8 @@
 
 ## Technical Debt Register
 
-| ID | Domain | Debt Item | Priority | Phase |
+| ID | Domain | Debt Item | Priority | Status |
 | --- | --- | --- | --- | --- |
-| TD-001 | components | Replace static footer visitor count with a real fail-safe integration | 🟠 P1 | 3 |
-| TD-002 | all | Expand smoke coverage beyond app boot and theme toggle | 🟠 P1 | 3 |
-| TD-003 | packages | Add dedicated tests around extracted contracts and frontend-core packages | 🟠 P1 | 3 |
-| TD-004 | CI | Confirm GitHub branch protection outside the repo | 🟠 P1 | 3 |
-| TD-005 | agent-tooling | Adapt or prune generic imported skills that are not repo-fitted | 🟡 P2 | 3 |
+| TD-004 | CI | Confirm GitHub branch protection outside the repo | 🟠 P1 | Active |
+| TD-005 | agent-tooling | Adapt or prune generic imported skills that are not repo-fitted | 🟡 P2 | Active |
+
