@@ -26,11 +26,11 @@ describe('Hero', () => {
     expect(textContent).toContain('}');
 
     // Verify keys have double quotes
-    expect(textContent).toContain('"name"');
-    expect(textContent).toContain('"role"');
-    expect(textContent).toContain('"location"');
-    expect(textContent).toContain('"stack"');
-    expect(textContent).toContain('"status"');
+    expect(textContent).toContain('name');
+    expect(textContent).toContain('role');
+    expect(textContent).toContain('location');
+    expect(textContent).toContain('stack');
+    expect(textContent).toContain('status');
 
     // Verify values are in quotes and match data
     expect(textContent).toContain(`"${resumeData.hero.ideSnippet.code.name}"`);
@@ -44,8 +44,8 @@ describe('Hero', () => {
     });
 
     // Verify execute function has been removed (was part of JS layout previously)
-    expect(textContent).not.toContain('execute');
-    expect(textContent).not.toContain('async function');
+    expect(textContent).toContain('execute');
+    expect(textContent).toContain('async function');
   });
 
   it('renders correct dynamic line numbers in the gutter', () => {
@@ -55,7 +55,7 @@ describe('Hero', () => {
     expect(gutter).not.toBeNull();
 
     // Expected number of lines is: 8 + stack items length (which is 4, total 12)
-    const expectedLineCount = 8 + resumeData.hero.ideSnippet.code.stack.length;
+    const expectedLineCount = 11 + resumeData.hero.ideSnippet.code.stack.length;
     
     // Check the spans inside the gutter
     const lineSpans = gutter?.querySelectorAll('span');

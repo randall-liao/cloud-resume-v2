@@ -7,7 +7,7 @@ export default function Hero() {
   // and resumeData acts as the Model. This is why we don't hardcode text!
   const { hero } = resumeData;
   const { code } = hero.ideSnippet;
-  const totalLines = 8 + code.stack.length;
+  const totalLines = 11 + code.stack.length;
   const lineNumbers = Array.from({ length: totalLines }, (_, i) => i + 1);
 
   return (
@@ -36,47 +36,93 @@ export default function Hero() {
           </a>
         </div>
       </div>
+
       <div className="order-1 md:order-2">
-        <div className="rounded-xl overflow-hidden shadow-xl dark:shadow-2xl bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-surface-border transition-colors">
-          <div className="bg-gray-100 dark:bg-[#252526] px-4 py-2 flex items-center space-x-2 border-b border-gray-200 dark:border-[#1e1e1e] transition-colors">
-            <div className="flex space-x-1.5">
+        <div className="rounded-xl overflow-hidden shadow-xl dark:shadow-2xl bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-surface-border transition-colors flex flex-col">
+          {/* Top Bar */}
+          <div className="bg-gray-100 dark:bg-[#252526] h-10 flex items-center border-b border-gray-200 dark:border-[#1e1e1e] transition-colors pl-4 pt-2">
+            {/* Mac Window Controls */}
+            <div className="flex space-x-2 mr-4 self-center pb-2">
               <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
               <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
               <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
             </div>
-            <div className="ml-4 px-3 py-1 bg-white dark:bg-[#1e1e1e] rounded-t-md text-xs text-slate-600 dark:text-slate-400 font-mono flex items-center border-t border-x border-gray-200 dark:border-transparent transition-colors">
-              <span className="material-icons text-[10px] mr-1 text-blue-500 dark:text-blue-400">code</span>
-              {hero.ideSnippet.filename}
+
+            {/* VSCode Tab */}
+            <div className="flex-1 flex h-full items-end">
+              <div className="bg-white dark:bg-[#1e1e1e] h-[85%] px-4 rounded-t-lg flex items-center space-x-2 text-xs font-mono text-slate-700 dark:text-slate-300 border border-b-0 border-gray-200 dark:border-[#1e1e1e] transition-colors mr-2 relative group min-w-[140px] justify-between">
+                <div className="flex items-center space-x-2">
+                  <span className="text-[#3b82f6] dark:text-[#569cd6] font-bold">&#123;&#125;</span>
+                  <span>{hero.ideSnippet.filename}</span>
+                </div>
+                <button className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="material-icons text-[14px]">close</span>
+                </button>
+              </div>
             </div>
           </div>
-          <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto transition-colors">
+
+          {/* Editor Area */}
+          <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto transition-colors flex-grow">
             <div className="text-slate-600 dark:text-slate-400 select-none grid grid-cols-[2rem_1fr] gap-2">
-              <div className="text-right text-slate-400 dark:text-slate-600 pr-2 border-r border-gray-200 dark:border-slate-700 flex flex-col transition-colors">
+              <div className="text-right text-slate-400 dark:text-slate-600 pr-2 flex flex-col transition-colors opacity-70">
                 {lineNumbers.map((num) => (
                   <span key={num}>{num}</span>
                 ))}
               </div>
               <div className="pl-2">
-                &#123;<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"name"</span>: <span className="text-[#a31515] dark:text-code-string">"{code.name}"</span>,<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"role"</span>: <span className="text-[#a31515] dark:text-code-string">"{code.role}"</span>,<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"location"</span>: <span className="text-[#a31515] dark:text-code-string">"{code.location}"</span>,<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"stack"</span>: [<br />
+                <span className="text-[#c678dd] dark:text-[#c586c0]">const</span> <span className="text-slate-900 dark:text-[#9cdcfe]">engineer</span> <span className="text-[#56b6c2] dark:text-[#d4d4d4]">=</span> &#123;<br />
+                &nbsp;&nbsp;<span className="text-[#e06c75] dark:text-[#9cdcfe]">name</span><span className="text-slate-700 dark:text-slate-300">:</span> <span className="text-[#98c379] dark:text-[#ce9178]">"{code.name}"</span><span className="text-slate-700 dark:text-slate-300">,</span><br />
+                &nbsp;&nbsp;<span className="text-[#e06c75] dark:text-[#9cdcfe]">role</span><span className="text-slate-700 dark:text-slate-300">:</span> <span className="text-[#98c379] dark:text-[#ce9178]">"{code.role}"</span><span className="text-slate-700 dark:text-slate-300">,</span><br />
+                &nbsp;&nbsp;<span className="text-[#e06c75] dark:text-[#9cdcfe]">location</span><span className="text-slate-700 dark:text-slate-300">:</span> <span className="text-[#98c379] dark:text-[#ce9178]">"{code.location}"</span><span className="text-slate-700 dark:text-slate-300">,</span><br />
+                &nbsp;&nbsp;<span className="text-[#e06c75] dark:text-[#9cdcfe]">stack</span><span className="text-slate-700 dark:text-slate-300">:</span> [<br />
                 {code.stack.map((item, i) => (
                   <span key={i}>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-[#a31515] dark:text-code-string">"{item}"</span>
-                    {i !== code.stack.length - 1 ? ',' : ''}
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-[#98c379] dark:text-[#ce9178]">"{item}"</span>
+                    {i !== code.stack.length - 1 ? <span className="text-slate-700 dark:text-slate-300">,</span> : ''}
                     <br />
                   </span>
                 ))}
-                &nbsp;&nbsp;],<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"status"</span>: <span className="text-[#a31515] dark:text-code-string">"{code.status}"</span><br />
-                &#125;<span className="blinking-cursor"></span>
+                &nbsp;&nbsp;]<span className="text-slate-700 dark:text-slate-300">,</span><br />
+                &nbsp;&nbsp;<span className="text-[#e06c75] dark:text-[#9cdcfe]">status</span><span className="text-slate-700 dark:text-slate-300">:</span> <span className="text-[#98c379] dark:text-[#ce9178]">"{code.status}"</span><span className="text-slate-700 dark:text-slate-300">,</span><br />
+                &nbsp;&nbsp;<span className="text-[#e06c75] dark:text-[#dcdcaa]">execute</span><span className="text-slate-700 dark:text-slate-300">:</span> <span className="text-[#c678dd] dark:text-[#c586c0]">async function</span>() &#123;<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-[#c678dd] dark:text-[#c586c0]">return</span> <span className="text-[#98c379] dark:text-[#ce9178]">"High Impact"</span>;<br />
+                &nbsp;&nbsp;&#125;<br />
+                &#125;<span className="text-slate-700 dark:text-slate-300">;</span><span className="blinking-cursor"></span>
+              </div>
+            </div>
+          </div>
+
+          {/* VSCode Status Bar */}
+          <div className="bg-[#007acc] dark:bg-[#007acc] text-white h-6 flex items-center justify-between px-3 text-[11px] font-sans">
+            <div className="flex items-center space-x-3 h-full">
+              <div className="flex items-center space-x-1 hover:bg-white/20 px-1 rounded cursor-pointer h-full transition-colors">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="currentColor">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M2.5 13.5l11-5v-1l-11-5v1.4l9.5 4.1-9.5 4.1v1.4zM2 13.5V2l12 5.5-12 6z"/>
+                </svg>
+                <span>main*</span>
+              </div>
+              <div className="flex items-center space-x-1 hover:bg-white/20 px-1 rounded cursor-pointer h-full transition-colors">
+                <span className="material-icons text-[12px]">sync</span>
+                <span>0↓ 1↑</span>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2 h-full">
+              <div className="flex items-center hover:bg-white/20 px-1 rounded cursor-pointer h-full transition-colors hidden sm:flex">
+                Ln {totalLines + 3}, Col 2
+              </div>
+              <div className="flex items-center hover:bg-white/20 px-1 rounded cursor-pointer h-full transition-colors">
+                UTF-8
+              </div>
+              <div className="flex items-center hover:bg-white/20 px-1 rounded cursor-pointer h-full transition-colors">
+                JSON
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </section>
   );
 }
