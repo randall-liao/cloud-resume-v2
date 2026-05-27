@@ -7,6 +7,8 @@ export default function Hero() {
   // and resumeData acts as the Model. This is why we don't hardcode text!
   const { hero } = resumeData;
   const { code } = hero.ideSnippet;
+  const totalLines = 8 + code.stack.length;
+  const lineNumbers = Array.from({ length: totalLines }, (_, i) => i + 1);
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -50,26 +52,26 @@ export default function Hero() {
           <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto transition-colors">
             <div className="text-slate-600 dark:text-slate-400 select-none grid grid-cols-[2rem_1fr] gap-2">
               <div className="text-right text-slate-400 dark:text-slate-600 pr-2 border-r border-gray-200 dark:border-slate-700 flex flex-col transition-colors">
-                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+                {lineNumbers.map((num) => (
+                  <span key={num}>{num}</span>
+                ))}
               </div>
               <div className="pl-2">
-                <span className="text-blue-600 dark:text-code-keyword">const</span> <span className="text-[#0070c1] dark:text-[#e5c07b]">engineer</span> = &#123;<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">name</span>: <span className="text-[#a31515] dark:text-code-string">"{code.name}"</span>,<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">role</span>: <span className="text-[#a31515] dark:text-code-string">"{code.role}"</span>,<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">location</span>: <span className="text-[#a31515] dark:text-code-string">"{code.location}"</span>,<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">stack</span>: [<br />
-                &nbsp;&nbsp;&nbsp;&nbsp;{code.stack.map((item, i) => (
+                &#123;<br />
+                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"name"</span>: <span className="text-[#a31515] dark:text-code-string">"{code.name}"</span>,<br />
+                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"role"</span>: <span className="text-[#a31515] dark:text-code-string">"{code.role}"</span>,<br />
+                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"location"</span>: <span className="text-[#a31515] dark:text-code-string">"{code.location}"</span>,<br />
+                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"stack"</span>: [<br />
+                {code.stack.map((item, i) => (
                   <span key={i}>
-                    <span className="text-[#a31515] dark:text-code-string">"{item}"</span>
-                    {i !== code.stack.length - 1 ? ', ' : ''}
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-[#a31515] dark:text-code-string">"{item}"</span>
+                    {i !== code.stack.length - 1 ? ',' : ''}
+                    <br />
                   </span>
-                ))}<br />
+                ))}
                 &nbsp;&nbsp;],<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">status</span>: <span className="text-[#a31515] dark:text-code-string">"{code.status}"</span>,<br />
-                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">execute</span>: <span className="text-blue-600 dark:text-code-keyword">async function</span>() &#123;<br />
-                &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-blue-600 dark:text-code-keyword">return</span> <span className="text-[#a31515] dark:text-code-string">"High Impact"</span>;<br />
-                &nbsp;&nbsp;&#125;<br />
-                &#125;;<span className="blinking-cursor"></span>
+                &nbsp;&nbsp;<span className="text-[#001080] dark:text-code-key">"status"</span>: <span className="text-[#a31515] dark:text-code-string">"{code.status}"</span><br />
+                &#125;<span className="blinking-cursor"></span>
               </div>
             </div>
           </div>

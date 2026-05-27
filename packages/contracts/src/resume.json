@@ -8,9 +8,9 @@
   },
   "hero": {
     "status": "Ready to Work",
-    "headlinePrefix": "Building Resilient",
-    "headlineHighlight": "Cloud Systems",
-    "description": "Software Engineer specializing in distributed systems, backend architectures, and high-throughput data pipelines.",
+    "headlinePrefix": "Cloud-Native meet",
+    "headlineHighlight": "AI-Native Engineering",
+    "description": "Software Engineer specializing in building robust, multi-tenant cloud backends and deploying the secure developer infrastructure needed to safely scale autonomous AI workflows.",
     "primaryButton": { "text": "View Projects", "url": "https://github.com/randall-liao" },
     "secondaryButton": { "text": "Contact Me", "url": "https://www.linkedin.com/in/randall-y-liao" },
     "ideSnippet": {
@@ -19,7 +19,7 @@
         "name": "Randall Liao",
         "role": "Software Engineer",
         "location": "Toronto, ON",
-        "stack": ["Java", "Python", "Cloud Systems", "Microservices"],
+        "stack": ["Python", "Java", "Cloud Systems", "Harness Engineering"],
         "status": "Ready to deploy"
       }
     }
