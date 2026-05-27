@@ -8,7 +8,10 @@ Keep it short. Use it to find the source of truth, not to duplicate it.
 - Humans steer. Agents execute.
 - Repository-local artifacts are authoritative. If it is not in the repo, it does not exist to the agent.
 - Prefer small, reviewable changes with a narrow blast radius.
+- Do not automatically create Pull Requests; wait for explicit human instruction to open a PR.
+- Always add or update relevant unit/smoke tests when modifying code or components, and ensure all tests run and pass.
 - Before wrapping up, run `npm run validate`.
+
 
 ## Boot The Repo
 
