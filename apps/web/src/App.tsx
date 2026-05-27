@@ -46,7 +46,7 @@ function App() {
         <OriginStory />
         <CommitHistory />
         <Education />
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8" aria-label="Certifications and Interests">
             <Certifications />
             <Interests />
         </section>
