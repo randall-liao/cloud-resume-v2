@@ -72,7 +72,8 @@ See [plans/agent_gap_analysis.md](plans/agent_gap_analysis.md) for the backlog. 
 - [ ] No routing or global state dependencies
 - [ ] No MUI layout imports or `sx` prop
 - [ ] Shared content and theme changes route through package boundaries, not app-local leaf files
-- [ ] `npm run test` passes when UI behavior or shared contracts are touched
+- [ ] New or updated tests are added/written for any modified code or new components
+- [ ] All unit/smoke tests run and pass successfully (`npm run test`)
 - [ ] Docs updated if repo structure or constraints changed
 - [ ] Agent-First bounds maintained (Subdirectory `README.md`s renamed to `AGENTS.md`, properly linked in root `AGENTS.md`, no orphaned markdown files)
 - [ ] `npm run validate` passes locally
