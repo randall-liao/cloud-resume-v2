@@ -132,3 +132,18 @@ dist-ssr
 .stitch-mcp/
 .turbo
 .antigravitycli/
+
+# OpenTofu / Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+*.tfvars
+*.tfvars.json
+crash.log
+
+# AWS Local Credentials & Config
+.aws/
+*credentials*
+*aws*credentials*
+

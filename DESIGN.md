@@ -11,7 +11,7 @@ The design aesthetic is best described as "The Engineer's Dashboard." The mood i
 * **Dark Base Background (#0a0a0a):** The primary canvas for dark mode, providing deep contrast.
 * **Light Surface Panel (#ffffff):** Used for cards, containers, and elevated components in light mode.
 * **Dark Surface Panel (#121212):** Used for cards, containers, and elevated components in dark mode.
-* **Subtle Surface Border (rgba(255, 255, 255, 0.12)):** Used to define container edges and create subtle separation between dark mode layers.
+* **Subtle Surface Border (rgba(255, 255, 255, 0.12)):** Used to define container edges and create subtle separation between dark edode layers.
 * **Dark Typography Primary (#1f2937):** High-contrast text on light backgrounds.
 * **Dark Typography Secondary (#4b5563):** Muted supporting text on light backgrounds.
 * **IDE Keyword Accent (#c678dd / #a626a4):** Used for code blocks and technical highlights (e.g. `const`, `function`).
