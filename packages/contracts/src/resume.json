@@ -25,31 +25,24 @@
     }
   },
   "originStory": {
-    "title": "Continuous Growth & Cloud Architectures",
+    "title": "The Next Paradigm of Systems Engineering",
     "icon": "cloud_queue",
-    "content": "From transforming monolithic banking systems to process millions of transactions, to optimizing bioinformatics pipelines on Kubernetes at UofT, I strive to engineer reliable and scalable cloud-native solutions."
+    "content": "Software architecture is shifting from rigid cloud infrastructure to cognitive ecosystems. I design platforms that don't just host code, but seamlessly govern, scale, and collaborate with autonomous AI agents."
   },
   "experience": [
     {
-      "company": "University Of Toronto",
-      "role": "Research Assistant",
-      "period": "Sep 2024 - Jan 2025",
-      "description": "Developed a cloud-native tool for pharmacogenetic analysis on Google Cloud using GKE. Reduced deployment time from 50 minutes to 3 seconds with Cloud Code and Skaffold.",
-      "technologies": ["Python", "Kubernetes", "GCP", "GitLab CI/CD"]
-    },
-    {
-      "company": "University Of Toronto",
-      "role": "Teaching Assistant",
-      "period": "Dec 2023 - Jan 2025",
-      "description": "Mentored student teams on Java and Python software design, OOD, and testing. Led lab sessions on C programming and systems-level development.",
-      "technologies": ["Java", "Python", "C", "System Programming"]
+      "company": "Municipal Property Assessment Corporation (MPAC)",
+      "role": "Systems Developer",
+      "period": "Jun 2025 – Present",
+      "description": "Engineered secure Python and FastAPI multi-tenant SaaS backends integrated with AI-native core workflows, architecting the foundational cloud harnesses required to transition traditional development pipelines into self-healing, autonomous engineering ecosystems.",
+      "technologies": ["Python", "AWS", "Claude Code", "FastAPI" ,"Harness Engineering"]
     },
     {
       "company": "Shenzhen Rural Commercial Bank",
       "role": "Software Development Engineer",
       "period": "Jul 2020 - Aug 2023",
-      "description": "Led a team of six in an agile project. Migrated a monolithic application to a containerized microservices architecture. Engineered a real-time data push notification pipeline for 300,000+ daily events.",
-      "technologies": ["Java", "Spring Boot", "Oracle", "Kafka", "Kubernetes"]
+      "description": "Led an agile team of developers in refactoring legacy banking monoliths into containerized Java Spring Boot microservices. Oversaw cloud-native migration and sprint planning to optimize distributed backend performance and eliminate downtime.",
+      "technologies": ["Java", "Python","Spring Boot", "Oracle", "Kafka", "Kubernetes"]
     }
   ],
   "education": [
