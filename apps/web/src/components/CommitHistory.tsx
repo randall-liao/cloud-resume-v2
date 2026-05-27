@@ -3,10 +3,10 @@ import { resumeData } from '@cloud-resume-v2/contracts';
 export default function CommitHistory() {
   const { experience } = resumeData;
   return (
-    <section>
+    <section aria-labelledby="experience-heading">
       <div className="flex items-center mb-8">
         <span className="material-icons text-primary mr-2">history</span>
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Commit History</h2>
+        <h2 id="experience-heading" className="text-2xl font-bold text-slate-900 dark:text-white">Commit History</h2>
       </div>
       <div className="relative pl-12 space-y-8">
         <div className="git-line"></div>

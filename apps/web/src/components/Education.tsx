@@ -3,8 +3,8 @@ import { resumeData } from '@cloud-resume-v2/contracts';
 export default function Education() {
   const { education } = resumeData;
   return (
-    <section>
-      <h2 className="text-3xl font-bold mb-8 text-slate-800 dark:text-gray-100 flex items-center">
+    <section aria-labelledby="education-heading">
+      <h2 id="education-heading" className="text-3xl font-bold mb-8 text-slate-800 dark:text-gray-100 flex items-center">
         <span className="material-icons mr-3 text-[#10B981]">school</span> Education
       </h2>
       <div className="space-y-6">
