@@ -34,7 +34,16 @@ This file describes what good code looks like in `cloud-resume-v2`. For the mech
 - The current footer visitor count is static placeholder UI. Do not document it as live API behavior.
 - When API integration is added, source browser-safe endpoints from `import.meta.env.VITE_*`, parse at the boundary, and wrap non-critical calls in `try/catch`.
 
-## 5. Repository Rules
+
+## 5. SEO and Semantic HTML
+
+- All non-decorative images must have descriptive `alt` tags.
+- Sections must use appropriate semantic HTML tags (`<section>`, `<article>`, `<nav>`, `<aside>`, `<header>`, `<footer>`, `<main>`).
+- Heading hierarchy (H1, H2, H3...) must be logical and sequential. `apps/web/src/App.tsx` and main sections should coordinate to avoid skipping levels.
+- Sections should generally include `aria-labelledby` linking to their respective heading IDs to improve accessibility and semantic linking.
+- `apps/web/index.html` must include base SEO meta tags (Description, Open Graph, Twitter Card) reflecting the current profile data from `@cloud-resume-v2/contracts`.
+
+## 6. Repository Rules
 
 - **Agent-First Documentation**: There must be exactly one `README.md` file in the entire repository, located at the root. Subdirectories must use `AGENTS.md`.
 - **Documentation Completeness**: The root `AGENTS.md` must link to all subdomain `AGENTS.md` files, and no `.md` files should be orphaned (unlinked).

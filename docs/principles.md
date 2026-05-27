@@ -83,3 +83,11 @@ Only principles with an explicit enforcement section are mechanically gated toda
 **Why:** The planned visitor counter is auxiliary, not mission-critical UI.
 
 **Enforcement:** 🔴 Unenforced. The current app does not yet implement the live visitor-counter call.
+
+## Principle 11: Semantic HTML Is Required
+
+**Rule:** UI components must use semantic HTML (`<section>`, `<main>`, `<article>`, `<nav>`, `<footer>`, `<header>`) over generic `<div>` tags where appropriate, and ensure heading tags (H1-H6) are used in a logical, unbroken sequence. Regions like `<section>` should use `aria-labelledby` referencing their heading ID.
+
+**Why:** Proper semantic HTML is a prerequisite for both SEO and screen-reader accessibility. Relying entirely on visual styling without semantic underlying structure breaks the structural meaning of the document.
+
+**Enforcement:** 🔴 Unenforced. This is currently a manual review expectation, as automated semantic linting is difficult to fully enforce mechanically.
