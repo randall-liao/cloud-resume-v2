@@ -8,6 +8,8 @@ export type {
   HeroSection,
   InterestEntry,
   OriginStorySection,
+  SideProject,
+  ProjectMetrics,
   ResumeDocument,
   SocialLink,
 } from './resume';

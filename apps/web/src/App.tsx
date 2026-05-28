@@ -4,6 +4,7 @@ import { applyThemePreference, themeManager } from '@cloud-resume-v2/frontend-co
 import Header from './components/Header';
 import Hero from './components/Hero';
 import OriginStory from './components/OriginStory';
+import SideProjects from './components/SideProjects';
 import CommitHistory from './components/CommitHistory';
 import Education from './components/Education';
 import Certifications from './components/Certifications';
@@ -44,6 +45,7 @@ function App() {
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 space-y-12">
         <Hero />
         <OriginStory />
+        <SideProjects />
         <CommitHistory />
         <Education />
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8" aria-label="Certifications and Interests">

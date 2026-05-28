@@ -38,6 +38,23 @@ export interface HeroSection {
   ideSnippet: HeroIdeSnippet;
 }
 
+
+export interface ProjectMetrics {
+  label: string;
+  value: string;
+}
+
+export interface SideProject {
+  title: string;
+  icon: string;
+  url: string;
+  description: string;
+  metrics: ProjectMetrics[];
+  uptime?: string;
+  statusLabel?: string;
+  statusPercentage?: number;
+}
+
 export interface OriginStorySection {
   title: string;
   icon: string;
@@ -93,6 +110,7 @@ export interface ResumeDocument {
   header: HeaderSection;
   hero: HeroSection;
   originStory: OriginStorySection;
+  sideProjects: SideProject[];
   experience: ExperienceEntry[];
   education: EducationEntry[];
   certifications: CertificationEntry[];
@@ -115,6 +133,14 @@ function expectString(value: unknown, context: string): string {
     throw new Error(`${context} must be a string.`);
   }
 
+  return value;
+}
+
+
+function expectNumber(value: unknown, context: string): number {
+  if (typeof value !== 'number') {
+    throw new Error(`${context} must be a number.`);
+  }
   return value;
 }
 
@@ -192,6 +218,31 @@ function parseHeroSection(value: unknown, context: string): HeroSection {
     primaryButton: parseLinkButton(record.primaryButton, `${context}.primaryButton`),
     secondaryButton: parseLinkButton(record.secondaryButton, `${context}.secondaryButton`),
     ideSnippet: parseHeroIdeSnippet(record.ideSnippet, `${context}.ideSnippet`),
+  };
+}
+
+
+function parseProjectMetrics(value: unknown, context: string): ProjectMetrics {
+  const record = expectRecord(value, context);
+
+  return {
+    label: expectString(record.label, `${context}.label`),
+    value: expectString(record.value, `${context}.value`),
+  };
+}
+
+function parseSideProject(value: unknown, context: string): SideProject {
+  const record = expectRecord(value, context);
+
+  return {
+    title: expectString(record.title, `${context}.title`),
+    icon: expectString(record.icon, `${context}.icon`),
+    url: expectString(record.url, `${context}.url`),
+    description: expectString(record.description, `${context}.description`),
+    metrics: expectObjectArray(record.metrics, `${context}.metrics`, parseProjectMetrics),
+    uptime: record.uptime !== undefined ? expectString(record.uptime, `${context}.uptime`) : undefined,
+    statusLabel: record.statusLabel !== undefined ? expectString(record.statusLabel, `${context}.statusLabel`) : undefined,
+    statusPercentage: record.statusPercentage !== undefined ? expectNumber(record.statusPercentage, `${context}.statusPercentage`) : undefined,
   };
 }
 
@@ -281,6 +332,7 @@ export function parseResumeDocument(value: unknown): ResumeDocument {
     header: parseHeaderSection(record.header, 'resumeData.header'),
     hero: parseHeroSection(record.hero, 'resumeData.hero'),
     originStory: parseOriginStorySection(record.originStory, 'resumeData.originStory'),
+    sideProjects: expectObjectArray(record.sideProjects, 'resumeData.sideProjects', parseSideProject),
     experience: expectObjectArray(record.experience, 'resumeData.experience', parseExperienceEntry),
     education: expectObjectArray(record.education, 'resumeData.education', parseEducationEntry),
     certifications: expectObjectArray(

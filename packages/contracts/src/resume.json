@@ -2,8 +2,14 @@
   "header": {
     "name": "Randall",
     "socialLinks": [
-      { "icon": "fab fa-github", "url": "https://github.com/randall-liao" },
-      { "icon": "fab fa-linkedin", "url": "https://www.linkedin.com/in/randall-y-liao" }
+      {
+        "icon": "fab fa-github",
+        "url": "https://github.com/randall-liao"
+      },
+      {
+        "icon": "fab fa-linkedin",
+        "url": "https://www.linkedin.com/in/randall-y-liao"
+      }
     ]
   },
   "hero": {
@@ -11,15 +17,26 @@
     "headlinePrefix": "Cloud-Native meet",
     "headlineHighlight": "AI-Native Engineering",
     "description": "Software Engineer specializing in building robust, multi-tenant cloud backends and deploying the secure developer infrastructure needed to safely scale autonomous AI workflows.",
-    "primaryButton": { "text": "View Projects", "url": "https://github.com/randall-liao" },
-    "secondaryButton": { "text": "Contact Me", "url": "https://www.linkedin.com/in/randall-y-liao" },
+    "primaryButton": {
+      "text": "View Projects",
+      "url": "https://github.com/randall-liao"
+    },
+    "secondaryButton": {
+      "text": "Contact Me",
+      "url": "https://www.linkedin.com/in/randall-y-liao"
+    },
     "ideSnippet": {
       "filename": "profile.json",
       "code": {
         "name": "Randall Liao",
         "role": "Software Engineer",
         "location": "Toronto, ON",
-        "stack": ["Python", "Java", "Cloud Systems", "Harness Engineering"],
+        "stack": [
+          "Python",
+          "Java",
+          "Cloud Systems",
+          "Harness Engineering"
+        ],
         "status": "Ready to deploy"
       }
     }
@@ -33,16 +50,29 @@
     {
       "company": "Municipal Property Assessment Corporation (MPAC)",
       "role": "Systems Developer",
-      "period": "Jun 2025 – Present",
+      "period": "Jun 2025 \u2013 Present",
       "description": "Engineered secure Python and FastAPI multi-tenant SaaS backends integrated with AI-native core workflows, architecting the foundational cloud harnesses required to transition traditional development pipelines into self-healing, autonomous engineering ecosystems.",
-      "technologies": ["Python", "AWS", "Claude Code", "FastAPI" ,"Harness Engineering"]
+      "technologies": [
+        "Python",
+        "AWS",
+        "Claude Code",
+        "FastAPI",
+        "Harness Engineering"
+      ]
     },
     {
       "company": "Shenzhen Rural Commercial Bank",
       "role": "Software Development Engineer",
       "period": "Jul 2020 - Aug 2023",
       "description": "Led an agile team of developers in refactoring legacy banking monoliths into containerized Java Spring Boot microservices. Oversaw cloud-native migration and sprint planning to optimize distributed backend performance and eliminate downtime.",
-      "technologies": ["Java", "Python","Spring Boot", "Oracle", "Kafka", "Kubernetes"]
+      "technologies": [
+        "Java",
+        "Python",
+        "Spring Boot",
+        "Oracle",
+        "Kafka",
+        "Kubernetes"
+      ]
     }
   ],
   "education": [
@@ -78,8 +108,14 @@
       "icon": "emoji_objects",
       "description": "Patented a flexible portable yogurt fermentation device (CN201721005435.0). Applying engineering problem-solving to everyday challenges with practical innovations.",
       "metrics": [
-        { "label": "Patent ID", "value": "CN201721005435.0" },
-        { "label": "Status", "value": "Granted" }
+        {
+          "label": "Patent ID",
+          "value": "CN201721005435.0"
+        },
+        {
+          "label": "Status",
+          "value": "Granted"
+        }
       ],
       "status": "PATENTED"
     }
@@ -88,5 +124,56 @@
     "systemStatus": "Healthy",
     "region": "ca-central-1",
     "latency": "14ms"
-  }
+  },
+  "sideProjects": [
+    {
+      "title": "Cloud Native Resume",
+      "icon": "account_tree",
+      "url": "https://github.com/randall-liao",
+      "description": "A highly available, serverless portfolio architecture. Utilizes S3 for static hosting, CloudFront for CDN, API Gateway, and DynamoDB for visitor analytics.",
+      "metrics": [
+        {
+          "label": "S3",
+          "value": "Static"
+        },
+        {
+          "label": "CDN",
+          "value": "Edge"
+        },
+        {
+          "label": "API",
+          "value": "Gateway"
+        },
+        {
+          "label": "DB",
+          "value": "NoSQL"
+        }
+      ],
+      "uptime": "99.99%",
+      "statusPercentage": 100
+    },
+    {
+      "title": "Spy Fall Arena",
+      "icon": "smart_toy",
+      "url": "https://github.com/randall-liao",
+      "description": "Multi-agent LLM environment playing the social deduction game 'Spyfall'. Evaluates reasoning, deception, and deduction capabilities across different models.",
+      "metrics": [
+        {
+          "label": "GPT-4",
+          "value": "Agent"
+        },
+        {
+          "label": "Claude",
+          "value": "Agent"
+        },
+        {
+          "label": "Llama 3",
+          "value": "Agent"
+        }
+      ],
+      "uptime": "Turn 4",
+      "statusLabel": "Active Session",
+      "statusPercentage": 60
+    }
+  ]
 }
