@@ -1,0 +1,483 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Randall | Cloud Architect Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "secondary": "#76d6d5",
+                        "background": "#131313",
+                        "surface": "#131313",
+                        "surface-container": "#201f1f",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-variant": "#353534",
+                        "on-background": "#e5e2e1",
+                        "on-surface": "#e5e2e1",
+                        "on-surface-variant": "#c1c6d5",
+                        "outline": "#8b919f",
+                        "outline-variant": "#414753",
+                        "primary-container": "#3691ff",
+                        "on-primary-container": "#002955",
+                        "inverse-surface": "#e5e2e1",
+                        "inverse-on-surface": "#313030",
+                        // IDE Colors for dark mode
+                        "ide-bg": "#1e1e1e",
+                        "ide-sidebar": "#252526",
+                        "ide-border": "#333333",
+                        "code-keyword": "#C678DD",
+                        "code-string": "#98C379",
+                        "code-key": "#E06C75",
+                        "code-num": "#D19A66",
+                        "code-comment": "#5C6370",
+                        "new-primary": "#137fec"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["Fira Code", "monospace"],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
+                        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px 0 rgba(0, 0, 0, 0.3)',
+                        'glow': '0 0 15px rgba(19, 127, 236, 0.2)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #131313;
+            color: #e5e2e1;
+        }
+        .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1c1b1b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #414753;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b919f;
+        }
+        .blinking-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #e5e2e1;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .git-line {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #137fec 0%, #137fec 80%, rgba(19, 127, 236, 0.1) 100%);
+            z-index: 0;
+        }
+        .git-node {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #131313;
+            border: 2px solid #137fec;
+            position: absolute;
+            left: 18px;
+            top: 24px;
+            z-index: 10;
+        }
+        .token-keyword { color: #C678DD; }
+        .token-string { color: #98C379; }
+        .token-key { color: #E06C75; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen pb-20 selection:bg-primary/20 selection:text-primary">
+<header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="text-primary font-mono font-bold text-xl tracking-tight">&lt;Randall /&gt;</span>
+</div>
+<div class="flex items-center space-x-4">
+<button aria-label="Toggle Light Mode" class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 w-10 h-10 flex items-center justify-center">
+<span class="material-icons text-xl">light_mode</span>
+</button>
+<div class="h-6 w-px bg-outline-variant hidden sm:block"></div>
+<a class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" href="#">
+<i class="fab fa-github text-xl"></i>
+</a>
+<a class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" href="#">
+<i class="fab fa-linkedin text-xl"></i>
+</a>
+<a class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" href="#">
+<i class="fas fa-envelope text-xl"></i>
+</a>
+<button class="hidden md:flex items-center px-4 py-2 bg-primary hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors shadow-md shadow-primary/20">
+<span class="material-icons text-sm mr-2">download</span>
+                    Resume.pdf
+                </button>
+</div>
+</div>
+</header>
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 space-y-16">
+<section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="order-2 md:order-1 space-y-6">
+<div class="space-y-3">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-mono border border-primary/20 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+                        Open to Work
+                    </div>
+<h1 class="text-4xl md:text-5xl font-display font-bold text-on-surface leading-[1.15]">
+                        Building Resilient <br>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Cloud Systems</span>
+</h1>
+<p class="text-lg text-on-surface-variant max-w-lg leading-relaxed">
+                        Senior Backend Engineer specializing in distributed systems, serverless architectures, and high-throughput data pipelines.
+                    </p>
+</div>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="px-6 py-3 bg-surface-container border border-outline-variant hover:border-primary text-on-surface rounded-lg font-medium transition-all shadow-sm hover:shadow-glow flex items-center group">
+                        View Projects
+                        <span class="material-icons ml-2 group-hover:translate-x-1 transition-transform text-primary">arrow_forward</span>
+</button>
+<button class="px-6 py-3 bg-transparent text-on-surface-variant hover:text-primary font-medium transition-colors font-mono">
+                        ./contact_me.sh
+                    </button>
+</div>
+</div>
+<div class="order-1 md:order-2">
+<div class="rounded-xl overflow-hidden shadow-2xl bg-ide-bg border border-ide-border ring-1 ring-white/5">
+<div class="bg-ide-sidebar px-4 py-2 flex items-center space-x-2 border-b border-ide-border">
+<div class="flex space-x-1.5 opacity-80 hover:opacity-100 transition-opacity">
+<div class="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
+<div class="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
+<div class="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
+</div>
+<div class="ml-4 px-4 py-1.5 bg-ide-bg rounded-t-md text-xs text-on-surface-variant font-mono flex items-center border-t border-l border-r border-ide-border shadow-sm transform translate-y-[5px]">
+<span class="material-icons text-[14px] mr-1.5 text-primary">data_object</span>
+                            profile.json
+                            <span class="ml-2 hover:bg-surface-container rounded p-0.5 cursor-pointer"><i class="fas fa-times text-[10px]"></i></span>
+</div>
+</div>
+<div class="p-6 font-mono text-sm leading-relaxed overflow-x-auto bg-ide-bg">
+<div class="text-on-surface select-none grid grid-cols-[2rem_1fr] gap-2">
+<div class="text-right text-code-comment pr-3 border-r border-ide-border flex flex-col select-none">
+<span class="">1</span><span class="">2</span><span class="">3</span><span class="">4</span><span class="">5</span><span class="">6</span><span class="">7</span><span class="">8</span><span class="">9</span><span class="">10</span><span class="">11</span><span class="">12</span>
+</div>
+<div class="pl-2">
+<span class="text-code-keyword">const</span> <span class="text-on-surface">engineer</span> = {<br>
+                                &nbsp;&nbsp;<span class="text-code-key">name</span>: <span class="text-code-string">"Randall"</span>,<br>
+                                &nbsp;&nbsp;<span class="text-code-key">role</span>: <span class="text-code-string">"Cloud Architect"</span>,<br>
+                                &nbsp;&nbsp;<span class="text-code-key">location</span>: <span class="text-code-string">"Toronto, ON"</span>,<br>
+                                &nbsp;&nbsp;<span class="text-code-key">stack</span>: [<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-code-string">"React"</span>, <span class="text-code-string">"Node.js"</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-code-string">"AWS Lambda"</span>, <span class="text-code-string">"Terraform"</span><br>
+                                &nbsp;&nbsp;],<br>
+                                &nbsp;&nbsp;<span class="text-code-key">status</span>: <span class="text-code-string">"Ready to deploy"</span>,<br>
+                                &nbsp;&nbsp;<span class="text-code-key">execute</span>: <span class="text-code-keyword">async function</span>() {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-code-keyword">return</span> <span class="text-code-string">"High Impact"</span>;<br>
+                                &nbsp;&nbsp;}<br>
+                                };<span class="blinking-cursor"></span>
+</div>
+</div>
+</div>
+<div class="bg-primary text-white text-[10px] font-mono py-1 px-3 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class=""><i class="fas fa-code-branch mr-1"></i>main*</span>
+<span class=""><i class="fas fa-sync-alt mr-1"></i>0↓ 1↑</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="">Ln 12, Col 2</span>
+<span class="">UTF-8</span>
+<span class="">JSON</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="relative">
+<div class="bg-surface-container rounded-xl p-1 border-l-4 border-primary shadow-soft">
+<div class="p-6 md:p-8 bg-surface-container-high rounded-r-lg border border-outline-variant border-l-0">
+<div class="flex flex-col md:flex-row gap-6 items-start">
+<div class="flex-shrink-0 bg-primary/10 p-4 rounded-full text-primary border border-primary/20 shadow-glow">
+<span class="material-icons text-3xl">cloud_queue</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-on-surface mb-2 font-display">Origin Story: The GeForce Analogy</h3>
+<p class="text-on-surface-variant italic font-medium leading-relaxed font-serif text-[1.05rem]">
+                                "In 2018, I tried GeForce Now and realized my flimsy laptop was running a AAA game on a rig hundreds of miles away. The latency was negligible, the power was immense. That's when it clicked: computing isn't about the box in front of you, it's about the pipe and the powerhouse at the other end. I've been building those powerhouses ever since."
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Side Projects -->
+<section>
+<div class="flex items-center mb-8">
+<span class="material-icons text-outline mr-3 text-3xl">dashboard</span>
+<h2 class="text-3xl font-bold text-on-surface tracking-tight">Side Projects</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Project 1: Cloud Native Resume -->
+<div class="bg-surface-container rounded-2xl border border-outline-variant p-8 shadow-card hover:shadow-glow transition-all duration-300 flex flex-col justify-between group">
+<div>
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high border border-outline-variant flex items-center justify-center shadow-sm">
+<i class="fab fa-github text-on-surface-variant text-2xl"></i>
+</div>
+<a class="text-outline hover:text-primary transition-colors" href="#">
+<span class="material-icons text-xl">open_in_new</span>
+</a>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-3 tracking-tight">Cloud Native Resume</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                            A highly available, serverless portfolio architecture. Utilizes S3 for static hosting, CloudFront for CDN, API Gateway, and DynamoDB for visitor analytics.
+                        </p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant">
+<div class="grid grid-cols-4 gap-2 mb-2">
+<div class="h-8 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center text-[10px] font-mono text-outline shadow-sm"><i class="fab fa-aws mr-1 text-primary"></i>S3</div>
+<div class="h-8 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center text-[10px] font-mono text-outline shadow-sm"><i class="fas fa-network-wired mr-1 text-primary"></i>CDN</div>
+<div class="h-8 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center text-[10px] font-mono text-outline shadow-sm"><i class="fas fa-exchange-alt mr-1 text-primary"></i>API</div>
+<div class="h-8 bg-surface-container-high border border-outline-variant rounded flex items-center justify-center text-[10px] font-mono text-outline shadow-sm"><i class="fas fa-database mr-1 text-primary"></i>DB</div>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden mt-4">
+<div class="h-full bg-primary w-[100%] shadow-[0_0_8px_#137fec]"></div>
+</div>
+<div class="flex justify-between items-center mt-2">
+<span class="text-[10px] text-outline uppercase tracking-wider font-semibold">Uptime</span>
+<span class="text-[10px] text-on-surface font-mono font-bold">99.99%</span>
+</div>
+</div>
+</div>
+<!-- Project 2: Spy Fall Arena -->
+<div class="bg-surface-container rounded-2xl border border-outline-variant p-8 shadow-card hover:shadow-glow transition-all duration-300 flex flex-col justify-between group">
+<div>
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high border border-outline-variant flex items-center justify-center shadow-sm">
+<i class="fab fa-github text-on-surface-variant text-2xl"></i>
+</div>
+<a class="text-outline hover:text-primary transition-colors" href="#">
+<span class="material-icons text-xl">open_in_new</span>
+</a>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-3 tracking-tight">Spy Fall Arena</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                            Multi-agent LLM environment playing the social deduction game 'Spyfall'. Evaluates reasoning, deception, and deduction capabilities across different models.
+                        </p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant relative overflow-hidden">
+<div class="flex justify-around items-center h-12 relative z-10">
+<div class="flex flex-col items-center">
+<div class="w-6 h-6 rounded-sm rotate-45 bg-emerald-900/50 border border-emerald-500/50 flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(16,185,129,0.3)]">
+<div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+</div>
+<span class="text-[9px] font-mono text-outline">GPT-4</span>
+</div>
+<div class="h-px w-8 bg-outline-variant"></div>
+<div class="flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-rose-900/50 border border-rose-500/50 flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(244,63,94,0.3)]">
+<div class="w-2 h-2 rounded-sm bg-rose-400"></div>
+</div>
+<span class="text-[9px] font-mono text-outline">Claude</span>
+</div>
+<div class="h-px w-8 bg-outline-variant"></div>
+<div class="flex flex-col items-center">
+<div class="w-6 h-6 rounded-sm bg-amber-900/50 border border-amber-500/50 flex items-center justify-center mb-2 shadow-[0_0_10px_rgba(245,158,11,0.3)]">
+<div class="w-2 h-2 rotate-45 bg-amber-400"></div>
+</div>
+<span class="text-[9px] font-mono text-outline">Llama 3</span>
+</div>
+</div>
+<div class="flex justify-between items-center mt-4 border-t border-outline-variant pt-2">
+<span class="text-[10px] text-outline uppercase tracking-wider font-semibold">Active Session</span>
+<div class="flex items-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mr-1.5 animate-pulse shadow-[0_0_5px_#137fec]"></span>
+<span class="text-[10px] text-on-surface font-mono font-bold">Turn 4</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center mb-10">
+<span class="material-icons text-outline mr-3 text-3xl">history</span>
+<h2 class="text-3xl font-bold text-on-surface tracking-tight">Commit History</h2>
+</div>
+<div class="relative pl-12 space-y-10">
+<div class="git-line"></div>
+<div class="relative group">
+<div class="git-node group-hover:bg-primary transition-colors ring-4 ring-background shadow-[0_0_10px_#137fec]"></div>
+<div class="bg-surface-container border border-outline-variant rounded-xl p-6 shadow-card hover:shadow-glow hover:border-primary/50 transition-all duration-300">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Cosmos</h3>
+<p class="text-primary font-semibold">Senior Backend Engineer</p>
+</div>
+<span class="mt-2 md:mt-0 px-3 py-1 bg-surface-container-high border border-outline-variant rounded-md text-sm font-mono text-outline shadow-sm">2021 - Present</span>
+</div>
+<p class="text-on-surface-variant mb-5 leading-relaxed">
+                            Architected a serverless microservices backend handling 50k+ concurrent connections. Optimized DynamoDB access patterns reducing latency by 40%.
+                        </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">FastAPI</span>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">AWS Fargate</span>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">Redis</span>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">Python</span>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="git-node group-hover:bg-primary transition-colors ring-4 ring-background"></div>
+<div class="bg-surface-container border border-outline-variant rounded-xl p-6 shadow-card hover:shadow-glow hover:border-primary/50 transition-all duration-300">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Axon</h3>
+<p class="text-primary font-semibold">Cloud Infrastructure Engineer</p>
+</div>
+<span class="mt-2 md:mt-0 px-3 py-1 bg-surface-container-high border border-outline-variant rounded-md text-sm font-mono text-outline shadow-sm">2019 - 2021</span>
+</div>
+<p class="text-on-surface-variant mb-5 leading-relaxed">
+                            Designed the CI/CD pipeline for machine learning model deployments. Managed EC2 fleet auto-scaling for neural network training jobs.
+                        </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">Terraform</span>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">Docker</span>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">Jenkins</span>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">Bash</span>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="git-node group-hover:bg-primary transition-colors ring-4 ring-background"></div>
+<div class="bg-surface-container border border-outline-variant rounded-xl p-6 shadow-card hover:shadow-glow hover:border-primary/50 transition-all duration-300">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Data Engineering Inc.</h3>
+<p class="text-primary font-semibold">Backend Developer</p>
+</div>
+<span class="mt-2 md:mt-0 px-3 py-1 bg-surface-container-high border border-outline-variant rounded-md text-sm font-mono text-outline shadow-sm">2018 - 2019</span>
+</div>
+<p class="text-on-surface-variant mb-5 leading-relaxed">
+                            Implemented real-time data ingestion services. Worked on high-throughput event streaming using Kafka and Apache Flink.
+                        </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">Apache Flink</span>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">Kafka</span>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">Java</span>
+<span class="px-2.5 py-1 bg-surface-container-high border border-outline-variant rounded text-xs font-mono font-medium text-on-surface-variant hover:text-primary hover:border-primary/50 transition-colors cursor-default">PostgreSQL</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-surface-container border border-outline-variant rounded-xl p-1 relative overflow-hidden group shadow-card hover:shadow-glow transition-all duration-300">
+<div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#FF9900]/20 to-transparent rounded-bl-full pointer-events-none"></div>
+<div class="p-8 h-full flex flex-col justify-between relative z-10 bg-surface-container rounded-lg">
+<div>
+<div class="flex items-center space-x-4 mb-6">
+<div class="w-14 h-14 flex items-center justify-center bg-[#232F3E] rounded-lg shadow-md p-2 border border-outline-variant">
+<i class="fab fa-aws text-[#FF9900] text-4xl"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface leading-tight">AWS Certified</h3>
+<p class="text-sm font-semibold text-outline">Official Certification</p>
+</div>
+</div>
+<p class="text-lg text-on-surface-variant font-medium mb-1">Solutions Architect – Professional</p>
+<p class="text-xs text-outline font-mono tracking-wide">Validation ID: AWS-PRO-2023-88X</p>
+</div>
+<div class="mt-8">
+<a class="text-sm font-bold text-[#FF9900] hover:text-[#e08900] flex items-center uppercase tracking-wider" href="#">
+                            Verify Badge <span class="material-icons text-sm ml-1">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-xl p-8 relative overflow-hidden shadow-card hover:shadow-glow transition-all duration-300 group">
+<div class="flex items-start justify-between mb-6">
+<div>
+<h3 class="text-xl font-bold text-on-surface">Precision Cooking</h3>
+<p class="text-primary font-medium text-sm mt-1">Sous Vide Enthusiast</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-red-900/20 flex items-center justify-center text-red-500 border border-red-500/30 shadow-[0_0_10px_rgba(239,68,68,0.2)]">
+<span class="material-icons text-2xl">thermostat</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                    Applying the same fault-tolerant logic to steak as I do to servers. Consistent temperature control ensures 99.99% reliability on medium-rare outcomes.
+                </p>
+<div class="bg-surface-container-high border border-outline-variant rounded-lg p-4 font-mono text-xs text-outline flex justify-between items-center shadow-inner">
+<div class="flex flex-col">
+<span class="uppercase text-[10px] text-outline mb-1">Target Temp</span>
+<span class="text-on-surface font-bold text-base">54.5°C</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="uppercase text-[10px] text-outline mb-1">Duration</span>
+<span class="text-on-surface font-bold text-base">2h 30m</span>
+</div>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center text-green-500 font-bold">
+<span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2 shadow-[0_0_5px_#22c55e]" title="Heater Active"></span>
+                        ACTIVE
+                    </div>
+</div>
+</div>
+</section>
+</main>
+<footer class="fixed bottom-0 w-full z-40 bg-surface border-t border-outline-variant shadow-[0_-2px_10px_rgba(0,0,0,0.5)]">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-10 flex items-center justify-between text-xs font-mono text-outline">
+<div class="flex items-center space-x-6">
+<div class="flex items-center px-2 py-0.5 rounded bg-green-900/20 border border-green-500/30">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 animate-pulse shadow-[0_0_5px_#22c55e]"></span>
+<span class="hidden sm:inline font-semibold text-green-400">System: </span>
+<span class="text-green-400 ml-1 font-bold">Healthy</span>
+</div>
+<div class="hidden sm:flex items-center">
+<span class="material-icons text-[14px] mr-1.5 text-outline">dns</span>
+<span class="text-on-surface-variant">us-east-1</span>
+</div>
+<div class="flex items-center group cursor-pointer relative hover:bg-surface-container-high px-2 py-1 rounded transition-colors">
+<span class="material-icons text-[14px] mr-1.5 text-orange-500">visibility</span>
+<span class="text-on-surface-variant">Visitors: <span class="text-on-surface font-bold">843</span></span>
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 bg-surface-container-high border border-outline-variant text-on-surface text-center rounded py-1 px-2 text-[10px] hidden group-hover:block opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+                        DynamoDB Live Count
+                    </div>
+</div>
+</div>
+<div class="flex items-center">
+<span class="mr-2 hidden sm:inline text-outline">Latency:</span>
+<span class="text-primary font-semibold">24ms</span>
+<div class="ml-4 pl-4 border-l border-outline-variant hidden sm:block text-outline">
+                    Built with <i class="fab fa-react mx-1 text-primary"></i> &amp; Tailwind
+                </div>
+</div>
+</div>
+</footer>
+<div class="fixed top-20 right-0 -z-10 opacity-5 pointer-events-none overflow-hidden h-96 w-96">
+<img alt="Abstract Pattern" class="w-full h-full object-cover blur-3xl rounded-full mix-blend-screen" data-alt="Abstract blue technology lines representing data flow and cybernetic patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgXH0uVSkacDEXWFsTXf7bQyTDHw1PqD5vSFg-s28lNIzgDlQUrsPxqf7zEvL06pdokdmmib0kNxupAkbiRr12Ll7Ng9eXT_AumUwiq1RmnrAs1dOgqhGylKXMeMUz5oLk0pAfkTiUwc1LpJV9QJTKZruwlPkURthngXmGZZHplSOSYJQt2YJOd1fTR-GuEIChDBrxFJG_KPS4_4W3BJqNasw8UOvUJA-_aSxpNyd9q52k3p_lIt8RCNHImUGD4WUDA6mOlzpRt7BL">
+</div>
+
+
+</body></html>
