@@ -149,7 +149,8 @@
           "value": "NoSQL"
         }
       ],
-      "uptime": "99.99%"
+      "uptime": "99.99%",
+      "statusPercentage": 100
     },
     {
       "title": "Spy Fall Arena",
@@ -170,7 +171,9 @@
           "value": "Agent"
         }
       ],
-      "uptime": "Turn 4"
+      "uptime": "Turn 4",
+      "statusLabel": "Active Session",
+      "statusPercentage": 60
     }
   ]
 }

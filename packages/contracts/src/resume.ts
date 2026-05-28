@@ -51,6 +51,8 @@ export interface SideProject {
   description: string;
   metrics: ProjectMetrics[];
   uptime?: string;
+  statusLabel?: string;
+  statusPercentage?: number;
 }
 
 export interface OriginStorySection {
@@ -131,6 +133,14 @@ function expectString(value: unknown, context: string): string {
     throw new Error(`${context} must be a string.`);
   }
 
+  return value;
+}
+
+
+function expectNumber(value: unknown, context: string): number {
+  if (typeof value !== 'number') {
+    throw new Error(`${context} must be a number.`);
+  }
   return value;
 }
 
@@ -231,6 +241,8 @@ function parseSideProject(value: unknown, context: string): SideProject {
     description: expectString(record.description, `${context}.description`),
     metrics: expectObjectArray(record.metrics, `${context}.metrics`, parseProjectMetrics),
     uptime: record.uptime !== undefined ? expectString(record.uptime, `${context}.uptime`) : undefined,
+    statusLabel: record.statusLabel !== undefined ? expectString(record.statusLabel, `${context}.statusLabel`) : undefined,
+    statusPercentage: record.statusPercentage !== undefined ? expectNumber(record.statusPercentage, `${context}.statusPercentage`) : undefined,
   };
 }
 

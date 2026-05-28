@@ -12,8 +12,8 @@ export default function SideProjects() {
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Side Projects</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {sideProjects.map((project, index) => (
-          <div key={index} className="bg-white dark:bg-[#1e1e1e] rounded-2xl border border-slate-200 dark:border-white/5 p-8 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
+        {sideProjects.map((project) => (
+          <div key={project.title} className="bg-white dark:bg-[#1e1e1e] rounded-2xl border border-slate-200 dark:border-white/5 p-8 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
             <div>
               <div className="flex justify-between items-start mb-6">
                 <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center shadow-sm">
@@ -31,17 +31,17 @@ export default function SideProjects() {
 
             <div className="bg-slate-50 dark:bg-black/20 rounded-xl p-4 border border-slate-100 dark:border-white/5">
                 <div className="grid grid-cols-4 gap-2 mb-2">
-                    {project.metrics?.map((metric, i) => (
-                         <div key={i} className="h-8 bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded flex items-center justify-center text-[10px] font-mono text-slate-500 dark:text-slate-400 shadow-sm">{metric.label}</div>
+                    {project.metrics?.map((metric) => (
+                         <div key={metric.label} className="h-8 bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded flex items-center justify-center text-[10px] font-mono text-slate-500 dark:text-slate-400 shadow-sm">{metric.label}</div>
                     ))}
                 </div>
                 {project.uptime && (
                   <>
                     <div className="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden mt-4">
-                      <div className="h-full bg-primary w-[100%]"></div>
+                      <div className="h-full bg-primary" style={{ width: `${project.statusPercentage || 100}%` }}></div>
                     </div>
                     <div className="flex justify-between items-center mt-2">
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-wider font-semibold">{project.title === 'Spy Fall Arena' ? 'Active Session' : 'Uptime'}</span>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-wider font-semibold">{project.statusLabel || 'Uptime'}</span>
                       <span className="text-[10px] text-slate-700 dark:text-slate-300 font-mono font-bold">{project.uptime}</span>
                     </div>
                   </>
