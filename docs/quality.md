@@ -18,7 +18,7 @@
 | Modularity | ✅ Good | Each section lives in its own file |
 | Styling consistency | ✅ Good | Tailwind-first with limited computed inline styles |
 | Type safety | ✅ Better | Components now consume typed content from `@cloud-resume-v2/contracts` |
-| Test coverage | ✅ Good | Vitest + RTL suite covers app boot, footer behavior, and component rendering |
+| Test coverage | ✅ Excellent | Vitest + RTL suite covers app boot, footer behavior, and full UI component rendering |
 | Hardcoded UI chrome | ⚠️ Present | Section labels still include hardcoded copy |
 | Async correctness | ✅ Resolved | Visitor count is controlled via a fail-safe feature flag `enableVisitorCounter` |
 

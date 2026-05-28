@@ -13,7 +13,7 @@ This file describes what good code looks like in `cloud-resume-v2`. For the mech
 
 ## 2. Component Structure
 
-- UI components live in `apps/web/src/components/`.
+- UI components live in `apps/web/src/components/` and mandatory component tests reside in `apps/web/tests/components/`.
 - `apps/web/src/App.tsx` is the layout shell and theme owner, not a data-validation layer.
 - Shared resume content comes from `@cloud-resume-v2/contracts`.
 - Shared browser-facing theme behavior comes from `@cloud-resume-v2/frontend-core`.
@@ -61,7 +61,6 @@ This file describes what good code looks like in `cloud-resume-v2`. For the mech
 
 See [plans/agent_gap_analysis.md](plans/agent_gap_analysis.md) for the backlog. The main remaining quality gaps are:
 
-- smoke coverage is still narrow and does not cover all critical UI behaviors
 - no dedicated tests around the extracted shared packages
 - no live visitor-counter integration
 - partially generic imported skills under `.agent/skills/`
