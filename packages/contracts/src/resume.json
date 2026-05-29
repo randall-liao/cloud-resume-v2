@@ -129,7 +129,7 @@
     {
       "title": "Cloud Native Resume",
       "icon": "account_tree",
-      "url": "https://github.com/randall-liao",
+      "url": "https://github.com/randall-liao/cloud-resume-v2",
       "description": "A highly available, serverless portfolio architecture. Utilizes S3 for static hosting, CloudFront for CDN, API Gateway, and DynamoDB for visitor analytics.",
       "metrics": [
         {
@@ -155,7 +155,7 @@
     {
       "title": "Spy Fall Arena",
       "icon": "smart_toy",
-      "url": "https://github.com/randall-liao",
+      "url": "https://github.com/randall-liao/spyfall-arena",
       "description": "Multi-agent LLM environment playing the social deduction game 'Spyfall'. Evaluates reasoning, deception, and deduction capabilities across different models.",
       "metrics": [
         {
