@@ -5,7 +5,11 @@ export default function Certifications() {
   return (
     <>
       {certifications.map((cert, idx) => (
-        <div key={idx} className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-1 relative overflow-hidden group transition-all hover:shadow-md">
+        <div 
+          key={idx} 
+          className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-1 relative overflow-hidden group shadow-card m-transition hover:shadow-hover hover:-translate-y-1 reveal-on-scroll"
+          style={{ transitionDelay: `${(idx + 1) * 100}ms` }}
+        >
           <div 
             className="absolute top-0 right-0 w-24 h-24 opacity-10 rounded-bl-full pointer-events-none"
             style={{ background: `linear-gradient(to bottom right, ${cert.color}, transparent)` }}

@@ -148,3 +148,4 @@ crash.log
 *aws*credentials*
 
 stitch_downloads/
+.agents/

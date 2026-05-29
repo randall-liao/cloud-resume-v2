@@ -20,4 +20,26 @@ describe('Interests Component', () => {
       expect(screen.getByText(interest.status)).toBeInTheDocument();
     });
   });
+
+  it('applies staggered reveal-on-scroll and card hover transitions to interests', () => {
+    const { container } = render(<Interests />);
+
+    const interestCards = container.querySelectorAll('.bg-white');
+    expect(interestCards.length).toBe(resumeData.interests.length);
+
+    interestCards.forEach((card, idx) => {
+      expect(card).toHaveClass('reveal-on-scroll');
+      expect(card).toHaveClass('shadow-card');
+      expect(card).toHaveClass('m-transition');
+      expect(card).toHaveClass('hover:shadow-hover');
+      expect(card).toHaveClass('hover:-translate-y-1');
+
+      const expectedDelay = `${(idx + 1 + resumeData.certifications.length) * 100}ms`;
+      expect(card).toHaveStyle({ transitionDelay: expectedDelay });
+    });
+
+    // Verify pulse dot is pulse-subtle
+    const pulseDot = container.querySelector('.animate-pulse-subtle');
+    expect(pulseDot).not.toBeNull();
+  });
 });

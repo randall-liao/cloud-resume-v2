@@ -1,11 +1,15 @@
 import { resumeData } from '@cloud-resume-v2/contracts';
 
 export default function Interests() {
-  const { interests } = resumeData;
+  const { interests, certifications } = resumeData;
   return (
     <>
       {interests.map((interest, idx) => (
-        <div key={idx} className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-all group">
+        <div 
+          key={idx} 
+          className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 relative overflow-hidden shadow-card m-transition hover:shadow-hover hover:-translate-y-1 group reveal-on-scroll"
+          style={{ transitionDelay: `${(idx + 1 + certifications.length) * 100}ms` }}
+        >
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">{interest.title}</h3>
@@ -27,7 +31,7 @@ export default function Interests() {
             ))}
             <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
             <div className="flex items-center text-green-600 dark:text-green-500 font-bold">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2" title="Active"></span>
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse-subtle mr-2" title="Active"></span>
                 {interest.status}
             </div>
           </div>
