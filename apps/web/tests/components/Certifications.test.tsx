@@ -14,6 +14,11 @@ describe('Certifications Component', () => {
     });
   });
 
+  it('renders the certifications section heading correctly', () => {
+    render(<Certifications />);
+    expect(screen.getByRole('heading', { level: 2, name: /Certifications/i })).toBeInTheDocument();
+  });
+
   it('applies staggered reveal-on-scroll and hover floating transition styling to certifications', () => {
     const { container } = render(<Certifications />);
 

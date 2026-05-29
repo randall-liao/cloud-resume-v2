@@ -82,10 +82,10 @@ function App() {
         <SideProjects />
         <CommitHistory />
         <Education />
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8" aria-label="Certifications and Interests">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Certifications />
             <Interests />
-        </section>
+        </div>
       </main>
 
       <Footer />
