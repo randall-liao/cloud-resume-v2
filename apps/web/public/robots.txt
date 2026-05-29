@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://github.com/randall-liao/cloud-resume-v2/sitemap.xml
