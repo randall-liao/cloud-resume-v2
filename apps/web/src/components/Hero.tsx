@@ -12,10 +12,10 @@ export default function Hero() {
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      <div className="order-2 md:order-1 space-y-6">
+      <div className="order-2 md:order-1 space-y-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
         <div className="space-y-2">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-mono border border-primary/20">
-            <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse-subtle"></span>
             {hero.status}
           </div>
           <h1 className="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-white leading-tight">
@@ -37,7 +37,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="order-1 md:order-2">
+      <div className="order-1 md:order-2 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
         <div className="rounded-xl overflow-hidden shadow-xl dark:shadow-2xl bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-surface-border transition-colors flex flex-col">
           {/* Top Bar */}
           <div className="bg-gray-100 dark:bg-[#252526] h-10 flex items-center border-b border-gray-200 dark:border-[#1e1e1e] transition-colors pl-4 pt-2">

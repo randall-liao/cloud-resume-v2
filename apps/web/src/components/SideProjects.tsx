@@ -7,13 +7,17 @@ export default function SideProjects() {
 
   return (
     <section>
-      <div className="flex items-center mb-8">
+      <div className="flex items-center mb-8 reveal-on-scroll">
         <span className="material-icons text-slate-400 dark:text-slate-500 mr-3 text-3xl">dashboard</span>
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Side Projects</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {sideProjects.map((project) => (
-          <div key={project.title} className="bg-white dark:bg-[#1e1e1e] rounded-2xl border border-slate-200 dark:border-white/5 p-8 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
+        {sideProjects.map((project, idx) => (
+          <div 
+            key={project.title} 
+            className="bg-white dark:bg-[#1e1e1e] rounded-2xl border border-slate-200 dark:border-white/5 p-8 shadow-md3 m-transition hover:shadow-hover hover:-translate-y-1 flex flex-col justify-between group reveal-on-scroll"
+            style={{ transitionDelay: `${(idx + 1) * 100}ms` }}
+          >
             <div>
               <div className="flex justify-between items-start mb-6">
                 <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center shadow-sm">

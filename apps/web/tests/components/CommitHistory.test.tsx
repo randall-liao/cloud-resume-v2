@@ -23,4 +23,25 @@ describe('CommitHistory Component', () => {
       });
     });
   });
+
+  it('applies staggered transitionDelay styling to timeline jobs', () => {
+    const { container } = render(<CommitHistory />);
+    
+    const header = container.querySelector('.reveal-on-scroll');
+    expect(header).toBeInTheDocument();
+
+    const jobs = container.querySelectorAll('.relative.group');
+    expect(jobs.length).toBe(resumeData.experience.length);
+
+    jobs.forEach((job, idx) => {
+      expect(job).toHaveClass('reveal-on-scroll');
+      expect(job).toHaveStyle({ transitionDelay: `${(idx + 1) * 100}ms` });
+
+      const card = job.querySelector('.shadow-card');
+      expect(card).toHaveClass('shadow-card');
+      expect(card).toHaveClass('m-transition');
+      expect(card).toHaveClass('hover:shadow-hover');
+      expect(card).toHaveClass('hover:-translate-y-1');
+    });
+  });
 });

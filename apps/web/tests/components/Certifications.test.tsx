@@ -13,4 +13,20 @@ describe('Certifications Component', () => {
       expect(screen.getByText(cert.validationId, { exact: false })).toBeInTheDocument();
     });
   });
+
+  it('applies staggered reveal-on-scroll and hover floating transition styling to certifications', () => {
+    const { container } = render(<Certifications />);
+
+    const certCards = container.querySelectorAll('.bg-white');
+    expect(certCards.length).toBe(resumeData.certifications.length);
+
+    certCards.forEach((card, idx) => {
+      expect(card).toHaveClass('reveal-on-scroll');
+      expect(card).toHaveClass('shadow-card');
+      expect(card).toHaveClass('m-transition');
+      expect(card).toHaveClass('hover:shadow-hover');
+      expect(card).toHaveClass('hover:-translate-y-1');
+      expect(card).toHaveStyle({ transitionDelay: `${(idx + 1) * 100}ms` });
+    });
+  });
 });

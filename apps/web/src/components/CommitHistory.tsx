@@ -4,7 +4,7 @@ export default function CommitHistory() {
   const { experience } = resumeData;
   return (
     <section aria-labelledby="experience-heading">
-      <div className="flex items-center mb-8">
+      <div className="flex items-center mb-8 reveal-on-scroll">
         <span className="material-icons text-primary mr-2">history</span>
         <h2 id="experience-heading" className="text-2xl font-bold text-slate-900 dark:text-white">Commit History</h2>
       </div>
@@ -12,9 +12,13 @@ export default function CommitHistory() {
         <div className="git-line"></div>
         
         {experience.map((job, index) => (
-          <div key={index} className="relative group">
+          <div 
+            key={index} 
+            className="relative group reveal-on-scroll"
+            style={{ transitionDelay: `${(index + 1) * 100}ms` }}
+          >
             <div className="git-node bg-white dark:bg-background-dark group-hover:bg-primary transition-colors"></div>
-            <div className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 shadow-sm hover:shadow-md hover:border-primary/40 transition-all">
+            <div className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 shadow-card m-transition hover:shadow-hover hover:-translate-y-1 hover:border-primary/40">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white">{job.company}</h3>

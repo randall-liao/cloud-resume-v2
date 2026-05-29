@@ -30,6 +30,40 @@ function App() {
     applyThemePreference(darkMode);
   }, [darkMode]);
 
+  // 🎓 LEARNING NOTE (DOM API & IntersectionObserver):
+  // We use the browser's IntersectionObserver API to detect when elements enter the viewport.
+  // When an element with class "reveal-on-scroll" is 10% visible (threshold: 0.1), we append "is-visible",
+  // which triggers the CSS transition. We clean up the observer on unmount to prevent memory leaks.
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      // Fallback: immediately make everything visible if IntersectionObserver is not supported (e.g. in tests)
+      const elements = document.querySelectorAll('.reveal-on-scroll');
+      elements.forEach((el) => el.classList.add('is-visible'));
+      return;
+    }
+
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px',
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    const elements = document.querySelectorAll('.reveal-on-scroll');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <div className="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 antialiased min-h-screen pb-20 relative font-display">
       <div className="fixed top-20 right-0 -z-10 opacity-20 pointer-events-none overflow-hidden h-96 w-96">

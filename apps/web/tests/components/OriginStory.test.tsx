@@ -10,4 +10,19 @@ describe('OriginStory Component', () => {
     expect(screen.getByRole('heading', { level: 2, name: resumeData.originStory.title })).toBeInTheDocument();
     expect(screen.getByText(resumeData.originStory.content)).toBeInTheDocument();
   });
+
+  it('applies scroll animation and hover floating classes', () => {
+    const { container } = render(<OriginStory />);
+    
+    // Section should have reveal-on-scroll class
+    const section = container.querySelector('section');
+    expect(section).toHaveClass('reveal-on-scroll');
+
+    // Outer card container should have shadow-soft and transit hover classes
+    const card = container.querySelector('.border-l-4');
+    expect(card).toHaveClass('shadow-soft');
+    expect(card).toHaveClass('m-transition');
+    expect(card).toHaveClass('hover:shadow-hover');
+    expect(card).toHaveClass('hover:-translate-y-1');
+  });
 });

@@ -65,4 +65,20 @@ describe('Hero', () => {
     expect(lineSpans?.[0].textContent).toBe('1');
     expect(lineSpans?.[lineSpans.length - 1].textContent).toBe(String(expectedLineCount));
   });
+
+  it('applies animation and delay styling to left and right columns', () => {
+    const { container } = render(<Hero />);
+    const sections = container.querySelectorAll('.animate-fade-in-up');
+    expect(sections.length).toBe(2);
+
+    const leftCol = sections[0];
+    expect(leftCol).toHaveStyle({ animationDelay: '0.1s' });
+
+    const rightCol = sections[1];
+    expect(rightCol).toHaveStyle({ animationDelay: '0.3s' });
+
+    // Verify the status badge has pulse-subtle
+    const pulseDot = container.querySelector('.animate-pulse-subtle');
+    expect(pulseDot).not.toBeNull();
+  });
 });

@@ -4,12 +4,16 @@ export default function Education() {
   const { education } = resumeData;
   return (
     <section aria-labelledby="education-heading">
-      <h2 id="education-heading" className="text-3xl font-bold mb-8 text-slate-800 dark:text-gray-100 flex items-center">
+      <h2 id="education-heading" className="text-3xl font-bold mb-8 text-slate-800 dark:text-gray-100 flex items-center reveal-on-scroll">
         <span className="material-icons mr-3 text-[#10B981]">school</span> Education
       </h2>
       <div className="space-y-6">
         {education.map((edu, idx) => (
-          <div key={idx} className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 relative overflow-hidden transition-all hover:shadow-md">
+          <div 
+            key={idx} 
+            className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 relative overflow-hidden shadow-card m-transition hover:shadow-hover hover:-translate-y-1 reveal-on-scroll"
+            style={{ transitionDelay: `${(idx + 1) * 100}ms` }}
+          >
             <div 
               className="absolute top-0 right-0 w-24 h-24 opacity-10 rounded-bl-full pointer-events-none"
               style={{ background: `linear-gradient(to bottom right, ${edu.color}, transparent)` }}
