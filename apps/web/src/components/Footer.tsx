@@ -2,27 +2,62 @@ import { useState, useEffect } from 'react';
 import { resumeData } from '@cloud-resume-v2/contracts';
 import { FEATURES } from '../config/features';
 
-
 export default function Footer() {
   const [isVisible, setIsVisible] = useState(true);
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
   const { footer } = resumeData;
 
   useEffect(() => {
+    if (!FEATURES.enableVisitorCounter) return;
+
+    const apiUri = import.meta.env.VITE_VISITOR_API_URL;
+    if (!apiUri) return;
+
+    setLoading(true);
+    fetch(apiUri)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch count');
+        return res.json();
+      })
+      .then((data) => {
+        if (typeof data.count === 'number') {
+          setVisitorCount(data.count);
+        } else if (typeof data.visitors === 'number') {
+          setVisitorCount(data.visitors);
+        }
+      })
+      .catch((err) => console.error('Error fetching visitor count:', err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    let scrollTimeout: number | null = null;
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const innerHeight = window.innerHeight;
-      const scrollHeight = document.documentElement.scrollHeight;
+      if (scrollTimeout !== null) {
+        cancelAnimationFrame(scrollTimeout);
+      }
+      scrollTimeout = requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const innerHeight = window.innerHeight;
+        const scrollHeight = document.documentElement.scrollHeight;
 
-      const isAtBottom = Math.ceil(scrollY + innerHeight) >= scrollHeight - 10;
-      const isAtTop = scrollY <= 10;
+        const isAtBottom = Math.ceil(scrollY + innerHeight) >= scrollHeight - 10;
+        const isAtTop = scrollY <= 10;
 
-      setIsVisible(isAtTop || isAtBottom);
+        setIsVisible(isAtTop || isAtBottom);
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout !== null) {
+        cancelAnimationFrame(scrollTimeout);
+      }
+    };
   }, []);
 
   return (
@@ -41,7 +76,12 @@ export default function Footer() {
           {FEATURES.enableVisitorCounter && (
             <div className="flex items-center group cursor-pointer relative hover:bg-slate-50 dark:hover:bg-white/5 px-2 py-1 rounded transition-colors">
               <span className="material-icons text-[14px] mr-1 text-orange-500 dark:text-orange-400">visibility</span>
-              <span className="text-slate-600 dark:text-slate-400">Visitors: <span className="text-slate-900 dark:text-white font-bold">843</span></span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Visitors:{' '}
+                <span className="text-slate-900 dark:text-white font-bold">
+                  {loading ? '...' : (visitorCount !== null ? visitorCount : 'N/A')}
+                </span>
+              </span>
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 bg-slate-800 dark:bg-black text-white text-center rounded py-1 px-2 text-[10px] hidden group-hover:block opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
                 DynamoDB Live Count
               </div>
@@ -51,7 +91,7 @@ export default function Footer() {
         </div>
         <div className="flex items-center">
           <div className="hidden sm:block text-slate-400">
-            Built with <i className="fab fa-react mx-1 text-blue-500"></i> &amp; Tailwind
+            Built with <i className="fab fa-react mx-1 text-blue-500" aria-hidden="true"></i> &amp; Tailwind
           </div>
         </div>
       </div>

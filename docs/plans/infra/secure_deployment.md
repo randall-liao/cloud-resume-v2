@@ -13,15 +13,21 @@ The infrastructure will be defined using OpenTofu files inside the `infra/` dire
 
 ### S3 Storage (Private)
 * **Configuration**: Private bucket with all public access blocked.
-* **Encryption**: Enable Server-Side Encryption with KMS keys (SSE-KMS) or S3-managed keys (SSE-S3).
-* **Versioning**: Enable bucket versioning for disaster recovery.
-* **Bucket Policy**: Restrict access to the S3 bucket exclusively to CloudFront using an Origin Access Control (OAC) policy.
+* **Encryption**: Enable Server-Side Encryption with S3-managed keys (SSE-S3) or KMS keys.
+* **Versioning**: Enable bucket versioning for disaster recovery and rollback capability.
+* **Bucket Policy**: Restrict access exclusively to the CloudFront distribution using Origin Access Control (OAC).
 
-### CloudFront CDN (Delivery)
-* **Origin**: Direct requests to the S3 bucket through OAC.
-* **Protocol Policy**: Force redirection from HTTP to HTTPS.
+### CloudFront CDN (Delivery & Technical SEO)
+* **Origin**: Point directly to the private S3 bucket using OAC.
+* **Compression**: Enable **"Compress Objects Automatically"** to serve assets with Brotli/Gzip encoding (improving LCP/FID metrics).
+* **Protocol support**: Enforce **HTTP/2 and HTTP/3** to enable connection multiplexing and minimize latency.
+* **Protocol Policy**: Force redirection from HTTP to HTTPS (mandatory SEO ranking signal).
 * **Default Root Object**: Set to `index.html`.
-* **Security Headers**: Inject security headers (HSTS, X-Frame-Options, X-Content-Type-Options, CSP).
+* **Edge Functions (Clean URLs)**: Deploy a lightweight **CloudFront Function** on viewer requests to rewrite sub-paths (e.g. `/projects` or `/education`) to `/index.html` internally. This prevents S3 from returning a SEO-damaging `404` status code and returns a clean `200 OK` index response instead.
+* **Security Headers**: Inject security response headers (HSTS, X-Frame-Options, X-Content-Type-Options, CSP, and Referrer-Policy) at the edge.
+* **Cache Control Optimization**: 
+  * Hashed Assets (`/assets/*.js`, `/assets/*.css`, `/assets/*.svg`): Cache aggressively with `Cache-Control: max-age=31536000, immutable`.
+  * Index/Metadata (`index.html`, `sitemap.xml`, `robots.txt`): Set `Cache-Control: max-age=0, must-revalidate` to avoid stale index versions.
 
 ### ACM & Route 53 (DNS/SSL)
 * **SSL Certificate**: Request a free public certificate via ACM for the custom domain.

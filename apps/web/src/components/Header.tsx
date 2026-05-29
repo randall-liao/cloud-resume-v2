@@ -18,11 +18,22 @@ export default function Header({ darkMode, setDarkMode }: HeaderProps) {
           <span className="text-primary font-mono font-bold text-xl">&lt;{header.name} <span>/</span>&gt;</span>
         </div>
         <div className="flex items-center space-x-4">
-          {header.socialLinks.map((link, idx) => (
-            <a key={idx} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-primary/20 transition-colors text-slate-600 dark:text-slate-300" href={link.url}>
-              <i className={`${link.icon} text-xl`}></i>
-            </a>
-          ))}
+          {header.socialLinks.map((link, idx) => {
+            const platform = link.icon.split('fa-')[1] || 'Social Profile';
+            const label = `Visit my ${platform.charAt(0).toUpperCase() + platform.slice(1)}`;
+            return (
+              <a 
+                key={idx} 
+                className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-primary/20 transition-colors text-slate-600 dark:text-slate-300" 
+                href={link.url}
+                aria-label={label}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className={`${link.icon} text-xl`} aria-hidden="true"></i>
+              </a>
+            );
+          })}
           <button 
             aria-label="Toggle theme" 
             onClick={() => setDarkMode(!darkMode)}

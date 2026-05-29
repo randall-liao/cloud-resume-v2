@@ -1,9 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { resumeData } from '@cloud-resume-v2/contracts';
 import { FEATURES } from '../../src/config/features';
 import Footer from '../../src/components/Footer';
-
 
 describe('Footer', () => {
   const scrollY = 0;
@@ -26,6 +25,23 @@ describe('Footer', () => {
       writable: true,
       value: scrollHeight,
     });
+
+    // Mock requestAnimationFrame to execute synchronously in tests
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+      cb(0);
+      return 0;
+    });
+
+    // Set environment variable for testing
+    import.meta.env.VITE_VISITOR_API_URL = 'https://example.com/api/count';
+
+    // Mock global fetch for visitor counter
+    globalThis.fetch = vi.fn().mockImplementation(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ count: 843 }),
+      } as Response)
+    );
   });
 
   afterEach(() => {
@@ -47,13 +63,15 @@ describe('Footer', () => {
     expect(screen.queryByText('DynamoDB Live Count')).not.toBeInTheDocument();
   });
 
-  it('renders visitor counter when the feature flag is enabled', () => {
+  it('renders visitor counter when the feature flag is enabled', async () => {
     FEATURES.enableVisitorCounter = true;
     render(<Footer />);
 
-    // Check that visitor counter IS rendered
+    // Check that visitor counter IS rendered and displays fetched count
     expect(screen.getByText('Visitors:')).toBeInTheDocument();
-    expect(screen.getByText('843')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('843')).toBeInTheDocument();
+    });
     expect(screen.getByText('DynamoDB Live Count')).toBeInTheDocument();
   });
 

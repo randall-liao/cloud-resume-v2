@@ -21,6 +21,11 @@ describe('Interests Component', () => {
     });
   });
 
+  it('renders the interests section heading correctly', () => {
+    render(<Interests />);
+    expect(screen.getByRole('heading', { level: 2, name: /Interests/i })).toBeInTheDocument();
+  });
+
   it('applies staggered reveal-on-scroll and card hover transitions to interests', () => {
     const { container } = render(<Interests />);
 
