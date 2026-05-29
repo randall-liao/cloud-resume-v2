@@ -61,9 +61,61 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <!-- Mobile App Settings -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- SEO Fallback Content for Crawlers & Non-JS clients -->
+      <noscript>
+        <main style="max-width: 800px; margin: 0 auto; padding: 20px; font-family: sans-serif;">
+          <header>
+            <h1>Randall Liao</h1>
+            <p>Systems Developer & Software Engineer | Toronto, ON</p>
+            <nav>
+              <a href="https://github.com/randall-liao">GitHub</a> | 
+              <a href="https://www.linkedin.com/in/randall-y-liao">LinkedIn</a>
+            </nav>
+          </header>
+          
+          <hr />
+          
+          <section>
+            <h2>Professional Summary</h2>
+            <p>Software Engineer specializing in building robust, multi-tenant cloud backends and deploying the secure developer infrastructure needed to safely scale autonomous AI workflows.</p>
+          </section>
+
+          <section>
+            <h2>Experience</h2>
+            <article>
+              <h3>Systems Developer - Municipal Property Assessment Corporation (MPAC)</h3>
+              <p>Jun 2025 – Present</p>
+              <p>Engineered secure Python and FastAPI multi-tenant SaaS backends integrated with AI-native core workflows.</p>
+            </article>
+            <article>
+              <h3>Software Development Engineer - Shenzhen Rural Commercial Bank</h3>
+              <p>Jul 2020 - Aug 2023</p>
+              <p>Refactored banking monoliths into containerized Java Spring Boot microservices, optimizing distributed backend performance.</p>
+            </article>
+          </section>
+
+          <section>
+            <h2>Education</h2>
+            <ul>
+              <li>Master of Engineering in Electrical and Computer Engineering - University of Toronto (Jan 2025)</li>
+              <li>Bachelor of Science in Management Information System - Rutgers University (May 2020)</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Certifications</h2>
+            <p>AWS Certified Solutions Architect (Validation ID: cf3fc6ea-c18c-4bcb-95f4-a58d0cc770de)</p>
+          </section>
+        </main>
+      </noscript>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
