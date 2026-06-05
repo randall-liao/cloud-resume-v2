@@ -149,3 +149,6 @@ crash.log
 
 stitch_downloads/
 .agents/
+
+# Local-only scratch folder
+/temp/
