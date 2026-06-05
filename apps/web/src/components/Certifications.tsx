@@ -11,7 +11,7 @@ export default function Certifications() {
       <div className="space-y-6">
         {certifications.map((cert, idx) => (
           <div 
-            key={idx} 
+            key={cert.validationId} 
             className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-1 relative isolate overflow-hidden group shadow-card m-transition hover:shadow-hover hover:-translate-y-1 reveal-on-scroll"
             style={{ transitionDelay: `${(idx + 1) * 100}ms` }}
           >

@@ -11,7 +11,7 @@ export default function Interests() {
       <div className="space-y-6">
         {interests.map((interest, idx) => (
           <div 
-            key={idx} 
+            key={interest.title} 
             className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 relative isolate overflow-hidden shadow-card m-transition hover:shadow-hover hover:-translate-y-1 group reveal-on-scroll"
             style={{ transitionDelay: `${(idx + 1 + certifications.length) * 100}ms` }}
           >
@@ -41,7 +41,7 @@ export default function Interests() {
             </p>
             <div className="bg-black/5 dark:bg-black/20 border border-black/5 dark:border-white/5 rounded p-3 font-mono text-xs text-slate-500 dark:text-slate-400 flex justify-between items-center">
               {interest.metrics.map((metric, i) => (
-                <div key={i} className={`flex flex-col ${i > 0 ? 'text-right' : ''}`}>
+                <div key={`${metric.label}-${metric.value}`} className={`flex flex-col ${i > 0 ? 'text-right' : ''}`}>
                    <span className="uppercase text-[10px] text-slate-400 mb-1">{metric.label}</span>
                    <span className="text-slate-900 dark:text-white font-bold text-base">{metric.value}</span>
                 </div>

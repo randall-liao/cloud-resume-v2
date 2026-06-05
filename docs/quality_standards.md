@@ -10,6 +10,11 @@ This file describes what good code looks like in `cloud-resume-v2`. For the mech
 - Keep state local with standard React hooks.
 - Keep `useEffect` dependency arrays complete.
 - Do not introduce `dangerouslySetInnerHTML`.
+- When writing or refactoring React/TSX (source and tests), follow the
+  **`vercel-react-best-practices`** agent skill for performance patterns (hoisting static
+  JSX/data, functional `setState`, splitting unrelated hooks, deriving state during render,
+  passive listeners, stable list keys). See [apps/AGENTS.md](../apps/AGENTS.md) for the
+  Vite-SPA-specific scope of that skill.
 
 ## 2. Component Structure
 

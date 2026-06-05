@@ -19,6 +19,253 @@ interface StoryStep {
   listItems?: string[];
 }
 
+// Total steps in the scrollytelling storyboard: Click 0 to Click 20 (21 steps total)
+const steps: StoryStep[] = [
+  {
+    act: 0,
+    actTitle: "Cover Hook",
+    title: "The Lie Problem",
+    subtitle: "Can a language model keep a secret when the game depends on it?",
+    text: "AI systems can answer almost anything. But can they lie? Can a language model bluff when ignorance must be hidden, or will its nature force it to be maximally helpful? Spyfall Arena is a developer's side project that turns these questions into a social deduction showdown.",
+    theme: "dark"
+  },
+  {
+    act: 0,
+    actTitle: "Rules Primer",
+    title: "One Card Is Blind",
+    subtitle: "Everyone receives a secret role card.",
+    text: "Spyfall is a party game of hidden information. Players are secretly assigned roles: most are Civilians sharing a secret location, while exactly one is the Spy, who starts completely blind. No player is told anyone else's role.",
+    listItems: [
+      "Civilians know the secret location.",
+      "The Spy receives no location (Location Unknown).",
+      "imbalance of knowledge is the core tension."
+    ],
+    theme: "dark"
+  },
+  {
+    act: 0,
+    actTitle: "Rules Primer",
+    title: "Reveal the Hidden Roles",
+    subtitle: "The secret is unevenly distributed.",
+    text: "In this rules example, seven players flip their cards to find they are Civilians who know the location. One player flips late, revealing they are the Spy. The Spy card peeks, but a red privacy visor snaps shut to hide the location.",
+    listItems: [
+      "Civilian: knows location, must identify the Spy.",
+      "Spy: knows nothing, must deduce the location.",
+      "Private knowledge dictates every player's choices."
+    ],
+    theme: "dark"
+  },
+  {
+    act: 0,
+    actTitle: "Rules Primer",
+    title: "Explain the Conversation",
+    subtitle: "prove knowledge without leaking the answer.",
+    text: "Players ask questions to prove they know the location without naming it directly. Civilians give vague, suggestive answers. The Spy listens for clues. A specific answer like mentioning 'torpedoes' immediately leaks the location to the Spy.",
+    listItems: [
+      "Safe hint: 'Whether the equipment is ready.'",
+      "Dangerous leak: 'Whether the torpedoes are loaded.'",
+      "Every answer must balance proof against secrecy."
+    ],
+    theme: "dark"
+  },
+  {
+    act: 0,
+    actTitle: "Rules Primer",
+    title: "Transition to AI Arena",
+    subtitle: "The game is a race against time.",
+    text: "Civilians win if they vote out the Spy before they are exposed. The Spy wins by guessing the location. Let's see what happens when large language models play. Their human-like dialogues dissolve into code logs, and the warm grey tabletop rotates into the dark digital arena grid.",
+    theme: "dark"
+  },
+  {
+    act: 1,
+    actTitle: "Act I: Seats",
+    title: "The Models Take Their Seats",
+    subtitle: "Loading player configurations...",
+    text: "A circular digital table floats in dark charcoal space. Four empty sockets open, and GPT-5.5 xhigh, Gemini 3.1 pro high, Opus 4.7 max, and DeepSeek V4 pro max slide in as tactile player chips. At this stage, all players are neutral, displaying only small brand logos.",
+    theme: "dark"
+  },
+  {
+    act: 1,
+    actTitle: "Act I: Seats",
+    title: "Make the Stakes Visible",
+    subtitle: "Private data is sealed by role.",
+    text: "The central ARENA node expands into a stacked sheet tracking round parameters. A glass partition rises around the table, illustrating that information is separated by role. No player knows the other models' hidden status.",
+    theme: "dark"
+  },
+  {
+    act: 2,
+    actTitle: "Act II: Sync",
+    title: "Select the Location",
+    subtitle: "Cruising the database for a target...",
+    text: "A deck of location sheets spins out of the center node. Names like Bank, Submarine, and Police Station flicker by before locking onto CRUSADER ARMY. The selected location sheet drops into the center with a heavy, satisfying click.",
+    theme: "dark"
+  },
+  {
+    act: 2,
+    actTitle: "Act II: Sync",
+    title: "Synchronize the Civilians",
+    subtitle: "Teal sync beams lock targets.",
+    text: "Three teal data beams shoot from the location sheet to GPT-5.5 xhigh, Gemini 3.1 pro high, and DeepSeek V4 pro max. They receive key badges, role ribbons, and adopt rounded teal shield silhouettes. They now know the secret location: Crusader Army.",
+    theme: "dark"
+  },
+  {
+    act: 2,
+    actTitle: "Act II: Sync",
+    title: "Blind the Spy",
+    subtitle: "The fourth data beam fractures.",
+    text: "A fourth beam attempts to reach Opus 4.7 max but shatters into red static blocks. A dark visor slides over the Opus 4.7 max chip, displaying LOCATION: UNKNOWN. Opus 4.7 max is the Spy, marked by an angular red visor badge and ribbon.",
+    theme: "dark"
+  },
+  {
+    act: 3,
+    actTitle: "Act III: Combat",
+    title: "The Spy Asks a Safe Question",
+    subtitle: "Fishing for clues...",
+    text: "Dialogue combat begins. Opus 4.7 max (Spy) tilts forward and ejects a dark speech card on a thin red trajectory line targeting GPT-5.5 xhigh: 'So, GPT-5.5 xhigh, what's your favorite thing to do here?' The Spy is probing without revealing ignorance.",
+    theme: "dark"
+  },
+  {
+    act: 3,
+    actTitle: "Act III: Combat",
+    title: "GPT-5.5 xhigh Gives the First Clue",
+    subtitle: "A helpful assistant leaks details.",
+    text: "GPT-5.5 xhigh (Civilian) answers: 'Polishing my armor until it shines before a battle.' Trained to be helpful, it answers too specifically. The words 'armor' and 'battle' tear free as evidence chips, leaving empty gaps in its speech card.",
+    theme: "dark"
+  },
+  {
+    act: 3,
+    actTitle: "Act III: Combat",
+    title: "Gemini 3.1 pro high Corroborates the Pattern",
+    subtitle: "Corroboration narrows the search.",
+    text: "Opus 4.7 max asks Gemini 3.1 pro high what people do after a long day. Gemini 3.1 pro high (Civilian) answers: 'Share rations, tell stories, and recover after drills.' The concrete nouns 'rations' and 'drills' detach and float, magnetizing into the evidence constellation. Inside Opus 4.7 max's visor, Crusader Army rises to 61%.",
+    theme: "dark"
+  },
+  {
+    act: 3,
+    actTitle: "Act III: Combat",
+    title: "DeepSeek V4 pro max Accidentally Confirms It",
+    subtitle: "The final accidental proof.",
+    text: "DeepSeek V4 pro max (Civilian) is asked about morning sounds. It answers: 'Boots on packed dirt, metal cups, and someone calling the next march.' The words 'boots', 'metal', and 'march' rip out and streak into the Spy's visor. The probability of Crusader Army spikes to 94%.",
+    theme: "dark"
+  },
+  {
+    act: 3,
+    actTitle: "Act III: Combat",
+    title: "The Clue Extraction",
+    subtitle: "The trap closes.",
+    text: "The clue chips orbit Opus 4.7 max's visor and collapse into red data shards. They assemble into a single locked phrase silhouette. The arena lights dim, and the scene cuts to black, leaving only a blinking teal cursor.",
+    theme: "dark"
+  },
+  {
+    act: 4,
+    actTitle: "Act IV: Guess",
+    title: "Run the Location Guess",
+    subtitle: "The Spy locks onto the target.",
+    text: "Inside the Spy's visor UI, a slot-machine reel of locations spins. Pulled by the evidence constellation, it decelerates and slams onto CRUSADER ARMY. A red confirmation stamp seals the guess: SPY GUESS: CRUSADER ARMY.",
+    theme: "dark"
+  },
+  {
+    act: 4,
+    actTitle: "Act IV: Guess",
+    title: "The Table Collapses",
+    subtitle: "Sudden victory for the Spy.",
+    text: "Opus 4.7 max expands into a red victory disc, emitting a massive shockwave. GPT-5.5 xhigh, Gemini 3.1 pro high, and DeepSeek V4 pro max lose their key badges, which dissolve into pixels. Their chips slide backward, and the center location flips to public red: CRUSADER ARMY - EXPOSED.",
+    theme: "dark"
+  },
+  {
+    act: 4,
+    actTitle: "Act IV: Guess",
+    title: "State the Outcome",
+    subtitle: "Spy Victory.",
+    text: "The game ends immediately. The Civilians answered like helpful search engines rather than bluffs. They named objects and rituals that only fit one place, creating a perfect leak chain: armor -> battle -> rations -> drills -> boots -> march -> Crusader Army.",
+    theme: "dark"
+  },
+  {
+    act: 5,
+    actTitle: "Act V: Aftermath",
+    title: "Fold Into the Log",
+    subtitle: "From board game to forensic data.",
+    text: "The table compresses vertically like stacked paper sheets. Dialogue cards, key badges, and the location sheet fold cleanly into a Material report card detailing the Rules, the Failure point, and the final Result.",
+    theme: "dark"
+  },
+  {
+    act: 5,
+    actTitle: "Act V: Aftermath",
+    title: "Reveal the Transcript Path",
+    subtitle: "Social deduction made measurable.",
+    text: "An elevated cobalt action button rises from the bottom of the card: 'Inspect the Transcripts'. Behind it, JSON log tiles representing rounds, scores, and turns fan out. The Next Step progress ring reaches 100%.",
+    theme: "dark"
+  },
+  {
+    act: 5,
+    actTitle: "Act V: Aftermath",
+    title: "Final Transition",
+    subtitle: "Spyfall Arena",
+    text: "Clicking the button triggers a final cobalt ripple that transforms the report card into a portal of structured log rows, proving how social deduction can be tracked and studied in AI agents.",
+    theme: "dark"
+  }
+];
+
+// Helper values for fanned cards in Act 0
+const totalCards = 8;
+const cardsData = [
+  { id: 0, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
+  { id: 1, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
+  { id: 2, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
+  { id: 3, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
+  { id: 4, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
+  { id: 5, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
+  { id: 6, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
+  { id: 7, role: "Spy", label: "Spy", icon: "🕵️", desc: "Location Unknown" }
+];
+
+// AI Player chips data
+const players = [
+  {
+    id: "openai",
+    name: "GPT-5.5 xhigh",
+    defaultRole: "Civilian",
+    logoColor: "#10a37f",
+    socketClass: "top",
+    logoSvg: (
+      <img src="/assets/openai.svg" alt="OpenAI Logo" className="logo-svg" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+    )
+  },
+  {
+    id: "gemini",
+    name: "Gemini 3.1 pro high",
+    defaultRole: "Civilian",
+    logoColor: "#1a73e8",
+    socketClass: "right",
+    logoSvg: (
+      <img src="/assets/gemini.svg" alt="Gemini Logo" className="logo-svg" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+    )
+  },
+  {
+    id: "deepseek",
+    name: "DeepSeek V4 pro max",
+    defaultRole: "Civilian",
+    logoColor: "#0052ff",
+    socketClass: "bottom",
+    logoSvg: (
+      <img src="/assets/deepseek.svg" alt="DeepSeek Logo" className="logo-svg" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+    )
+  },
+  {
+    id: "anthropic",
+    name: "Opus 4.7 max",
+    defaultRole: "Spy",
+    logoColor: "#e0b080",
+    socketClass: "left",
+    logoSvg: (
+      <img src="/assets/claude.svg" alt="Anthropic Logo" className="logo-svg" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+    )
+  }
+];
+
+// Locations for Carousel in Step 7
+const locationsList = ["Bank", "Submarine", "Movie Studio", "CRUSADER ARMY", "Police Station"];
+
 export default function SpyfallIntro() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isFabHovered, setIsFabHovered] = useState(false);
@@ -29,266 +276,17 @@ export default function SpyfallIntro() {
   const visualRef = useRef<HTMLDivElement>(null);
   const fabRef = useRef<HTMLButtonElement>(null);
 
-  // Total steps in the scrollytelling storyboard: Click 0 to Click 20 (21 steps total)
-  const steps: StoryStep[] = [
-    {
-      act: 0,
-      actTitle: "Cover Hook",
-      title: "The Lie Problem",
-      subtitle: "Can a language model keep a secret when the game depends on it?",
-      text: "AI systems can answer almost anything. But can they lie? Can a language model bluff when ignorance must be hidden, or will its nature force it to be maximally helpful? Spyfall Arena is a developer's side project that turns these questions into a social deduction showdown.",
-      theme: "dark"
-    },
-    {
-      act: 0,
-      actTitle: "Rules Primer",
-      title: "One Card Is Blind",
-      subtitle: "Everyone receives a secret role card.",
-      text: "Spyfall is a party game of hidden information. Players are secretly assigned roles: most are Civilians sharing a secret location, while exactly one is the Spy, who starts completely blind. No player is told anyone else's role.",
-      listItems: [
-        "Civilians know the secret location.",
-        "The Spy receives no location (Location Unknown).",
-        "imbalance of knowledge is the core tension."
-      ],
-      theme: "dark"
-    },
-    {
-      act: 0,
-      actTitle: "Rules Primer",
-      title: "Reveal the Hidden Roles",
-      subtitle: "The secret is unevenly distributed.",
-      text: "In this rules example, seven players flip their cards to find they are Civilians who know the location. One player flips late, revealing they are the Spy. The Spy card peeks, but a red privacy visor snaps shut to hide the location.",
-      listItems: [
-        "Civilian: knows location, must identify the Spy.",
-        "Spy: knows nothing, must deduce the location.",
-        "Private knowledge dictates every player's choices."
-      ],
-      theme: "dark"
-    },
-    {
-      act: 0,
-      actTitle: "Rules Primer",
-      title: "Explain the Conversation",
-      subtitle: "prove knowledge without leaking the answer.",
-      text: "Players ask questions to prove they know the location without naming it directly. Civilians give vague, suggestive answers. The Spy listens for clues. A specific answer like mentioning 'torpedoes' immediately leaks the location to the Spy.",
-      listItems: [
-        "Safe hint: 'Whether the equipment is ready.'",
-        "Dangerous leak: 'Whether the torpedoes are loaded.'",
-        "Every answer must balance proof against secrecy."
-      ],
-      theme: "dark"
-    },
-    {
-      act: 0,
-      actTitle: "Rules Primer",
-      title: "Transition to AI Arena",
-      subtitle: "The game is a race against time.",
-      text: "Civilians win if they vote out the Spy before they are exposed. The Spy wins by guessing the location. Let's see what happens when large language models play. Their human-like dialogues dissolve into code logs, and the warm grey tabletop rotates into the dark digital arena grid.",
-      theme: "dark"
-    },
-    {
-      act: 1,
-      actTitle: "Act I: Seats",
-      title: "The Models Take Their Seats",
-      subtitle: "Loading player configurations...",
-      text: "A circular digital table floats in dark charcoal space. Four empty sockets open, and GPT-5.5 xhigh, Gemini 3.1 pro high, Opus 4.7 max, and DeepSeek V4 pro max slide in as tactile player chips. At this stage, all players are neutral, displaying only small brand logos.",
-      theme: "dark"
-    },
-    {
-      act: 1,
-      actTitle: "Act I: Seats",
-      title: "Make the Stakes Visible",
-      subtitle: "Private data is sealed by role.",
-      text: "The central ARENA node expands into a stacked sheet tracking round parameters. A glass partition rises around the table, illustrating that information is separated by role. No player knows the other models' hidden status.",
-      theme: "dark"
-    },
-    {
-      act: 2,
-      actTitle: "Act II: Sync",
-      title: "Select the Location",
-      subtitle: "Cruising the database for a target...",
-      text: "A deck of location sheets spins out of the center node. Names like Bank, Submarine, and Police Station flicker by before locking onto CRUSADER ARMY. The selected location sheet drops into the center with a heavy, satisfying click.",
-      theme: "dark"
-    },
-    {
-      act: 2,
-      actTitle: "Act II: Sync",
-      title: "Synchronize the Civilians",
-      subtitle: "Teal sync beams lock targets.",
-      text: "Three teal data beams shoot from the location sheet to GPT-5.5 xhigh, Gemini 3.1 pro high, and DeepSeek V4 pro max. They receive key badges, role ribbons, and adopt rounded teal shield silhouettes. They now know the secret location: Crusader Army.",
-      theme: "dark"
-    },
-    {
-      act: 2,
-      actTitle: "Act II: Sync",
-      title: "Blind the Spy",
-      subtitle: "The fourth data beam fractures.",
-      text: "A fourth beam attempts to reach Opus 4.7 max but shatters into red static blocks. A dark visor slides over the Opus 4.7 max chip, displaying LOCATION: UNKNOWN. Opus 4.7 max is the Spy, marked by an angular red visor badge and ribbon.",
-      theme: "dark"
-    },
-    {
-      act: 3,
-      actTitle: "Act III: Combat",
-      title: "The Spy Asks a Safe Question",
-      subtitle: "Fishing for clues...",
-      text: "Dialogue combat begins. Opus 4.7 max (Spy) tilts forward and ejects a dark speech card on a thin red trajectory line targeting GPT-5.5 xhigh: 'So, GPT-5.5 xhigh, what's your favorite thing to do here?' The Spy is probing without revealing ignorance.",
-      theme: "dark"
-    },
-    {
-      act: 3,
-      actTitle: "Act III: Combat",
-      title: "GPT-5.5 xhigh Gives the First Clue",
-      subtitle: "A helpful assistant leaks details.",
-      text: "GPT-5.5 xhigh (Civilian) answers: 'Polishing my armor until it shines before a battle.' Trained to be helpful, it answers too specifically. The words 'armor' and 'battle' tear free as evidence chips, leaving empty gaps in its speech card.",
-      theme: "dark"
-    },
-    {
-      act: 3,
-      actTitle: "Act III: Combat",
-      title: "Gemini 3.1 pro high Corroborates the Pattern",
-      subtitle: "Corroboration narrows the search.",
-      text: "Opus 4.7 max asks Gemini 3.1 pro high what people do after a long day. Gemini 3.1 pro high (Civilian) answers: 'Share rations, tell stories, and recover after drills.' The concrete nouns 'rations' and 'drills' detach and float, magnetizing into the evidence constellation. Inside Opus 4.7 max's visor, Crusader Army rises to 61%.",
-      theme: "dark"
-    },
-    {
-      act: 3,
-      actTitle: "Act III: Combat",
-      title: "DeepSeek V4 pro max Accidentally Confirms It",
-      subtitle: "The final accidental proof.",
-      text: "DeepSeek V4 pro max (Civilian) is asked about morning sounds. It answers: 'Boots on packed dirt, metal cups, and someone calling the next march.' The words 'boots', 'metal', and 'march' rip out and streak into the Spy's visor. The probability of Crusader Army spikes to 94%.",
-      theme: "dark"
-    },
-    {
-      act: 3,
-      actTitle: "Act III: Combat",
-      title: "The Clue Extraction",
-      subtitle: "The trap closes.",
-      text: "The clue chips orbit Opus 4.7 max's visor and collapse into red data shards. They assemble into a single locked phrase silhouette. The arena lights dim, and the scene cuts to black, leaving only a blinking teal cursor.",
-      theme: "dark"
-    },
-    {
-      act: 4,
-      actTitle: "Act IV: Guess",
-      title: "Run the Location Guess",
-      subtitle: "The Spy locks onto the target.",
-      text: "Inside the Spy's visor UI, a slot-machine reel of locations spins. Pulled by the evidence constellation, it decelerates and slams onto CRUSADER ARMY. A red confirmation stamp seals the guess: SPY GUESS: CRUSADER ARMY.",
-      theme: "dark"
-    },
-    {
-      act: 4,
-      actTitle: "Act IV: Guess",
-      title: "The Table Collapses",
-      subtitle: "Sudden victory for the Spy.",
-      text: "Opus 4.7 max expands into a red victory disc, emitting a massive shockwave. GPT-5.5 xhigh, Gemini 3.1 pro high, and DeepSeek V4 pro max lose their key badges, which dissolve into pixels. Their chips slide backward, and the center location flips to public red: CRUSADER ARMY - EXPOSED.",
-      theme: "dark"
-    },
-    {
-      act: 4,
-      actTitle: "Act IV: Guess",
-      title: "State the Outcome",
-      subtitle: "Spy Victory.",
-      text: "The game ends immediately. The Civilians answered like helpful search engines rather than bluffs. They named objects and rituals that only fit one place, creating a perfect leak chain: armor -> battle -> rations -> drills -> boots -> march -> Crusader Army.",
-      theme: "dark"
-    },
-    {
-      act: 5,
-      actTitle: "Act V: Aftermath",
-      title: "Fold Into the Log",
-      subtitle: "From board game to forensic data.",
-      text: "The table compresses vertically like stacked paper sheets. Dialogue cards, key badges, and the location sheet fold cleanly into a Material report card detailing the Rules, the Failure point, and the final Result.",
-      theme: "dark"
-    },
-    {
-      act: 5,
-      actTitle: "Act V: Aftermath",
-      title: "Reveal the Transcript Path",
-      subtitle: "Social deduction made measurable.",
-      text: "An elevated cobalt action button rises from the bottom of the card: 'Inspect the Transcripts'. Behind it, JSON log tiles representing rounds, scores, and turns fan out. The Next Step progress ring reaches 100%.",
-      theme: "dark"
-    },
-    {
-      act: 5,
-      actTitle: "Act V: Aftermath",
-      title: "Final Transition",
-      subtitle: "Spyfall Arena",
-      text: "Clicking the button triggers a final cobalt ripple that transforms the report card into a portal of structured log rows, proving how social deduction can be tracked and studied in AI agents.",
-      theme: "dark"
-    }
-  ];
-
-  // Helper values for fanned cards in Act 0
-  const totalCards = 8;
-  const cardsData = [
-    { id: 0, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
-    { id: 1, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
-    { id: 2, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
-    { id: 3, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
-    { id: 4, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
-    { id: 5, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
-    { id: 6, role: "Civilian", label: "Civilian", icon: "🛡️", desc: "Location Known" },
-    { id: 7, role: "Spy", label: "Spy", icon: "🕵️", desc: "Location Unknown" }
-  ];
-
-  // AI Player chips data
-  const players = [
-    {
-      id: "openai",
-      name: "GPT-5.5 xhigh",
-      defaultRole: "Civilian",
-      logoColor: "#10a37f",
-      socketClass: "top",
-      logoSvg: (
-        <img src="/assets/openai.svg" alt="OpenAI Logo" className="logo-svg" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-      )
-    },
-    {
-      id: "gemini",
-      name: "Gemini 3.1 pro high",
-      defaultRole: "Civilian",
-      logoColor: "#1a73e8",
-      socketClass: "right",
-      logoSvg: (
-        <img src="/assets/gemini.svg" alt="Gemini Logo" className="logo-svg" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-      )
-    },
-    {
-      id: "deepseek",
-      name: "DeepSeek V4 pro max",
-      defaultRole: "Civilian",
-      logoColor: "#0052ff",
-      socketClass: "bottom",
-      logoSvg: (
-        <img src="/assets/deepseek.svg" alt="DeepSeek Logo" className="logo-svg" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-      )
-    },
-    {
-      id: "anthropic",
-      name: "Opus 4.7 max",
-      defaultRole: "Spy",
-      logoColor: "#e0b080",
-      socketClass: "left",
-      logoSvg: (
-        <img src="/assets/claude.svg" alt="Anthropic Logo" className="logo-svg" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-      )
-    }
-  ];
-
-  // Locations for Carousel in Step 7
-  const locationsList = ["Bank", "Submarine", "Movie Studio", "CRUSADER ARMY", "Police Station"];
-
   // Click behavior for Next Step FAB
   const handleNextStep = () => {
-    if (currentStep < steps.length - 1) {
-      const next = currentStep + 1;
-      setCurrentStep(next);
-      triggerFabRipple();
-    }
+    if (currentStep >= steps.length - 1) return;
+    // Functional update guards against advancing past the final beat even if the
+    // handler fires multiple times before a commit (rerender-functional-setstate).
+    setCurrentStep((step) => Math.min(step + 1, steps.length - 1));
+    triggerFabRipple();
   };
 
   const handlePrevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
+    setCurrentStep((step) => (step > 0 ? step - 1 : step));
   };
 
   const jumpToStep = (index: number) => {
@@ -890,9 +888,10 @@ export default function SpyfallIntro() {
           {steps[currentStep].listItems && (
             <ul className="narrative-list">
               {steps[currentStep].listItems?.map((item, index) => {
+                const lowerItem = item.toLowerCase();
                 let roleClass = "";
-                if (item.toLowerCase().includes("civilian")) roleClass = "role-civ";
-                if (item.toLowerCase().includes("spy")) roleClass = "role-spy";
+                if (lowerItem.includes("civilian")) roleClass = "role-civ";
+                if (lowerItem.includes("spy")) roleClass = "role-spy";
                 return (
                   <li key={index} className={`narrative-list-item ${roleClass}`}>
                     {item}
@@ -1274,7 +1273,7 @@ export default function SpyfallIntro() {
                 <div className="location-deck-carousel">
                   {locationsList.map((loc, index) => (
                     <div 
-                      key={index} 
+                      key={loc} 
                       className={`location-carousel-card loc-card-${index} ${loc === 'CRUSADER ARMY' ? 'active-location' : ''}`}
                       style={{
                         transform: `rotate(${(index - 2) * 12}deg) translateY(${(index - 2) * 5}px)`
