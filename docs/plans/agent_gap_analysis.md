@@ -1,6 +1,6 @@
 # Agent-First Gap Analysis
 
-> Updated: 2026-05-26
+> Updated: 2026-06-04
 > Scope: backlog after Phase 3 workflow hardening
 
 ## Summary
@@ -28,6 +28,7 @@ The remaining gaps are no longer about missing scaffolding. They are about incre
 | 🟡 P2 | [Secure AWS static site infrastructure (IaC)](./infra/secure_deployment.md) | Deploying S3, CloudFront OAC, and ACM securely without manual errors | Define AWS infra in `infra/` using OpenTofu (Terraform) |
 | 🟡 P2 | [OIDC-based automated deployment](./infra/secure_deployment.md) | Avoid storing permanent AWS credentials in GitHub Secrets | Set up GitHub Actions CI/CD with AWS OIDC authentication |
 | 🟡 P2 | Imported skills remain partly generic | Agents can still be misled by repo-external assumptions | Adapt or prune non-repo-fitted imported skills |
+| 🟡 P2 | Narrow test depth on the Spyfall Arena intro page | GSAP is mocked, so animation timelines and scroll behavior are not exercised | Add targeted coverage if the intro logic grows |
 | 🟡 P2 | No bundle-size budget | Static hosting constraints are validated only qualitatively | Add a lightweight size budget check if bundle growth becomes a problem |
 
 ## Agent Tooling Notes

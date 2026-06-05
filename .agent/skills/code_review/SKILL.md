@@ -13,7 +13,7 @@ This skill provides a structured approach and a "Master Prompt" for conducting c
 
 **Context:**
 I am building the frontend for the **Cloud Resume Challenge**.
-- **Stack:** React 18, TypeScript 5, Vite 4, Tailwind CSS v4.
+- **Stack:** React 18, TypeScript 5, Vite 8, Tailwind CSS v4.
 - **Hosting:** AWS S3 (Static Website Hosting) + CloudFront CDN.
 - **Constraints:**
   - 100% Client-Side Rendering (CSR).

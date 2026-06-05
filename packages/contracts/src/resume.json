@@ -174,7 +174,8 @@
       ],
       "uptime": "Turn 4",
       "statusLabel": "Active Session",
-      "statusPercentage": 60
+      "statusPercentage": 60,
+      "introUrl": "/spyfall-arena.html"
     }
   ]
 }

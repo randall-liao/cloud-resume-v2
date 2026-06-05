@@ -53,6 +53,7 @@ export interface SideProject {
   uptime?: string;
   statusLabel?: string;
   statusPercentage?: number;
+  introUrl?: string;
 }
 
 export interface OriginStorySection {
@@ -244,6 +245,7 @@ function parseSideProject(value: unknown, context: string): SideProject {
     uptime: record.uptime !== undefined ? expectString(record.uptime, `${context}.uptime`) : undefined,
     statusLabel: record.statusLabel !== undefined ? expectString(record.statusLabel, `${context}.statusLabel`) : undefined,
     statusPercentage: record.statusPercentage !== undefined ? expectNumber(record.statusPercentage, `${context}.statusPercentage`) : undefined,
+    introUrl: record.introUrl !== undefined ? expectString(record.introUrl, `${context}.introUrl`) : undefined,
   };
 }
 

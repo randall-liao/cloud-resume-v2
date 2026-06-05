@@ -23,15 +23,27 @@ export default function SideProjects() {
                 <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center shadow-sm">
                   <span className="material-icons text-slate-600 dark:text-slate-400 text-2xl">{project.icon}</span>
                 </div>
-                <a 
-                  className="text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" 
-                  href={project.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  aria-label={`View ${project.title} on GitHub`}
-                >
-                  <i className="fab fa-github text-xl" aria-hidden="true"></i>
-                </a>
+                <div className="flex items-center gap-3">
+                  {project.introUrl && (
+                    <a
+                      className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+                      href={project.introUrl}
+                      aria-label={`Launch the ${project.title} animated introduction`}
+                    >
+                      <span className="material-icons text-base" aria-hidden="true">play_circle</span>
+                      Launch intro
+                    </a>
+                  )}
+                  <a 
+                    className="text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" 
+                    href={project.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    aria-label={`View ${project.title} on GitHub`}
+                  >
+                    <i className="fab fa-github text-xl" aria-hidden="true"></i>
+                  </a>
+                </div>
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">{project.title}</h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">

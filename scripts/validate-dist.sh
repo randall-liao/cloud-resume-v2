@@ -87,6 +87,44 @@ else
   echo "✅ PASS: All local asset references in dist/index.html resolve."
 fi
 
+# 8. Validate any additional top-level HTML entry points (multi-page build output,
+#    e.g. dist/spyfall-arena.html). Each extra page must reference at least one JS
+#    asset and every local root-relative asset reference must resolve on disk.
+for PAGE in "$DIST_DIR"/*.html; do
+  [ -e "$PAGE" ] || continue
+  PAGE_NAME=$(basename "$PAGE")
+  if [ "$PAGE_NAME" = "index.html" ]; then
+    continue
+  fi
+
+  PAGE_JS_REF_COUNT=$(grep -c '\.js"' "$PAGE" 2>/dev/null || echo "0")
+  if [ "$PAGE_JS_REF_COUNT" -eq 0 ]; then
+    echo "❌ FAIL: $PAGE_NAME references no JS assets. The page build may be empty or broken."
+    ERRORS=$((ERRORS + 1))
+  else
+    echo "✅ PASS: $PAGE_NAME references $PAGE_JS_REF_COUNT JS asset(s)."
+  fi
+
+  PAGE_MISSING_ASSETS=""
+  while IFS= read -r asset; do
+    CLEAN_ASSET=${asset%%\?*}
+    CLEAN_ASSET=${CLEAN_ASSET%%#*}
+    CLEAN_ASSET=${CLEAN_ASSET#/}
+
+    if [ -n "$CLEAN_ASSET" ] && [ ! -f "$DIST_DIR/$CLEAN_ASSET" ]; then
+      PAGE_MISSING_ASSETS="${PAGE_MISSING_ASSETS}\n$CLEAN_ASSET"
+    fi
+  done < <(grep -oE '(src|href)="/[^"#?]+' "$PAGE" | cut -d'"' -f2 | sort -u)
+
+  if [ -n "$PAGE_MISSING_ASSETS" ]; then
+    echo "❌ FAIL: $PAGE_NAME references missing local asset(s):"
+    printf '%b\n' "$PAGE_MISSING_ASSETS"
+    ERRORS=$((ERRORS + 1))
+  else
+    echo "✅ PASS: All local asset references in $PAGE_NAME resolve."
+  fi
+done
+
 echo ""
 
 # Final result
