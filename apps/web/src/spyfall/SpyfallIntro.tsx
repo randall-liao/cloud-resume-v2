@@ -1565,9 +1565,11 @@ export default function SpyfallIntro() {
             )}
 
             {/* Step 16: Victory Shockwave Burst visual overlay */}
+            {/* Centered on Opus 4.7 (left socket, center at x:65 y:240) so the ring
+                expands from the Spy's chip. For an 80x80 element, top-left = center - 40. */}
             {currentStep === 16 && (
               <div className="shockwave-burst" style={{ 
-                top: "240px", left: "65px", width: "80px", height: "80px"
+                top: "200px", left: "25px", width: "80px", height: "80px"
               }} />
             )}
 
