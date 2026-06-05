@@ -1230,6 +1230,11 @@ export default function SpyfallIntro() {
                         <div className="chip-name-label">{p.name}</div>
                       )}
                     </div>
+
+                    {/* Step 16: Victory shockwave ring. Nested in the Spy's socket
+                        (sibling of the chip) so it stays centered on Opus 4.7's chip
+                        at every breakpoint instead of using hardcoded coordinates. */}
+                    {isSpy && currentStep === 16 && <div className="shockwave-burst" />}
                   </div>
                 );
               })}
@@ -1562,13 +1567,6 @@ export default function SpyfallIntro() {
                   SPY GUESS: CRUSADER ARMY
                 </div>
               </div>
-            )}
-
-            {/* Step 16: Victory Shockwave Burst visual overlay */}
-            {currentStep === 16 && (
-              <div className="shockwave-burst" style={{ 
-                top: "240px", left: "65px", width: "80px", height: "80px"
-              }} />
             )}
 
             {/* Step 17: Forensic leak chain cards */}
