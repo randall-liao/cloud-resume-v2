@@ -1853,7 +1853,6 @@ body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: #0f1015;
   }
   
   /* Uniformly scale the whole visual stage so every absolutely positioned

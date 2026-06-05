@@ -285,6 +285,13 @@ export default function SpyfallIntro() {
     if (!visual) return;
 
     const DESIGN_SIZE = 600;
+    // A few step animations fling clue chips just past the 600px canvas's left
+    // edge (e.g. step 13's "march" chip travels to roughly design-x -82). Fit
+    // the width to a slightly wider "animation envelope" so that overflowing
+    // content never clips on narrow phones, instead of fitting the nominal
+    // canvas exactly. Height stays at the canvas size since nothing overflows
+    // vertically. Desktop (>1024px) keeps scale 1 and is unaffected.
+    const FIT_WIDTH = 740;
     const stacked = window.matchMedia('(max-width: 1024px)');
 
     const updateScale = () => {
@@ -295,7 +302,7 @@ export default function SpyfallIntro() {
       const availWidth = visual.clientWidth - 32;
       const availHeight = visual.clientHeight - 24;
       if (availWidth <= 0 || availHeight <= 0) return;
-      const fitted = Math.min(1, availWidth / DESIGN_SIZE, availHeight / DESIGN_SIZE);
+      const fitted = Math.min(1, availWidth / FIT_WIDTH, availHeight / DESIGN_SIZE);
       visual.style.setProperty('--spyfall-stage-scale', Math.max(0.2, fitted).toFixed(3));
     };
 
