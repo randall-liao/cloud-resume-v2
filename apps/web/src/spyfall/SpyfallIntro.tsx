@@ -375,42 +375,52 @@ export default function SpyfallIntro() {
     // Reset common animations first
     gsap.killTweensOf(".visual-side *");
 
-    // General resets to prevent backward/forward navigation style stuck glitches
-    gsap.set(".speech-bubble-combat", { clearProps: "opacity,scale,transform,filter" });
-    gsap.set(".keyword-inline-chip", { clearProps: "color,borderColor,backgroundColor,boxShadow,x,y,rotation,scale,opacity" });
-    gsap.set(".arena-circle-table", { clearProps: "opacity,scale,transform" });
-    gsap.set(".arena-table-container", { clearProps: "opacity,scale,transform" });
-    gsap.set(".locked-phrase-silhouette-container", { clearProps: "opacity,scale,transform" });
-    gsap.set(".locked-char-block", { clearProps: "backgroundColor,color,borderColor,boxShadow" });
-    gsap.set(".blinking-cursor-container", { clearProps: "opacity" });
-    gsap.set(".player-socket", { clearProps: "x,y,transform" });
-    gsap.set(".player-chip", { clearProps: "scale,borderColor,boxShadow,transform" });
-    gsap.set(".slot-reel-strip", { clearProps: "y,transform" });
-    gsap.set(".red-stamp-confirmation", { clearProps: "scale,opacity,transform" });
-    gsap.set(".shockwave-burst", { clearProps: "scale,opacity,transform" });
-    gsap.set(".victory-forensic-card", { clearProps: "y,opacity,transform" });
-    gsap.set(".action-cta-button, .json-log-fan-card", { clearProps: "opacity,scale,x,y,transform" });
+    // General resets to prevent backward/forward navigation style stuck glitches.
+    // Each step conditionally mounts only its own visuals, so we clear inline styles
+    // only on elements present in the current step. Querying the scope first avoids
+    // GSAP "target not found" warnings for selectors that aren't mounted yet.
+    const resets: Array<[string, string]> = [
+      [".speech-bubble-combat", "opacity,scale,transform,filter"],
+      [".keyword-inline-chip", "color,borderColor,backgroundColor,boxShadow,x,y,rotation,scale,opacity"],
+      [".arena-circle-table", "opacity,scale,transform"],
+      [".arena-table-container", "opacity,scale,transform"],
+      [".locked-phrase-silhouette-container", "opacity,scale,transform"],
+      [".locked-char-block", "backgroundColor,color,borderColor,boxShadow"],
+      [".blinking-cursor-container", "opacity"],
+      [".player-socket", "x,y,transform"],
+      [".player-chip", "scale,borderColor,boxShadow,transform"],
+      [".slot-reel-strip", "y,transform"],
+      [".red-stamp-confirmation", "scale,opacity,transform"],
+      [".shockwave-burst", "scale,opacity,transform"],
+      [".victory-forensic-card", "y,opacity,transform"],
+      [".action-cta-button, .json-log-fan-card", "opacity,scale,x,y,transform"],
+      // Act 0 resets
+      [".rules-board-container", "opacity,scale,transform"],
+      [".cover-sheet, .cover-bubble-decoration", "opacity,scale,x,y,transform"],
+      [".game-box-physical", "opacity,scale,x,y,transform"],
+      [".fanned-card", "opacity,scale,x,y,transform,rotation,rotationY"],
+      [".rules-convo-container", "opacity,scale,x,y,transform"],
+      [".floating-torpedoes-chip", "opacity,scale,x,y,transform,rotation"],
+      [".rule-stamp-badge", "opacity,scale,transform,rotation"],
+      [".rules-ending-panel", "opacity,scale,transform"],
+      // Act I - V resets
+      [".glass-partition", "scale,opacity,transform"],
+      [".central-stakes-sheet", "scale,opacity,transform"],
+      [".location-carousel-card", "y,opacity,scale,transform,backgroundColor,color,borderColor,boxShadow,zIndex"],
+      [".data-sync-beam", "width,opacity"],
+      [".civ-badge, .spy-badge", "scale,opacity,rotation,transform"],
+      [".spy-visor-overlay", "scaleY,opacity,transform"],
+      [".red-path-q1", "scaleX,transform"],
+      [".spy-visor-deduction-overlay", "scale,opacity,transform"],
+      [".error-warning-overlay-card", "y,opacity,transform"],
+    ];
 
-    // Act 0 Resets
-    gsap.set(".rules-board-container", { clearProps: "opacity,scale,transform" });
-    gsap.set(".cover-sheet, .cover-bubble-decoration", { clearProps: "opacity,scale,x,y,transform" });
-    gsap.set(".game-box-physical", { clearProps: "opacity,scale,x,y,transform" });
-    gsap.set(".fanned-card", { clearProps: "opacity,scale,x,y,transform,rotation,rotationY" });
-    gsap.set(".rules-convo-container", { clearProps: "opacity,scale,x,y,transform" });
-    gsap.set(".floating-torpedoes-chip", { clearProps: "opacity,scale,x,y,transform,rotation" });
-    gsap.set(".rule-stamp-badge", { clearProps: "opacity,scale,transform,rotation" });
-    gsap.set(".rules-ending-panel", { clearProps: "opacity,scale,transform" });
-
-    // Act I - V Resets
-    gsap.set(".glass-partition", { clearProps: "scale,opacity,transform" });
-    gsap.set(".central-stakes-sheet", { clearProps: "scale,opacity,transform" });
-    gsap.set(".location-carousel-card", { clearProps: "y,opacity,scale,transform,backgroundColor,color,borderColor,boxShadow,zIndex" });
-    gsap.set(".data-sync-beam", { clearProps: "width,opacity" });
-    gsap.set(".civ-badge, .spy-badge", { clearProps: "scale,opacity,rotation,transform" });
-    gsap.set(".spy-visor-overlay", { clearProps: "scaleY,opacity,transform" });
-    gsap.set(".red-path-q1", { clearProps: "scaleX,transform" });
-    gsap.set(".spy-visor-deduction-overlay", { clearProps: "scale,opacity,transform" });
-    gsap.set(".error-warning-overlay-card", { clearProps: "y,opacity,transform" });
+    resets.forEach(([selector, props]) => {
+      const elements = scope.querySelectorAll(selector);
+      if (elements.length > 0) {
+        gsap.set(elements, { clearProps: props });
+      }
+    });
 
     // Click 0: Cover Slide Animations
     if (currentStep === 0) {
@@ -830,8 +840,12 @@ export default function SpyfallIntro() {
 
     // Click 18: Table folds into report card
     if (currentStep === 18) {
-      // Fade table elements (not the parent container)
-      gsap.to(".arena-circle-table, .victory-forensic-card", { scale: 0.5, opacity: 0, duration: 0.6 });
+      // The arena table and forensic card unmount when leaving step 17, so only fade
+      // them when they are still present to avoid a GSAP null-target warning.
+      const foldTargets = scope.querySelectorAll(".arena-circle-table, .victory-forensic-card");
+      if (foldTargets.length > 0) {
+        gsap.to(foldTargets, { scale: 0.5, opacity: 0, duration: 0.6 });
+      }
       
       // Animate report card slide in
       gsap.fromTo(".report-card-container",
