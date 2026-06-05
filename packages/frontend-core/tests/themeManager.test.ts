@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
-import { themeManager, applyThemePreference } from '../src/themeManager';
+import { ThemeManager, themeManager, applyThemePreference } from '../src/themeManager';
 
 describe('ThemeManager', () => {
   let matchMediaMock: ReturnType<typeof vi.fn>;
@@ -56,6 +56,34 @@ describe('ThemeManager', () => {
       }));
       expect(themeManager.getInitialTheme()).toBe(false);
     });
+
+    it('ignores an unrecognized stored value and falls back to matchMedia', () => {
+      window.localStorage.setItem('theme-preference', 'chartreuse');
+      matchMediaMock.mockImplementation((query) => ({
+        matches: true, // system prefers dark
+        media: query,
+      }));
+
+      expect(themeManager.getInitialTheme()).toBe(true);
+      expect(matchMediaMock).toHaveBeenCalledWith('(prefers-color-scheme: dark)');
+    });
+
+    it('does not consult matchMedia when a valid preference is stored', () => {
+      window.localStorage.setItem('theme-preference', 'light');
+
+      expect(themeManager.getInitialTheme()).toBe(false);
+      expect(matchMediaMock).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('class instantiation', () => {
+    it('works as a standalone instance independent of the shared singleton', () => {
+      const instance = new ThemeManager();
+      instance.saveTheme(true);
+
+      expect(window.localStorage.getItem('theme-preference')).toBe('dark');
+      expect(instance.getInitialTheme()).toBe(true);
+    });
   });
 
   describe('saveTheme', () => {
@@ -81,6 +109,20 @@ describe('ThemeManager', () => {
       document.documentElement.className = 'dark';
       applyThemePreference(false);
       expect(document.documentElement.classList.contains('dark')).toBe(false);
+    });
+
+    it('preserves unrelated classes when toggling the dark class', () => {
+      document.documentElement.className = 'reduced-motion theme-host';
+
+      applyThemePreference(true);
+      expect(document.documentElement.classList.contains('dark')).toBe(true);
+      expect(document.documentElement.classList.contains('reduced-motion')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-host')).toBe(true);
+
+      applyThemePreference(false);
+      expect(document.documentElement.classList.contains('dark')).toBe(false);
+      expect(document.documentElement.classList.contains('reduced-motion')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-host')).toBe(true);
     });
   });
 });

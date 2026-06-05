@@ -98,6 +98,7 @@ export interface InterestEntry {
   description: string;
   metrics: InterestMetric[];
   status: string;
+  url?: string;
 }
 
 export interface FooterSection {
@@ -312,6 +313,7 @@ function parseInterestEntry(value: unknown, context: string): InterestEntry {
     description: expectString(record.description, `${context}.description`),
     metrics: expectObjectArray(record.metrics, `${context}.metrics`, parseInterestMetric),
     status: expectString(record.status, `${context}.status`),
+    url: record.url !== undefined ? expectString(record.url, `${context}.url`) : undefined,
   };
 }
 

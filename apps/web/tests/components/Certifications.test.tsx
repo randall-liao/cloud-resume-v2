@@ -19,6 +19,26 @@ describe('Certifications Component', () => {
     expect(screen.getByRole('heading', { level: 2, name: /Certifications/i })).toBeInTheDocument();
   });
 
+  it('renders a safe external "Verify Badge" link tinted with the certification color', () => {
+    const { container } = render(<Certifications />);
+
+    const cards = container.querySelectorAll('.bg-white');
+
+    resumeData.certifications.forEach((cert, idx) => {
+      const link = screen.getByRole('link', { name: /Verify Badge/i });
+      expect(link).toHaveAttribute('href', cert.url);
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+      expect(link).toHaveStyle({ color: cert.color });
+
+      // The badge icon carries the data-driven color and is hidden from assistive tech.
+      const icon = cards[idx].querySelector('i');
+      expect(icon).not.toBeNull();
+      expect(icon).toHaveStyle({ color: cert.color });
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+    });
+  });
+
   it('applies staggered reveal-on-scroll and hover floating transition styling to certifications', () => {
     const { container } = render(<Certifications />);
 
