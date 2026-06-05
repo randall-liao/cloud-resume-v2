@@ -15,7 +15,7 @@ export default function SideProjects() {
         {sideProjects.map((project, idx) => (
           <div 
             key={project.title} 
-            className="bg-white dark:bg-[#1e1e1e] rounded-2xl border border-slate-200 dark:border-white/5 p-8 shadow-md3 m-transition hover:shadow-hover hover:-translate-y-1 flex flex-col justify-between group reveal-on-scroll"
+            className="relative isolate bg-white dark:bg-[#1e1e1e] rounded-2xl border border-slate-200 dark:border-white/5 p-8 shadow-md3 m-transition hover:shadow-hover hover:-translate-y-1 flex flex-col justify-between group reveal-on-scroll"
             style={{ transitionDelay: `${(idx + 1) * 100}ms` }}
           >
             <div>
@@ -23,7 +23,7 @@ export default function SideProjects() {
                 <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 flex items-center justify-center shadow-sm">
                   <span className="material-icons text-slate-600 dark:text-slate-400 text-2xl">{project.icon}</span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="relative z-30 flex items-center gap-3">
                   {project.introUrl && (
                     <a
                       className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
@@ -69,6 +69,18 @@ export default function SideProjects() {
                   </>
                 )}
             </div>
+
+            <a
+              className="absolute inset-0 z-20 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+              href={project.introUrl ?? project.url}
+              target={project.introUrl ? undefined : '_blank'}
+              rel={project.introUrl ? undefined : 'noopener noreferrer'}
+              aria-label={
+                project.introUrl
+                  ? `Open the ${project.title} introduction`
+                  : `Open ${project.title} on GitHub`
+              }
+            />
           </div>
         ))}
       </div>

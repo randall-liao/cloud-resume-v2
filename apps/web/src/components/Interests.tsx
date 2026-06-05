@@ -12,7 +12,7 @@ export default function Interests() {
         {interests.map((interest, idx) => (
           <div 
             key={idx} 
-            className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 relative overflow-hidden shadow-card m-transition hover:shadow-hover hover:-translate-y-1 group reveal-on-scroll"
+            className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 relative isolate overflow-hidden shadow-card m-transition hover:shadow-hover hover:-translate-y-1 group reveal-on-scroll"
             style={{ transitionDelay: `${(idx + 1 + certifications.length) * 100}ms` }}
           >
             <div className="flex items-start justify-between mb-4">
@@ -27,7 +27,7 @@ export default function Interests() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`View ${interest.title}`}
-                    className="flex items-center justify-center hover:text-red-600 transition-colors"
+                    className="relative z-30 flex items-center justify-center hover:text-red-600 transition-colors"
                   >
                     <span className="material-icons" aria-hidden="true">{interest.icon}</span>
                   </a>
@@ -52,6 +52,16 @@ export default function Interests() {
                   {interest.status}
               </div>
             </div>
+
+            {interest.url && (
+              <a
+                className="absolute inset-0 z-20 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                href={interest.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${interest.title}`}
+              />
+            )}
           </div>
         ))}
       </div>

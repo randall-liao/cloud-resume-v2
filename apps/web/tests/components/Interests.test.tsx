@@ -61,4 +61,18 @@ describe('Interests Component', () => {
     const pulseDot = container.querySelector('.animate-pulse-subtle');
     expect(pulseDot).not.toBeNull();
   });
+
+  it('makes the entire interest card a safe external link when a url is provided', () => {
+    render(<Interests />);
+
+    const interestsWithUrl = resumeData.interests.filter(interest => interest.url);
+    expect(interestsWithUrl.length).toBeGreaterThan(0);
+
+    interestsWithUrl.forEach(interest => {
+      const cardLink = screen.getByRole('link', { name: `Open ${interest.title}` });
+      expect(cardLink).toHaveAttribute('href', interest.url);
+      expect(cardLink).toHaveAttribute('target', '_blank');
+      expect(cardLink).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+  });
 });

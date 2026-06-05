@@ -54,4 +54,17 @@ describe('Certifications Component', () => {
       expect(card).toHaveStyle({ transitionDelay: `${(idx + 1) * 100}ms` });
     });
   });
+
+  it('makes the entire certification card a safe external link to its verification url', () => {
+    render(<Certifications />);
+
+    resumeData.certifications.forEach(cert => {
+      const cardLink = screen.getByRole('link', {
+        name: `Open the ${cert.name} certification`,
+      });
+      expect(cardLink).toHaveAttribute('href', cert.url);
+      expect(cardLink).toHaveAttribute('target', '_blank');
+      expect(cardLink).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+  });
 });
