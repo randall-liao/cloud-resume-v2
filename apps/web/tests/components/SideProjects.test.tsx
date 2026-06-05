@@ -30,6 +30,23 @@ describe('SideProjects Component', () => {
     });
   });
 
+  it('renders an animated-intro launch link only for projects that define introUrl', () => {
+    render(<SideProjects />);
+
+    resumeData.sideProjects.forEach(project => {
+      const introLink = screen.queryByRole('link', {
+        name: `Launch the ${project.title} animated introduction`,
+      });
+
+      if (project.introUrl) {
+        expect(introLink).not.toBeNull();
+        expect(introLink).toHaveAttribute('href', project.introUrl);
+      } else {
+        expect(introLink).toBeNull();
+      }
+    });
+  });
+
   it('renders the metric labels for each project', () => {
     render(<SideProjects />);
 

@@ -1,6 +1,6 @@
 # Architecture: cloud-resume-v2
 
-> Stack: React 18 · TypeScript 5 · Vite 4 · Tailwind CSS v4
+> Stack: React 18 · TypeScript 5 · Vite 8 · Tailwind CSS v4
 > Deployment target: AWS S3 static hosting behind CloudFront
 > Rendering model: 100% client-side rendering
 > Workspace model: npm workspaces with one active app at `apps/web`
@@ -15,6 +15,11 @@ Browser
 
 The current frontend ships only static assets. There is no server-side runtime in this repository.
 
+The web workspace is a Vite multi-page build. It emits two static entry points into `apps/web/dist/`:
+
+- `index.html` — the main resume SPA.
+- `spyfall-arena.html` — a standalone animated "Spyfall Arena" intro (GSAP scrollytelling). The "Spy Fall Arena" side-project card links here via the `introUrl` field in the resume contract. Both pages are served from the same S3 bucket / CloudFront distribution at the domain root.
+
 The visitor counter API is planned but not implemented in the current UI. A feature flag `enableVisitorCounter` is defined in `apps/web/src/config/features.ts` (disabled by default) to control the display of the counter. `.env.example` exists as scaffold for that future API work.
 
 ## 2. Repository Map
@@ -28,14 +33,21 @@ cloud-resume-v2/
 ├── apps/
 │   └── web/
 │       ├── index.html
+│       ├── spyfall-arena.html
 │       ├── package.json
 │       ├── public/
-│       │   └── assets/background.svg
+│       │   ├── assets/background.svg
+│       │   ├── assets/{openai,gemini,deepseek,claude}.svg
+│       │   └── favicon.svg
 │       ├── src/
 │       │   ├── App.tsx
 │       │   ├── main.tsx
 │       │   ├── index.css
-│       │   └── components/
+│       │   ├── components/
+│       │   └── spyfall/
+│       │       ├── main.tsx
+│       │       ├── SpyfallIntro.tsx
+│       │       └── spyfall.css
 │       └── vite.config.ts
 ├── packages/
 │   ├── contracts/
@@ -114,17 +126,61 @@ Theme persistence is handled by `packages/frontend-core/src/themeManager.ts`, wh
 
 This repo does not use Redux, Zustand, or any other global state library.
 
-## 5. Dependency Inventory
+## 5. Spyfall Arena Intro Page
+
+The "Spy Fall Arena" side project ships with a standalone animated introduction that was migrated from a separate Vite + React + GSAP project into this workspace. It is a second static page, not a route inside the resume SPA.
+
+### Build wiring
+
+The web workspace is a Vite multi-page build. `apps/web/vite.config.ts` declares two Rollup inputs:
+
+- `main` → `apps/web/index.html` (resume SPA, emitted as `dist/index.html`).
+- `spyfall` → `apps/web/spyfall-arena.html` (intro, emitted as `dist/spyfall-arena.html`).
+
+Each entry is code-split into its own JS/CSS chunks, so the intro's GSAP timeline and cinematic styles never load on the resume page, and vice versa. Both pages are uploaded to the same S3 bucket and served from the same CloudFront distribution at the domain root.
+
+### Runtime structure
+
+```text
+spyfall-arena.html
+  -> src/spyfall/main.tsx        (imports ./spyfall.css, mounts in StrictMode)
+    -> src/spyfall/SpyfallIntro.tsx   (the intro component)
+```
+
+`SpyfallIntro.tsx` is a 21-beat scrollytelling state machine. A single `currentStep` React state value (0–20) is the source of truth for which narrative beat is shown. The HUD step dots, the next-step FAB, and the "Previous Step" control all mutate `currentStep`; the rendered narrative card and act tag derive from it.
+
+Animation is layered on top of that state with GSAP via the `useGSAP` hook from `@gsap/react`, scoped to the component's container ref so selectors never escape the page. `lucide-react` supplies the HUD and narrative icons. Per the repository's React + GSAP convention, all GSAP work runs inside `useGSAP` (client-only, auto-cleaned on unmount); there is no SSR for this page.
+
+### Linking in and out
+
+- **Resume → intro:** `SideProject` in `@cloud-resume-v2/contracts` carries an optional `introUrl` field. `packages/contracts/src/resume.json` sets `introUrl: "/spyfall-arena.html"` on the Spy Fall Arena entry, and `apps/web/src/components/SideProjects.tsx` renders a "Launch intro" link (same-tab navigation) only when `introUrl` is present. The card's GitHub link is kept separate and truthful.
+- **Intro → resume:** the intro HUD has a top-left "Back to resume" link (`href="/"`) that returns to the resume root. Because the launch link navigates in the same tab, this is a plain root navigation rather than `history.back()`.
+
+### Styling and assets
+
+`src/spyfall/spyfall.css` is a page-scoped global stylesheet owned by the intro entry (imported from `main.tsx`), kept isolated from `apps/web/src/index.css`. Brand logos used by the intro live in `apps/web/public/assets/{openai,gemini,deepseek,claude}.svg` and are served unhashed from `/assets/...`.
+
+### Testing
+
+`apps/web/tests/spyfall/SpyfallIntro.test.tsx` mocks `gsap` and `@gsap/react` so the React state machine, HUD navigation, and the back-to-resume link can be asserted deterministically in jsdom without a real layout engine. `scripts/validate-dist.sh` additionally checks that `spyfall-arena.html` references its JS chunk and resolves its local assets.
+
+## 6. Dependency Inventory
 
 ### Runtime
 
 - `react`
 - `react-dom`
+- `gsap` and `@gsap/react` — power the GSAP animation timeline on the `spyfall-arena.html` intro page only.
+- `lucide-react` — icon set used by the Spyfall Arena intro page only.
 - External font/icon CDNs declared in `apps/web/index.html`:
   - Inter
   - Fira Code
   - Material Icons / Material Symbols
   - Font Awesome
+- External fonts declared in `apps/web/spyfall-arena.html`:
+  - Inter
+  - Outfit
+  - JetBrains Mono
 
 ### Development
 
@@ -137,7 +193,7 @@ This repo does not use Redux, Zustand, or any other global state library.
 
 Unused MUI and Emotion packages were removed during the Phase 1 audit remediation so the installed dependency set matches the actual runtime model.
 
-## 6. Agent-First Foundation
+## 7. Agent-First Foundation
 
 Phase 1 and Phase 2 foundations in this repo mean:
 
@@ -153,7 +209,7 @@ Phase 1 and Phase 2 foundations in this repo mean:
 - CI enforces docs validation, workspace lint/build success, smoke tests, and static artifact validation.
 - Plans in `docs/plans/` are kept as first-class artifacts instead of out-of-band notes.
 
-## 7. Known Next Gaps
+## 8. Known Next Gaps
 
 - Smoke coverage exists, but it is still intentionally narrow.
 - The visitor counter remains static UI, not a live integration.

@@ -6,7 +6,7 @@
 > - 🟠 C: workable but needs care
 > - 🔴 D: do not extend without repair
 >
-> Last Updated: 2026-05-26
+> Last Updated: 2026-06-04
 
 ## Product Domains
 
@@ -25,6 +25,20 @@
 **Known Debt**
 
 - `Hero.tsx` contains a dense inline IDE snippet that could be extracted if the section grows.
+
+### `apps/web/src/spyfall/` — Spyfall Arena Intro Page
+**Grade: 🟡 B**
+
+| Dimension | Status | Notes |
+| --- | --- | --- |
+| Static entry isolation | ✅ Good | Separate Vite entry (`spyfall-arena.html`) emits its own JS/CSS chunks; no spyfall code leaks into the resume bundle |
+| Type safety | ✅ Good | Migrated to TypeScript strict with typed refs and GSAP callbacks |
+| Test coverage | ⚠️ Narrow | GSAP-mocked tests assert state-driven DOM, but animation timelines are not exercised |
+| Styling | ⚠️ Heavy | Large page-scoped `spyfall.css` cinematic layer, isolated to this entry |
+
+**Known Debt**
+
+- The intro is a single large component plus a large page-scoped stylesheet; decompose if it grows.
 
 ### `packages/contracts/` — Shared Content Contract Layer
 **Grade: 🟢 A**

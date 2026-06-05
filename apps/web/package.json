@@ -13,6 +13,9 @@
   "dependencies": {
     "@cloud-resume-v2/contracts": "0.0.0",
     "@cloud-resume-v2/frontend-core": "0.0.0",
+    "@gsap/react": "^2.1.2",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

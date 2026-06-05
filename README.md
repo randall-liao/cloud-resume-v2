@@ -8,7 +8,7 @@ For coding agents, start with [AGENTS.md](AGENTS.md). The documentation system o
 
 - React 18
 - TypeScript 5
-- Vite 4
+- Vite 8
 - Tailwind CSS v4
 - Static deployment target: AWS S3 behind CloudFront
 - Scroll-first single page UI with local component state only
@@ -16,6 +16,7 @@ For coding agents, start with [AGENTS.md](AGENTS.md). The documentation system o
 ## Current Status
 
 - The active web app is fully client-rendered and builds to static assets in `apps/web/dist/`.
+- The web app is a Vite multi-page build: the main resume (`index.html`) plus a standalone animated "Spyfall Arena" intro (`spyfall-arena.html`). The "Spy Fall Arena" side-project card links into the intro, and both pages are served from the same S3/CloudFront origin.
 - Dark mode is persisted through `localStorage` via `@cloud-resume-v2/frontend-core`.
 - Resume content is sourced through the typed `@cloud-resume-v2/contracts` package.
 - The footer visitor count is a static placeholder, controlled by a feature flag `enableVisitorCounter` in `apps/web/src/config/features.ts` (disabled by default). Live API integration is planned but not implemented yet.

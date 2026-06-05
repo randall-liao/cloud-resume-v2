@@ -14,6 +14,7 @@ This file describes what good code looks like in `cloud-resume-v2`. For the mech
 ## 2. Component Structure
 
 - UI components live in `apps/web/src/components/` and mandatory component tests reside in `apps/web/tests/components/`.
+- The standalone "Spyfall Arena" intro is a separate static entry, not a resume section. Its component and page CSS live in `apps/web/src/spyfall/` with tests in `apps/web/tests/spyfall/`, kept apart from the resume component tree on purpose.
 - `apps/web/src/App.tsx` is the layout shell and theme owner, not a data-validation layer.
 - Shared resume content comes from `@cloud-resume-v2/contracts`.
 - Shared browser-facing theme behavior comes from `@cloud-resume-v2/frontend-core`.
@@ -23,6 +24,7 @@ This file describes what good code looks like in `cloud-resume-v2`. For the mech
 
 - Tailwind utilities are the default styling layer.
 - `apps/web/src/index.css` is reserved for global styles, tokens, and shared custom layers.
+- A secondary static entry may own its own page-scoped global stylesheet imported from that entry's `main.tsx` (for example, `apps/web/src/spyfall/spyfall.css`). Keep such styles isolated to their entry rather than leaking into `index.css`.
 - The `style` prop is allowed only for computed values that are awkward to express in Tailwind.
 - MUI layout primitives and the `sx` prop are not allowed.
 - Keep the visual system aligned with [DESIGN.md](../DESIGN.md).
@@ -61,7 +63,7 @@ This file describes what good code looks like in `cloud-resume-v2`. For the mech
 
 See [plans/agent_gap_analysis.md](plans/agent_gap_analysis.md) for the backlog. The main remaining quality gaps are:
 
-- no dedicated tests around the extracted shared packages
+- narrow test coverage on the Spyfall Arena intro page (GSAP is mocked, so timelines are not exercised)
 - no live visitor-counter integration
 - partially generic imported skills under `.agent/skills/`
 
