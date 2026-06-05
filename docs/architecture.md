@@ -15,6 +15,8 @@ Browser
 
 The current frontend ships only static assets. There is no server-side runtime in this repository.
 
+For local end-to-end testing there is a Docker host under `infra/local-dev/` that builds the same static artifact and serves it through nginx. The repository-root `docker-compose.yml` `include:`s that module, so `docker compose up --build` brings the project up locally in one command. See [`infra/local-dev/AGENTS.md`](../infra/local-dev/AGENTS.md).
+
 The web workspace is a Vite multi-page build. It emits two static entry points into `apps/web/dist/`:
 
 - `index.html` — the main resume SPA.

@@ -1,0 +1,20 @@
+# =============================================================================
+# docker-compose.yml (repository root)
+# Single entry point for local development. It composes the reusable
+# `infra/local-dev` module via the Compose `include:` mechanism so one command
+# brings up every service the project needs:
+#
+#   docker compose up --build
+#
+# As new runtime domains are added (for example services/visitor-counter), add
+# their compose file to the `include:` list below. They will then start together
+# with the web tier from this same single command.
+# =============================================================================
+name: cloud-resume-v2
+
+include:
+  # Local-dev web host: builds the static site and serves it through nginx.
+  - path: infra/local-dev/docker-compose.yml
+
+  # Future modules plug in here, e.g.:
+  # - path: services/visitor-counter/docker-compose.yml
