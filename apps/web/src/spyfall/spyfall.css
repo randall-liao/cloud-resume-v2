@@ -1798,6 +1798,7 @@ body {
 
   .narrative-side {
     width: 100%;
+    min-width: 0;
     height: 38%;
     padding: 64px 16px 8px 16px;
     overflow-y: auto;
@@ -1855,27 +1856,25 @@ body {
     background: #0f1015;
   }
   
+  /* Uniformly scale the whole visual stage so every absolutely positioned
+     beat stays aligned at any width. The stage is a fixed 600x600 design
+     canvas (480px table + framing margin); --spyfall-stage-scale is computed
+     in JS to fit the available area and falls back to 0.6 before it runs. */
+  .rules-board-container,
+  .arena-table-container {
+    width: 600px !important;
+    height: 600px !important;
+    max-width: none !important;
+    flex-shrink: 0 !important;
+    transform: scale(var(--spyfall-stage-scale, 0.6)) !important;
+    transform-origin: center center !important;
+  }
+
   .arena-circle-table {
-    width: 380px;
-    height: 380px;
+    width: 480px !important;
+    height: 480px !important;
   }
-  
-  .player-socket.top    { top: 12px; left: 145px; }
-  .player-socket.right  { top: 145px; right: 12px; }
-  .player-socket.bottom { bottom: 12px; left: 145px; }
-  .player-socket.left   { top: 145px; left: 12px; }
-  
-  .player-chip {
-    width: 78px;
-    height: 78px;
-  }
-  
-  .logo-well {
-    width: 48px;
-    height: 48px;
-    padding: 6px;
-  }
-  
+
   .next-step-fab-container {
     bottom: 20px;
     right: 20px;
@@ -1915,38 +1914,6 @@ body {
     justify-content: center !important;
     padding: 0 10px !important;
     gap: 12px;
-  }
-  
-  .rules-board-container,
-  .arena-table-container {
-    width: 600px !important;
-    height: 600px !important;
-    transform: scale(0.56) !important;
-    transform-origin: center center !important;
-    margin: 0 auto !important;
-    flex-shrink: 0 !important;
-  }
-  
-  /* Reset the circle table sizes inside the scaled container so they match desktop positioning coordinates */
-  .arena-circle-table {
-    width: 480px !important;
-    height: 480px !important;
-  }
-  
-  .player-socket.top    { top: 20px !important; left: 195px !important; }
-  .player-socket.right  { top: 195px !important; right: 20px !important; }
-  .player-socket.bottom { bottom: 20px !important; left: 195px !important; }
-  .player-socket.left   { top: 195px !important; left: 20px !important; }
-  
-  .player-chip {
-    width: 90px !important;
-    height: 90px !important;
-  }
-  
-  .logo-well {
-    width: 52px !important;
-    height: 52px !important;
-    padding: 8px !important;
   }
 }
 

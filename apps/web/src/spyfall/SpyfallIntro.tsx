@@ -1,4 +1,4 @@
-import { useState, useRef, type CSSProperties } from 'react';
+import { useState, useRef, useEffect, type CSSProperties } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import {
@@ -275,6 +275,46 @@ export default function SpyfallIntro() {
   const containerRef = useRef<HTMLDivElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
   const fabRef = useRef<HTMLButtonElement>(null);
+
+  // Fluidly scale the fixed 600x600 visual stage to fit the available area on
+  // tablet/mobile, so every absolutely positioned beat stays aligned at any
+  // screen size. Writing only the CSS variable keeps this independent from the
+  // GSAP transforms that animate the inner stage elements.
+  useEffect(() => {
+    const visual = visualRef.current;
+    if (!visual) return;
+
+    const DESIGN_SIZE = 600;
+    const stacked = window.matchMedia('(max-width: 1024px)');
+
+    const updateScale = () => {
+      if (!stacked.matches) {
+        visual.style.setProperty('--spyfall-stage-scale', '1');
+        return;
+      }
+      const availWidth = visual.clientWidth - 32;
+      const availHeight = visual.clientHeight - 24;
+      if (availWidth <= 0 || availHeight <= 0) return;
+      const fitted = Math.min(1, availWidth / DESIGN_SIZE, availHeight / DESIGN_SIZE);
+      visual.style.setProperty('--spyfall-stage-scale', Math.max(0.2, fitted).toFixed(3));
+    };
+
+    updateScale();
+
+    const observer =
+      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updateScale) : null;
+    observer?.observe(visual);
+    window.addEventListener('resize', updateScale);
+    window.addEventListener('orientationchange', updateScale);
+    stacked.addEventListener('change', updateScale);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', updateScale);
+      window.removeEventListener('orientationchange', updateScale);
+      stacked.removeEventListener('change', updateScale);
+    };
+  }, []);
 
   // Click behavior for Next Step FAB
   const handleNextStep = () => {
