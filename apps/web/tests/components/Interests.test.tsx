@@ -26,6 +26,20 @@ describe('Interests Component', () => {
     expect(screen.getByRole('heading', { level: 2, name: /Interests/i })).toBeInTheDocument();
   });
 
+  it('renders a safe external link for interests that provide a url', () => {
+    render(<Interests />);
+
+    const interestsWithUrl = resumeData.interests.filter((interest) => interest.url);
+    expect(interestsWithUrl.length).toBeGreaterThan(0);
+
+    interestsWithUrl.forEach((interest) => {
+      const link = screen.getByRole('link', { name: `View ${interest.title}` });
+      expect(link).toHaveAttribute('href', interest.url);
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+  });
+
   it('applies staggered reveal-on-scroll and card hover transitions to interests', () => {
     const { container } = render(<Interests />);
 

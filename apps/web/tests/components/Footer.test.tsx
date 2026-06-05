@@ -10,6 +10,9 @@ describe('Footer', () => {
   const scrollHeight = 2000;
 
   beforeEach(() => {
+    // Default the mutable feature flag so each test starts from a known state.
+    FEATURES.enableVisitorCounter = false;
+
     // Mock window properties
     Object.defineProperty(window, 'scrollY', {
       writable: true,
@@ -46,6 +49,7 @@ describe('Footer', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    FEATURES.enableVisitorCounter = false;
   });
 
   it('renders footer content correctly with visitor counter disabled by default', () => {
@@ -119,5 +123,109 @@ describe('Footer', () => {
     // Should become visible again
     expect(footerElement?.className).toContain('translate-y-0');
     expect(footerElement?.className).not.toContain('translate-y-full');
+  });
+
+  it('renders the "Built with React & Tailwind" attribution', () => {
+    render(<Footer />);
+    expect(screen.getByText(/Built with/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tailwind/i)).toBeInTheDocument();
+  });
+
+  it('removes the scroll listener and cancels the pending frame on unmount', () => {
+    const addSpy = vi.spyOn(window, 'addEventListener');
+    const removeSpy = vi.spyOn(window, 'removeEventListener');
+
+    const { unmount } = render(<Footer />);
+
+    const scrollCall = addSpy.mock.calls.find(([type]) => type === 'scroll');
+    expect(scrollCall).toBeDefined();
+    const handler = scrollCall?.[1];
+
+    unmount();
+
+    expect(removeSpy).toHaveBeenCalledWith('scroll', handler);
+  });
+
+  describe('visitor counter data integration', () => {
+    it('does not call the API when the feature flag is disabled', () => {
+      FEATURES.enableVisitorCounter = false;
+      render(<Footer />);
+      expect(globalThis.fetch).not.toHaveBeenCalled();
+    });
+
+    it('does not call the API when no endpoint is configured', () => {
+      FEATURES.enableVisitorCounter = true;
+      import.meta.env.VITE_VISITOR_API_URL = '';
+
+      render(<Footer />);
+
+      expect(globalThis.fetch).not.toHaveBeenCalled();
+      expect(screen.getByText('N/A')).toBeInTheDocument();
+    });
+
+    it('reads the count from the alternate "visitors" response field', async () => {
+      FEATURES.enableVisitorCounter = true;
+      globalThis.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({ visitors: 555 }),
+      } as Response);
+
+      render(<Footer />);
+
+      expect(await screen.findByText('555')).toBeInTheDocument();
+    });
+
+    it('shows a loading placeholder until the request resolves', async () => {
+      FEATURES.enableVisitorCounter = true;
+      let resolveFetch: (() => void) | undefined;
+      globalThis.fetch = vi.fn().mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            resolveFetch = () =>
+              resolve({
+                ok: true,
+                json: () => Promise.resolve({ count: 7 }),
+              } as Response);
+          }),
+      );
+
+      render(<Footer />);
+
+      expect(await screen.findByText('...')).toBeInTheDocument();
+
+      resolveFetch?.();
+
+      expect(await screen.findByText('7')).toBeInTheDocument();
+      expect(screen.queryByText('...')).not.toBeInTheDocument();
+    });
+
+    it('falls back to N/A and logs when the request fails', async () => {
+      FEATURES.enableVisitorCounter = true;
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      globalThis.fetch = vi.fn().mockRejectedValue(new Error('network down'));
+
+      render(<Footer />);
+
+      await waitFor(() => {
+        expect(consoleErrorSpy).toHaveBeenCalled();
+      });
+      expect(screen.getByText('N/A')).toBeInTheDocument();
+    });
+
+    it('falls back to N/A when the API responds with a non-ok status', async () => {
+      FEATURES.enableVisitorCounter = true;
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      globalThis.fetch = vi.fn().mockResolvedValue({
+        ok: false,
+        json: () => Promise.resolve({}),
+      } as Response);
+
+      render(<Footer />);
+
+      await waitFor(() => {
+        expect(consoleErrorSpy).toHaveBeenCalled();
+      });
+      expect(screen.getByText('N/A')).toBeInTheDocument();
+    });
   });
 });

@@ -19,6 +19,20 @@ describe('Education Component', () => {
     });
   });
 
+  it('tints each education icon with its configured color', () => {
+    const { container } = render(<Education />);
+
+    const cards = container.querySelectorAll('.bg-white');
+    expect(cards.length).toBe(resumeData.education.length);
+
+    resumeData.education.forEach((edu, idx) => {
+      const icon = cards[idx].querySelector('.material-icons') as HTMLElement | null;
+      expect(icon).not.toBeNull();
+      expect(icon?.textContent).toBe(edu.icon);
+      expect(icon).toHaveStyle({ color: edu.color });
+    });
+  });
+
   it('applies staggered reveal-on-scroll delay and card hover transitions to education', () => {
     const { container } = render(<Education />);
 

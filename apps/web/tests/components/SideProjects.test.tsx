@@ -19,6 +19,51 @@ describe('SideProjects Component', () => {
     });
   });
 
+  it('renders accessible, safe GitHub links for every project', () => {
+    render(<SideProjects />);
+
+    resumeData.sideProjects.forEach(project => {
+      const link = screen.getByRole('link', { name: `View ${project.title} on GitHub` });
+      expect(link).toHaveAttribute('href', project.url);
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+  });
+
+  it('renders the metric labels for each project', () => {
+    render(<SideProjects />);
+
+    resumeData.sideProjects.forEach(project => {
+      project.metrics?.forEach(metric => {
+        expect(screen.getAllByText(metric.label).length).toBeGreaterThan(0);
+      });
+    });
+  });
+
+  it('renders uptime details with the configured or default status label and progress width', () => {
+    const { container } = render(<SideProjects />);
+
+    const cards = container.querySelectorAll('.shadow-md3');
+
+    resumeData.sideProjects.forEach((project, idx) => {
+      if (!project.uptime) return;
+
+      const card = cards[idx];
+      expect(card).toBeDefined();
+
+      // Uptime value is shown verbatim.
+      expect(card.textContent).toContain(project.uptime);
+
+      // statusLabel falls back to "Uptime" when not provided by the data.
+      expect(card.textContent).toContain(project.statusLabel || 'Uptime');
+
+      // Progress bar width is driven by statusPercentage, defaulting to 100%.
+      const bar = card.querySelector('.bg-primary') as HTMLElement | null;
+      expect(bar).not.toBeNull();
+      expect(bar).toHaveStyle({ width: `${project.statusPercentage || 100}%` });
+    });
+  });
+
   it('applies scroll animation and staggered transition delay styling to projects', () => {
     const { container } = render(<SideProjects />);
     

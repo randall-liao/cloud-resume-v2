@@ -81,4 +81,21 @@ describe('Hero', () => {
     const pulseDot = container.querySelector('.animate-pulse-subtle');
     expect(pulseDot).not.toBeNull();
   });
+
+  it('renders the primary and secondary call-to-action links from the contract', () => {
+    render(<Hero />);
+
+    const primary = screen.getByRole('link', { name: new RegExp(resumeData.hero.primaryButton.text, 'i') });
+    expect(primary).toHaveAttribute('href', resumeData.hero.primaryButton.url);
+
+    const secondary = screen.getByRole('link', { name: resumeData.hero.secondaryButton.text });
+    expect(secondary).toHaveAttribute('href', resumeData.hero.secondaryButton.url);
+  });
+
+  it('reports an editor cursor position derived from the generated line count', () => {
+    render(<Hero />);
+
+    const totalLines = 11 + resumeData.hero.ideSnippet.code.stack.length;
+    expect(screen.getByText(`Ln ${totalLines + 3}, Col 2`)).toBeInTheDocument();
+  });
 });
