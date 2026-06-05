@@ -16,6 +16,7 @@ Phase 1, Phase 2, and Phase 3 are now structurally in place, and key gaps in tes
 - CI validates workspace builds, smoke/component tests, and static artifact integrity
 - `docs/git_subtree.md` now captures the operational subtree workflow
 - Feature flag control is implemented for visitor counter display
+- a browser-level e2e harness now exists at `infra/local-dev/agent-harnesses/` (Playwright specs + Playwright MCP live tier), runnable on demand against the local-dev nginx host
 
 The remaining gaps are no longer about missing scaffolding. They are about increasing agent autonomy on top of that foundation.
 
@@ -33,7 +34,7 @@ The remaining gaps are no longer about missing scaffolding. They are about incre
 
 ## Agent Tooling Notes
 
-- Stitch MCP is the only MCP integration configured in `.agent/mcp.json`.
+- `.agent/mcp.json` configures Stitch MCP plus a Playwright MCP server used by the live tier of the e2e harness (`infra/local-dev/agent-harnesses/`).
 - Repo-local workflows are useful, but imported skills such as Remotion and shadcn should be treated as optional setup paths, not default capabilities.
 
 ## Next Exit Criteria

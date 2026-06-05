@@ -6,7 +6,7 @@
 > - 🟠 C: workable but needs care
 > - 🔴 D: do not extend without repair
 >
-> Last Updated: 2026-06-04
+> Last Updated: 2026-06-05
 
 ## Product Domains
 
@@ -100,8 +100,24 @@
 | --- | --- | --- |
 | Repo-local workflows | ✅ Good | Doc gardening and PR wrap-up exist |
 | Repo-shaped review skill | ✅ Good | Code review skill is useful |
-| MCP provisioning | ⚠️ Partial | Only Stitch MCP is configured |
+| MCP provisioning | ✅ Configured | Stitch MCP plus a Playwright MCP server (live e2e tier) in `.agent/mcp.json` |
 | Imported skill fit | ⚠️ Mixed | Several imported skills are generic and require extra setup |
+
+### `infra/local-dev/agent-harnesses/` — E2E Harness
+**Grade: 🟡 B**
+
+| Dimension | Status | Notes |
+| --- | --- | --- |
+| Real-artifact coverage | ✅ Good | Playwright specs run against the nginx-served build, health-gated on `/healthz` |
+| Locator resilience | ✅ Good | Semantic role/title locators, not brittle CSS/XPath |
+| Evidence for review | ✅ Good | Screenshots, video, traces, and HTML report emitted to `temp/e2e-evidence/` |
+| Live tier | ✅ Present | `@playwright/mcp` driven on-demand from natural-language intent cases |
+| CI integration | ⚠️ Not gated | Runs on demand via Docker; not part of `npm run validate`/CI yet |
+| Coverage breadth | ⚠️ Narrow | Covers core resume + spyfall + nginx routing; grows as flows are added |
+
+**Known Debt**
+
+- The deterministic tier is not yet wired into CI (see TD-006).
 
 ## Technical Debt Register
 
@@ -109,4 +125,5 @@
 | --- | --- | --- | --- | --- |
 | TD-004 | CI | Confirm GitHub branch protection outside the repo | 🟠 P1 | Active |
 | TD-005 | agent-tooling | Adapt or prune generic imported skills that are not repo-fitted | 🟡 P2 | Active |
+| TD-006 | e2e-harness | Wire the deterministic Playwright tier into CI as a (non-blocking, then blocking) gate | 🟡 P2 | Active |
 

@@ -16,6 +16,11 @@ project can be exercised end-to-end before any cloud deployment.
   back to the resume entry for unknown paths.
 - `docker-compose.yml` — defines the `web` service. This is the unit other
   modules reuse.
+- `agent-harnesses/` — browser-level **end-to-end harness** that runs against
+  the nginx-served build (deterministic Playwright specs + an on-demand
+  Playwright MCP live tier). It consumes this module; it does not change how the
+  site is built or served. See
+  [`agent-harnesses/AGENTS.md`](./agent-harnesses/AGENTS.md).
 
 ## Usage
 

@@ -19,7 +19,8 @@ This repository is intentionally light right now. Only the frontend app is imple
 | `packages/contracts/` | Shared schemas and typed resume content | Active |
 | `packages/frontend-core/` | Shared browser-facing frontend runtime helpers | Active |
 | `services/` | Future backend or serverless runtime code | Reserved |
-| `infra/` | Future IaC and deployment definitions | Reserved |
+| `infra/` | IaC and deployment definitions; local-dev Docker host | `infra/local-dev` active (Docker + nginx) |
+| `infra/local-dev/agent-harnesses/` | Browser-level e2e harness (Playwright specs + MCP live tier) | Active; non-workspace tooling |
 | `docs/` | Canonical architecture and operating knowledge | Active |
 
 ## Dependency Direction
@@ -29,7 +30,7 @@ Use these rules unless a future doc explicitly narrows them further:
 1. `apps/` may depend on `packages/`.
 2. `packages/` must not depend on `apps/`.
 3. `services/` may depend on `packages/` and `packages/contracts/`.
-4. `infra/` must not become a runtime dependency of `apps/` or `services/`.
+4. `infra/` must not become a runtime dependency of `apps/` or `services/`. The e2e harness under `infra/local-dev/agent-harnesses/` may drive `apps/web` through the browser, but must not import application source (and is not an npm workspace).
 
 ## Agent Ownership Model
 
