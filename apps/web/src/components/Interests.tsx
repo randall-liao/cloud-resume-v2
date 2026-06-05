@@ -21,7 +21,19 @@ export default function Interests() {
                 <p className="text-primary font-medium text-sm mt-1">{interest.subtitle}</p>
               </div>
               <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20">
-                <span className="material-icons" aria-hidden="true">{interest.icon}</span>
+                {interest.url ? (
+                  <a
+                    href={interest.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`View ${interest.title}`}
+                    className="flex items-center justify-center hover:text-red-600 transition-colors"
+                  >
+                    <span className="material-icons" aria-hidden="true">{interest.icon}</span>
+                  </a>
+                ) : (
+                  <span className="material-icons" aria-hidden="true">{interest.icon}</span>
+                )}
               </div>
             </div>
             <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 leading-relaxed">
