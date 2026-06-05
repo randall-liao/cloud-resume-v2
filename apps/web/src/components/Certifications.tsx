@@ -12,7 +12,7 @@ export default function Certifications() {
         {certifications.map((cert, idx) => (
           <div 
             key={idx} 
-            className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-1 relative overflow-hidden group shadow-card m-transition hover:shadow-hover hover:-translate-y-1 reveal-on-scroll"
+            className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-1 relative isolate overflow-hidden group shadow-card m-transition hover:shadow-hover hover:-translate-y-1 reveal-on-scroll"
             style={{ transitionDelay: `${(idx + 1) * 100}ms` }}
           >
             <div 
@@ -33,11 +33,19 @@ export default function Certifications() {
                 <p className="text-xs text-slate-500 font-mono">Validation ID: {cert.validationId}</p>
               </div>
               <div className="mt-6">
-                <a className="text-sm font-medium hover:text-[#ffac31] flex items-center uppercase tracking-wider" style={{ color: cert.color }} href={cert.url} target="_blank" rel="noopener noreferrer">
+                <a className="relative z-30 text-sm font-medium hover:text-[#ffac31] flex items-center uppercase tracking-wider" style={{ color: cert.color }} href={cert.url} target="_blank" rel="noopener noreferrer">
                   Verify Badge <span className="material-icons text-sm ml-1" aria-hidden="true">open_in_new</span>
                 </a>
               </div>
             </div>
+
+            <a
+              className="absolute inset-0 z-20 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+              href={cert.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open the ${cert.name} certification`}
+            />
           </div>
         ))}
       </div>

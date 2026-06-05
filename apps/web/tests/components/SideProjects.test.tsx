@@ -101,4 +101,26 @@ describe('SideProjects Component', () => {
       expect(card).toHaveStyle({ transitionDelay: `${(idx + 1) * 100}ms` });
     });
   });
+
+  it('makes the entire card a link to the intro when available, otherwise to the GitHub repo', () => {
+    render(<SideProjects />);
+
+    resumeData.sideProjects.forEach(project => {
+      if (project.introUrl) {
+        const cardLink = screen.getByRole('link', {
+          name: `Open the ${project.title} introduction`,
+        });
+        expect(cardLink).toHaveAttribute('href', project.introUrl);
+        // Internal intro page opens in the same tab.
+        expect(cardLink).not.toHaveAttribute('target');
+      } else {
+        const cardLink = screen.getByRole('link', {
+          name: `Open ${project.title} on GitHub`,
+        });
+        expect(cardLink).toHaveAttribute('href', project.url);
+        expect(cardLink).toHaveAttribute('target', '_blank');
+        expect(cardLink).toHaveAttribute('rel', 'noopener noreferrer');
+      }
+    });
+  });
 });
