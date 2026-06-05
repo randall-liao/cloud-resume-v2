@@ -13,7 +13,7 @@ export default function CommitHistory() {
         
         {experience.map((job, index) => (
           <div 
-            key={index} 
+            key={`${job.company}-${job.role}-${job.period}`} 
             className="relative group reveal-on-scroll"
             style={{ transitionDelay: `${(index + 1) * 100}ms` }}
           >

@@ -18,13 +18,17 @@ function App() {
   const [darkMode, setDarkMode] = useState<boolean>(() => themeManager.getInitialTheme());
 
   // 🎓 LEARNING NOTE (Hooks):
-  // `useEffect` allows you to sync your React state with external systems. 
-  // In this case, whenever the "Database" (darkMode) changes, we trigger a "Side-Effect" 
-  // to update the external browser DOM class list and persist the state.
+  // `useEffect` allows you to sync your React state with external systems.
+  // The document title is derived from static contract data, so it only needs to
+  // run once on mount — keeping it out of the theme effect (rerender-split-combined-hooks).
   useEffect(() => {
     // Dynamic document title from the shared resume contract
     document.title = `${resumeData.header.name} | Cloud Architect Dashboard`;
-    
+  }, []);
+
+  // Whenever the "Database" (darkMode) changes, we trigger a "Side-Effect"
+  // to update the external browser DOM class list and persist the state.
+  useEffect(() => {
     // Save state via OOP manager
     themeManager.saveTheme(darkMode);
     applyThemePreference(darkMode);

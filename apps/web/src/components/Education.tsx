@@ -10,7 +10,7 @@ export default function Education() {
       <div className="space-y-6">
         {education.map((edu, idx) => (
           <div 
-            key={idx} 
+            key={`${edu.institution}-${edu.degree}-${edu.graduationDate}`} 
             className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-lg p-6 relative overflow-hidden shadow-card m-transition hover:shadow-hover hover:-translate-y-1 reveal-on-scroll"
             style={{ transitionDelay: `${(idx + 1) * 100}ms` }}
           >
