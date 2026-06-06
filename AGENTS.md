@@ -70,6 +70,7 @@ Treat Remotion, shadcn, and WSL bridge skills as opt-in tooling. They are not pa
 ## Subdomain Agents
 
 - [Infra Domain](./infra/AGENTS.md)
+- [Infra Local-Dev Domain](./infra/local-dev/AGENTS.md)
 - [.Agent Skills Shadcn-Ui Domain](./.agent/skills/shadcn-ui/AGENTS.md)
 - [.Agent Skills Stitch-Loop Domain](./.agent/skills/stitch-loop/AGENTS.md)
 - [.Agent Skills Enhance-Prompt Domain](./.agent/skills/enhance-prompt/AGENTS.md)

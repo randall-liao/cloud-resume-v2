@@ -1,0 +1,44 @@
+# =============================================================================
+# infra/local-dev/docker-compose.yml
+# Reusable "local-dev" module: builds the cloud-resume-v2 static site and serves
+# it through nginx for local end-to-end testing.
+#
+# Other modules compose this file instead of duplicating it. The repository-root
+# docker-compose.yml pulls it in via the Compose `include:` mechanism, so a
+# single `docker compose up` from the repo root brings up every service the
+# project needs. Future backends (e.g. services/visitor-counter) add their own
+# service block here or their own compose file to the root `include:` list.
+#
+# Run this module on its own:
+#   docker compose -f infra/local-dev/docker-compose.yml up --build
+# Override the published port:
+#   WEB_PORT=3000 docker compose -f infra/local-dev/docker-compose.yml up --build
+# =============================================================================
+
+services:
+  web:
+    build:
+      # Context is the repository root so the build can see the whole monorepo.
+      # Paths are resolved relative to this file, including when it is pulled in
+      # through the root compose `include:` block.
+      context: ../..
+      dockerfile: infra/local-dev/Dockerfile
+    image: cloud-resume-v2-web:local
+    container_name: cloud-resume-v2-web
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - cloud-resume
+
+# Shared network so future services can be reached by the web tier locally.
+networks:
+  cloud-resume:
+    name: cloud-resume
+    driver: bridge

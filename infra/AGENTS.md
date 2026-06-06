@@ -16,4 +16,6 @@
 
 ## Current State
 
-Phase 1 creates this boundary as documentation only. No IaC implementation is included yet.
+The cloud IaC boundary (AWS provisioning, deployment stacks) is still documentation only.
+
+The first concrete implementation here is the local-development host, [`local-dev/`](./local-dev/AGENTS.md): a Docker + nginx module that builds and serves the static site for local end-to-end testing. The repository-root `docker-compose.yml` `include:`s it, so `docker compose up --build` brings the project up locally in one command.

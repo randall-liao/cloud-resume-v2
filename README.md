@@ -39,6 +39,16 @@ The app runs at `http://localhost:5173`.
 
 `npm run validate` runs the full local gate set: docs validation, lint, build, and static artifact validation.
 
+### Local Docker Preview
+
+To exercise the production-style static build behind nginx (mirrors the S3/CloudFront hosting model), use the `infra/local-dev` module. One command from the repo root builds the site and serves it:
+
+```bash
+docker compose up --build
+```
+
+The site is then served at `http://localhost:8080` (intro page at `http://localhost:8080/spyfall-arena.html`). Set `WEB_PORT` to publish on a different port. This root `docker-compose.yml` `include:`s `infra/local-dev/docker-compose.yml`, and future services plug into the same command. See [`infra/local-dev/AGENTS.md`](infra/local-dev/AGENTS.md) for details.
+
 ## Scripts
 
 - `npm run dev` starts the Vite dev server.
@@ -61,7 +71,7 @@ cloud-resume-v2/
 │   ├── contracts/       # Typed resume content and shared contract boundary
 │   └── frontend-core/   # Shared browser-facing frontend utilities
 ├── services/            # Future serverless/backend domains
-├── infra/               # Future IaC domains
+├── infra/               # IaC domains; infra/local-dev hosts the site in Docker
 ├── docs/                # System of record for architecture, standards, quality, and plans
 ├── .agent/              # Repo-local workflows and imported skills
 ├── scripts/             # Validation and helper scripts

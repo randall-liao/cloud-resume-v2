@@ -1,0 +1,38 @@
+# =============================================================================
+# Build-context ignore list for infra/local-dev/Dockerfile.
+# BuildKit reads this file (matching the `-f` Dockerfile path) and applies it to
+# the repo-root build context, keeping the context small and free of secrets.
+# =============================================================================
+
+# Dependencies and build output are regenerated inside the image.
+**/node_modules
+**/dist
+**/.turbo
+.turbo
+
+# Local tooling caches and scratch space.
+**/.vite
+.stitch-mcp
+.antigravitycli
+.agents
+stitch_downloads
+temp
+
+# VCS metadata.
+.git
+**/.git
+
+# Never copy local environment files or credentials into the image.
+.env
+.env.*
+**/.env
+**/.env.*
+**/*credentials*
+.aws
+
+# Logs and editor noise.
+*.log
+**/*.log
+.vscode
+.idea
+**/.DS_Store
