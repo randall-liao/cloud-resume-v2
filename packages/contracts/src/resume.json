@@ -160,7 +160,7 @@
       "description": "Multi-agent LLM environment playing the social deduction game 'Spyfall'. Evaluates reasoning, deception, and deduction capabilities across different models.",
       "metrics": [
         {
-          "label": "GPT-4",
+          "label": "OpenAI",
           "value": "Agent"
         },
         {
@@ -168,7 +168,11 @@
           "value": "Agent"
         },
         {
-          "label": "Llama 3",
+          "label": "Gemini",
+          "value": "Agent"
+        },
+        {
+          "label": "DeepSeek",
           "value": "Agent"
         }
       ],

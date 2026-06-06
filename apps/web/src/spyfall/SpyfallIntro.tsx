@@ -23,7 +23,7 @@ interface StoryStep {
 const steps: StoryStep[] = [
   {
     act: 0,
-    actTitle: "Cover Hook",
+    actTitle: "Introduction",
     title: "The Lie Problem",
     subtitle: "Can a language model keep a secret when the game depends on it?",
     text: "AI systems can answer almost anything. But can they lie? Can a language model bluff when ignorance must be hidden, or will its nature force it to be maximally helpful? Spyfall Arena is a developer's side project that turns these questions into a social deduction showdown.",
