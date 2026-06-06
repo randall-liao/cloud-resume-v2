@@ -46,7 +46,8 @@ The active runtime app lives in `apps/web`. Shared frontend boundaries live in `
 | Ready | [`.agent/workflows/doc-gardening.md`](.agent/workflows/doc-gardening.md) | Refresh docs, grades, and plan status |
 | Ready | [`.agent/workflows/lgtm-create-pr.md`](.agent/workflows/lgtm-create-pr.md) | Wrap up work, validate, and open a PR |
 | Ready | [`.agent/skills/code_review/SKILL.md`](.agent/skills/code_review/SKILL.md) | Repo-specific review guidance |
-| Optional | [`.agent/mcp.json`](.agent/mcp.json) | Only Stitch MCP is configured in this repo |
+| Ready | [`infra/local-dev/agent-harnesses/`](infra/local-dev/agent-harnesses/AGENTS.md) | Hybrid e2e harness: deterministic Playwright specs + on-demand Playwright MCP live tier; evidence to `temp/` |
+| Optional | [`.agent/mcp.json`](.agent/mcp.json) | Stitch MCP, plus a Playwright MCP server for the live e2e tier |
 | Optional | Stitch-related imported skills under [`.agent/skills/`](.agent/skills/) | Use only when the task clearly needs them and their prerequisites are present |
 
 Treat Remotion, shadcn, and WSL bridge skills as opt-in tooling. They are not part of the default Phase 1 foundation and may require extra local setup beyond what this repo provisions.
@@ -71,6 +72,7 @@ Treat Remotion, shadcn, and WSL bridge skills as opt-in tooling. They are not pa
 
 - [Infra Domain](./infra/AGENTS.md)
 - [Infra Local-Dev Domain](./infra/local-dev/AGENTS.md)
+- [Infra Local-Dev Agent-Harnesses Domain](./infra/local-dev/agent-harnesses/AGENTS.md)
 - [.Agent Skills Shadcn-Ui Domain](./.agent/skills/shadcn-ui/AGENTS.md)
 - [.Agent Skills Stitch-Loop Domain](./.agent/skills/stitch-loop/AGENTS.md)
 - [.Agent Skills Enhance-Prompt Domain](./.agent/skills/enhance-prompt/AGENTS.md)

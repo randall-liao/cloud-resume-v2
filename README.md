@@ -49,6 +49,16 @@ docker compose up --build
 
 The site is then served at `http://localhost:8080` (intro page at `http://localhost:8080/spyfall-arena.html`). Set `WEB_PORT` to publish on a different port. This root `docker-compose.yml` `include:`s `infra/local-dev/docker-compose.yml`, and future services plug into the same command. See [`infra/local-dev/AGENTS.md`](infra/local-dev/AGENTS.md) for details.
 
+### End-to-End Tests
+
+A browser-level e2e harness lives in `infra/local-dev/agent-harnesses/`. It runs Playwright specs against the same nginx-served build and writes screenshots, screen recordings, traces, and an HTML report to `temp/e2e-evidence/` for review. One command (it starts the web host for you):
+
+```bash
+docker compose -f infra/local-dev/agent-harnesses/docker-compose.yml --profile e2e run --rm e2e
+```
+
+See [`infra/local-dev/agent-harnesses/AGENTS.md`](infra/local-dev/agent-harnesses/AGENTS.md) for the deterministic and live (MCP-driven) tiers.
+
 ## Scripts
 
 - `npm run dev` starts the Vite dev server.
@@ -72,6 +82,7 @@ cloud-resume-v2/
 │   └── frontend-core/   # Shared browser-facing frontend utilities
 ├── services/            # Future serverless/backend domains
 ├── infra/               # IaC domains; infra/local-dev hosts the site in Docker
+│                        #   and infra/local-dev/agent-harnesses holds the e2e harness
 ├── docs/                # System of record for architecture, standards, quality, and plans
 ├── .agent/              # Repo-local workflows and imported skills
 ├── scripts/             # Validation and helper scripts

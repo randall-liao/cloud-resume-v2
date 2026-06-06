@@ -1,0 +1,55 @@
+# =============================================================================
+# infra/local-dev/agent-harnesses/docker-compose.yml
+# Tier-1 (deterministic) e2e runner for the hybrid agent harness.
+#
+# It composes the reusable local-dev web module via `include:` so the e2e
+# container always runs against the real nginx-served static artifact. The
+# `e2e` service is guarded by the `e2e` profile so it never starts as part of a
+# normal `docker compose up`; it is invoked explicitly:
+#
+#   docker compose -f infra/local-dev/agent-harnesses/docker-compose.yml \
+#     --profile e2e run --rm e2e
+#
+# The Playwright image tag MUST stay in lockstep with the @playwright/test
+# version pinned in package.json.
+# =============================================================================
+
+include:
+  # Brings in the `web` service (nginx) and the `cloud-resume` network.
+  - path: ../docker-compose.yml
+
+services:
+  e2e:
+    image: mcr.microsoft.com/playwright:v1.49.1-jammy
+    container_name: cloud-resume-v2-e2e
+    profiles: ["e2e"]
+    depends_on:
+      web:
+        condition: service_healthy
+    environment:
+      # `web` resolves on the shared compose network; nginx listens on port 80.
+      E2E_BASE_URL: "http://web"
+      # Evidence is written here and bind-mounted to repo-root temp/ for humans.
+      E2E_EVIDENCE_DIR: "/evidence"
+      CI: "true"
+    working_dir: /work
+    volumes:
+      - .:/work
+      # Keep container-installed deps off the host bind mount.
+      - e2e_node_modules:/work/node_modules
+      # Human-reviewable evidence (screenshots, recordings, traces, report).
+      - ../../../temp/e2e-evidence:/evidence
+    command:
+      - sh
+      - -lc
+      - "npm ci --no-audit --no-fund && npx playwright test"
+    networks:
+      - cloud-resume
+
+volumes:
+  e2e_node_modules:
+
+networks:
+  cloud-resume:
+    name: cloud-resume
+    driver: bridge

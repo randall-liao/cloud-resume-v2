@@ -15,7 +15,7 @@ Browser
 
 The current frontend ships only static assets. There is no server-side runtime in this repository.
 
-For local end-to-end testing there is a Docker host under `infra/local-dev/` that builds the same static artifact and serves it through nginx. The repository-root `docker-compose.yml` `include:`s that module, so `docker compose up --build` brings the project up locally in one command. See [`infra/local-dev/AGENTS.md`](../infra/local-dev/AGENTS.md).
+For local end-to-end testing there is a Docker host under `infra/local-dev/` that builds the same static artifact and serves it through nginx. The repository-root `docker-compose.yml` `include:`s that module, so `docker compose up --build` brings the project up locally in one command. See [`infra/local-dev/AGENTS.md`](../infra/local-dev/AGENTS.md). A browser-level e2e agent harness lives alongside it under `infra/local-dev/agent-harnesses/` (see [§9](#9-end-to-end-agent-harness) and [`infra/local-dev/agent-harnesses/AGENTS.md`](../infra/local-dev/agent-harnesses/AGENTS.md)).
 
 The web workspace is a Vite multi-page build. It emits two static entry points into `apps/web/dist/`:
 
@@ -64,6 +64,15 @@ cloud-resume-v2/
 ├── services/
 │   └── ...future serverless domains
 ├── infra/
+│   ├── local-dev/                  # Docker + nginx host for the static site
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   │   ├── nginx/default.conf
+│   │   └── agent-harnesses/        # e2e harness (Playwright specs + MCP live tier)
+│   │       ├── deterministic/      # committed *.spec.ts regression specs
+│   │       ├── live/               # NL intent cases + MCP runbook
+│   │       ├── playwright.config.ts
+│   │       └── docker-compose.yml  # `e2e` runner (profile: e2e)
 │   └── ...future IaC domains
 ├── docs/
 │   ├── README.md
@@ -217,3 +226,21 @@ Phase 1 and Phase 2 foundations in this repo mean:
 - The visitor counter remains static UI, not a live integration.
 - The extracted shared packages do not yet have dedicated regression tests beyond workspace builds.
 - Several imported skills under `.agent/skills/` are generic and not yet fully adapted to this repo.
+- The e2e agent harness (§9) is not yet wired into CI; it runs on demand via Docker.
+
+## 9. End-to-End Agent Harness
+
+Browser-level e2e lives in `infra/local-dev/agent-harnesses/` and always runs against the **real artifact** — the nginx-served static build from `infra/local-dev`, not the Vite dev server. It is a hybrid two-tier design and is deliberately **not** an npm workspace (root `npm`/`turbo`/`npm run validate` ignore it), mirroring `infra/local-dev` itself.
+
+- **Tier 1 — deterministic:** committed `@playwright/test` specs in `deterministic/*.spec.ts` (health/fallback, resume landmarks + sections + theme toggle, spyfall load/mount). They use semantic role/title locators and run headless via a Docker `e2e` runner that `include:`s the `web` module and waits on its `/healthz` healthcheck:
+
+  ```bash
+  docker compose -f infra/local-dev/agent-harnesses/docker-compose.yml \
+    --profile e2e run --rm e2e
+  ```
+
+- **Tier 2 — live exploratory:** an LLM coding agent drives a browser through `@playwright/mcp` (registered in `.agent/mcp.json`) to execute natural-language intent cases in `live/cases/*.md`, then feeds durable findings back as PRs that tighten Tier-1 specs.
+
+- **Evidence:** every run writes screenshots, screen recordings (video), traces, an HTML report, and `results.json` to the repo-root `temp/e2e-evidence/` scratch folder (git-ignored) for human review; override with `E2E_EVIDENCE_DIR`.
+
+The harness drives `apps/web` only through the browser — it does not import application source, and application source does not import it.

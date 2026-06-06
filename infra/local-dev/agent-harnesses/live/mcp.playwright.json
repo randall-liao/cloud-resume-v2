@@ -1,0 +1,9 @@
+{
+  "//": "Reference config for the on-demand live tier. The active registration lives in .agent/mcp.json so this CLI can drive it. Start the local-dev host first (docker compose up --build), then the agent points the browser at E2E_BASE_URL (default http://localhost:8080).",
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest", "--browser", "chromium", "--headless"]
+    }
+  }
+}
