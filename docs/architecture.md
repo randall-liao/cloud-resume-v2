@@ -32,6 +32,7 @@ cloud-resume-v2/
 ├── AGENT.md
 ├── README.md
 ├── DESIGN.md
+├── .opencodereview/      # Local OCR rule selection; not CI automation
 ├── apps/
 │   └── web/
 │       ├── index.html
