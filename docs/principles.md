@@ -83,3 +83,10 @@ Only principles with an explicit enforcement section are mechanically gated toda
 **Why:** The planned visitor counter is auxiliary, not mission-critical UI.
 
 **Enforcement:** 🔴 Unenforced. The current app does not yet implement the live visitor-counter call.
+
+## Principle 11: Browser Results Need Reviewable Evidence
+
+**Rule:** Each requested browser case must have a human-review package with its result, screenshots, recording and trace. Failed and unexecuted cases remain discoverable; missing captures cannot establish a fully evidenced pass. HTTP-only cases explicitly mark browser captures not applicable.
+
+**Enforcement:** On-demand only, not CI or root validation. The deterministic review reporter fails packaging errors and passing browser cases missing captures; its index also exposes run-level failures and global errors. `npm run qa:package -- <run-directory>` renders all requested live cases and returns nonzero for missing capture kinds or incomplete raw trace bundles (network companions and referenced resources). Unwritten case pages show an error rather than a broken link. Live agents must actually start/stop recording and tracing; prompt instructions are not a hard capture guarantee. Package inventories check file/dependency presence, not video content, screenshot correctness or assertion truth. Human review remains required.
+

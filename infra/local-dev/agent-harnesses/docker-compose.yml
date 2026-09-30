@@ -29,8 +29,8 @@ services:
     environment:
       # `web` resolves on the shared compose network; nginx listens on port 80.
       E2E_BASE_URL: "http://web"
-      # Evidence is written here and bind-mounted to repo-root temp/ for humans.
-      E2E_EVIDENCE_DIR: "/evidence"
+      # Each run gets a unique subdirectory under this host-mounted root.
+      E2E_EVIDENCE_ROOT: "/evidence"
       CI: "true"
     working_dir: /work
     volumes:

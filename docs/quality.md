@@ -99,9 +99,9 @@
 
 | Dimension | Status | Notes |
 | --- | --- | --- |
-| Repo-local workflows | ✅ Good | Doc gardening and PR wrap-up exist |
+| Repo-local workflows | ✅ Good | Doc gardening, PR wrap-up, and Astra-orchestrated live browser QA exist |
 | Repo-shaped review skill | ✅ Good | Code review skill is useful |
-| MCP provisioning | ✅ Configured | Stitch MCP plus a Playwright MCP server (live e2e tier) in `.agent/mcp.json` |
+| Browser tooling | Configured | Microsoft Playwright CLI + repo skill; Astra plans in normal mode and the named Luna `browser-operator` executes cases; optional Stitch MCP remains in `.agent/mcp.json` |
 | Imported skill fit | ⚠️ Mixed | Several imported skills are generic and require extra setup |
 
 ### `infra/local-dev/agent-harnesses/` — E2E Harness
@@ -111,8 +111,8 @@
 | --- | --- | --- |
 | Real-artifact coverage | ✅ Good | Playwright specs run against the nginx-served build, health-gated on `/healthz` |
 | Locator resilience | ✅ Good | Semantic role/title locators, not brittle CSS/XPath |
-| Evidence for review | ✅ Good | Screenshots, video, traces, and HTML report emitted to `temp/e2e-evidence/` |
-| Live tier | ✅ Present | `@playwright/mcp` driven on-demand from natural-language intent cases |
+| Evidence for review | Good | Both tiers produce run indexes and self-contained per-case HTML/JSON packages, with screenshot previews, video players and traces under ignored `temp/e2e-evidence/`. Live case IDs match intent filenames; missing evidence and absent worker results remain explicit. Deterministic projects/retries remain separate; HTTP-only health capture is explicitly not applicable. |
+| Live tier | Present | On-demand `npm run qa:live`: `github-copilot/gpt-6-astra` delegates sequential whole cases to `browser-operator` on `github-copilot/gpt-6-luna` and consumes structured evidence without browser actions |
 | CI integration | ⚠️ Not gated | Runs on demand via Docker; not part of `npm run validate`/CI yet |
 | Coverage breadth | ⚠️ Narrow | Covers core resume + spyfall + nginx routing; grows as flows are added |
 
