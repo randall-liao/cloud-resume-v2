@@ -19,6 +19,7 @@
     "preview": "npm run preview --workspace @cloud-resume-v2/web --",
     "test": "turbo run test && python3 scripts/test_agents_scripts.py",
     "test:mutation": "turbo run test:mutation --filter=./packages/* --filter=./apps/web",
+    "review:local": "omp --model github-copilot/gpt-6-sol --tools=read,bash,grep,glob @.agent/workflows/review-local.md",
     "validate": "npm run docs:validate && python3 scripts/lint_agents.py && npm run lint && npm run build && npm run test && bash scripts/validate-dist.sh apps/web/dist"
   },
   "devDependencies": {

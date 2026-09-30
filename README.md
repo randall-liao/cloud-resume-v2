@@ -59,6 +59,19 @@ docker compose -f infra/local-dev/agent-harnesses/docker-compose.yml --profile e
 
 See [`infra/local-dev/agent-harnesses/AGENTS.md`](infra/local-dev/agent-harnesses/AGENTS.md) for the deterministic and live (MCP-driven) tiers.
 
+### Local LLM Review (On Demand)
+
+Run OpenCodeReview's [delegation workflow](.agent/workflows/review-local.md) through OMP when you want an LLM review:
+
+```bash
+npm run review:local                                     # interactive: staged, unstaged and untracked changes
+npm run review:local -- --print                          # same review, print result and exit
+npm run review:local -- --print "Review commit HEAD"     # explicitly review the latest commit
+npm run review:local -- --print "Review origin/main to HEAD" # explicitly review a branch range
+```
+
+The command uses the existing OMP GitHub Copilot login and installs the pinned OCR CLI through `npm exec` if needed. OCR selects files and resolves the [repository rules](.opencodereview/rule.json); OMP performs the review. It reads files but does not post comments or make changes. Reviewing a branch already merged into `main` may select no files; use an explicit commit target instead. No LLM step runs during `npm run validate` or in GitHub Actions. Run this command yourself when you are ready to incur model usage.
+
 ## Scripts
 
 - `npm run dev` starts the Vite dev server.
@@ -67,6 +80,7 @@ See [`infra/local-dev/agent-harnesses/AGENTS.md`](infra/local-dev/agent-harnesse
 - `npm run build` type-checks and builds the active web workspace.
 - `npm run preview` previews the production build for the active web workspace.
 - `npm run validate` runs the full local validation flow.
+- `npm run review:local` starts the manual OCR-delegated OMP review; add `-- --print` for a non-interactive result.
 - `bash scripts/validate-dist.sh apps/web/dist` verifies the built artifact is suitable for S3/CloudFront hosting.
 
 ## Project Structure
