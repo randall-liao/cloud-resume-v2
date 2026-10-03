@@ -3,17 +3,21 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "Hybrid two-tier e2e agent harness for cloud-resume-v2 (deterministic Playwright specs + on-demand MCP-driven live agent), exercised against the infra/local-dev nginx host.",
+  "description": "Hybrid e2e harness: deterministic Playwright tests and Astra/Luna live QA through Playwright CLI, against the nginx-served build.",
   "scripts": {
     "test": "playwright test",
+    "test:artifacts": "node --test review-packages.test.mjs review-reporter.test.mjs",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "report": "playwright show-report",
     "list": "playwright test --list",
     "typecheck": "tsc --noEmit",
+    "browser": "node live/browser.mjs",
+    "install:live-browser": "node live/browser.mjs install-browser chromium",
     "install:browsers": "playwright install --with-deps chromium"
   },
   "devDependencies": {
+    "@playwright/cli": "0.1.21",
     "@playwright/test": "1.49.1",
     "@types/node": "^22.10.0",
     "typescript": "^5.0.2"

@@ -51,13 +51,31 @@ The site is then served at `http://localhost:8080` (intro page at `http://localh
 
 ### End-to-End Tests
 
-A browser-level e2e harness lives in `infra/local-dev/agent-harnesses/`. It runs Playwright specs against the same nginx-served build and writes screenshots, screen recordings, traces, and an HTML report to `temp/e2e-evidence/` for review. One command (it starts the web host for you):
+A browser-level e2e harness lives in `infra/local-dev/agent-harnesses/`. It runs Playwright specs against the same nginx-served build. Each run writes a review index and self-contained per-test packages (results, screenshots, recordings and traces) under `temp/e2e-evidence/deterministic/<run>/`, alongside Playwright's HTML report. One command (it starts the web host for you):
 
 ```bash
 docker compose -f infra/local-dev/agent-harnesses/docker-compose.yml --profile e2e run --rm e2e
 ```
 
-See [`infra/local-dev/agent-harnesses/AGENTS.md`](infra/local-dev/agent-harnesses/AGENTS.md) for the deterministic and live (MCP-driven) tiers.
+The deterministic tier is an intended CI gate, but currently runs on demand and is not wired into CI or `npm run validate`.
+
+Chromium is the only supported QA browser. Both the deterministic suite and the
+live CLI use Playwright; alternate framework and cross-browser trials are not
+part of the retained harness.
+
+For live browser QA, start the Docker preview above, then run from the repository root:
+
+```bash
+npm ci --prefix infra/local-dev/agent-harnesses
+npm run browser -- --help
+npm run qa:live
+# Non-interactive/headless omp invocation:
+npm run qa:live -- --print
+```
+
+The live tier uses Microsoft Playwright CLI + skills: `github-copilot/gpt-6-astra` plans and orchestrates in normal mode, while the named `browser-operator` on `github-copilot/gpt-6-luna` performs browser actions and returns structured evidence. It requires `omp` with both model routes available. Every live browser case requires screenshots, video and complete traces. Astra finalizes `temp/e2e-evidence/live/<run>/index.html` and `<case>/index.html` with `npm run qa:package -- temp/e2e-evidence/live/<run>`. For example, open `<run>/mobile-resume/index.html` to review that exact scenario. Each case folder is portable; missing evidence is explicit, never a fully evidenced pass. CLI capture remains separate from `playwright.config.ts`.
+
+See [`infra/local-dev/agent-harnesses/AGENTS.md`](infra/local-dev/agent-harnesses/AGENTS.md) for both tiers and browser setup.
 
 ### Local LLM Review (On Demand)
 
@@ -80,6 +98,9 @@ The command uses the existing OMP GitHub Copilot login and installs the pinned O
 - `npm run build` type-checks and builds the active web workspace.
 - `npm run preview` previews the production build for the active web workspace.
 - `npm run validate` runs the full local validation flow.
+- `npm run browser -- --help` shows the pinned Microsoft Playwright CLI commands.
+- `npm run qa:live` launches Astra's live QA workflow with the Luna browser operator; add `-- --print` for non-interactive/headless omp usage.
+- `npm run qa:package -- <run-directory>` finalizes a live run's saved `summary.json` into per-case review pages and an index, including failed or unreturned cases.
 - `npm run review:local` starts the manual OCR-delegated OMP review; add `-- --print` for a non-interactive result.
 - `bash scripts/validate-dist.sh apps/web/dist` verifies the built artifact is suitable for S3/CloudFront hosting.
 

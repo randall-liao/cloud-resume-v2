@@ -19,6 +19,9 @@
     "preview": "npm run preview --workspace @cloud-resume-v2/web --",
     "test": "turbo run test && python3 scripts/test_agents_scripts.py",
     "test:mutation": "turbo run test:mutation --filter=./packages/* --filter=./apps/web",
+    "browser": "npm --prefix infra/local-dev/agent-harnesses run browser --",
+    "qa:live": "omp --model github-copilot/gpt-6-astra @.agent/workflows/browser-qa.md",
+    "qa:package": "node infra/local-dev/agent-harnesses/review-packages.mjs",
     "review:local": "omp --model github-copilot/gpt-6-sol --tools=read,bash,grep,glob @.agent/workflows/review-local.md",
     "validate": "npm run docs:validate && python3 scripts/lint_agents.py && npm run lint && npm run build && npm run test && bash scripts/validate-dist.sh apps/web/dist"
   },
@@ -32,7 +35,6 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^17.6.0",
-    "puppeteer": "^25.1.0",
     "turbo": "^2.9.12",
     "typescript": "^5.0.2",
     "typescript-eslint": "^8.59.3",

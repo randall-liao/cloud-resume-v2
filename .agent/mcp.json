@@ -5,10 +5,6 @@
       "headers": {
         "X-Goog-Api-Key": "${STITCH_API_KEY}"
       }
-    },
-    "playwright": {
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest", "--browser", "chromium", "--headless"]
     }
   }
 }

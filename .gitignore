@@ -132,6 +132,7 @@ dist-ssr
 .stitch-mcp/
 .turbo
 .antigravitycli/
+.playwright-cli/
 
 # OpenTofu / Terraform
 .terraform/

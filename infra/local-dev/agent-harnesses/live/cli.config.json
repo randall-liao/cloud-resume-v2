@@ -1,0 +1,18 @@
+{
+  "browser": {
+    "browserName": "chromium",
+    "isolated": true,
+    "launchOptions": {
+      "channel": "chromium",
+      "headless": true
+    },
+    "contextOptions": {
+      "viewport": { "width": 1280, "height": 800 }
+    }
+  },
+  "outputMode": "file",
+  "timeouts": {
+    "action": 10000,
+    "navigation": 30000
+  }
+}

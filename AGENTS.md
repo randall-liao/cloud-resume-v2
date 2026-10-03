@@ -47,8 +47,11 @@ The active runtime app lives in `apps/web`. Shared frontend boundaries live in `
 | Ready | [`.agent/workflows/doc-gardening.md`](.agent/workflows/doc-gardening.md) | Refresh docs, grades, and plan status |
 | Ready | [`.agent/workflows/lgtm-create-pr.md`](.agent/workflows/lgtm-create-pr.md) | Wrap up work, validate, and open a PR |
 | Ready | [`.agent/skills/code_review/SKILL.md`](.agent/skills/code_review/SKILL.md) | Repo-specific review guidance |
-| Ready | [`infra/local-dev/agent-harnesses/`](infra/local-dev/agent-harnesses/AGENTS.md) | Hybrid e2e harness: deterministic Playwright specs + on-demand Playwright MCP live tier; evidence to `temp/` |
-| Optional | [`.agent/mcp.json`](.agent/mcp.json) | Stitch MCP, plus a Playwright MCP server for the live e2e tier |
+| Ready | [`infra/local-dev/agent-harnesses/`](infra/local-dev/agent-harnesses/AGENTS.md) | Hybrid e2e harness: on-demand deterministic Playwright specs + Playwright CLI live tier; separate evidence under `temp/e2e-evidence/` |
+| Ready | [`.agent/skills/playwright-cli/SKILL.md`](.agent/skills/playwright-cli/SKILL.md) | Microsoft Playwright CLI browser operation and evidence capture |
+| Ready | [`.agent/workflows/browser-qa.md`](.agent/workflows/browser-qa.md) | `github-copilot/gpt-6-astra` plans and orchestrates sequential whole-case delegation in normal mode, without browser actions |
+| Ready | [`.omp/agents/browser-operator.md`](.omp/agents/browser-operator.md) | Named `browser-operator` on `github-copilot/gpt-6-luna` operates the browser with the CLI skill and returns structured evidence |
+| Optional | [`.agent/mcp.json`](.agent/mcp.json) | Optional Stitch MCP; browser QA uses Playwright CLI, not MCP |
 | Optional | Stitch-related imported skills under [`.agent/skills/`](.agent/skills/) | Use only when the task clearly needs them and their prerequisites are present |
 
 Treat Remotion, shadcn, and WSL bridge skills as opt-in tooling. They are not part of the default Phase 1 foundation and may require extra local setup beyond what this repo provisions.

@@ -69,9 +69,9 @@ cloud-resume-v2/
 │   │   ├── Dockerfile
 │   │   ├── docker-compose.yml
 │   │   ├── nginx/default.conf
-│   │   └── agent-harnesses/        # e2e harness (Playwright specs + MCP live tier)
+│   │   └── agent-harnesses/        # e2e harness (Playwright specs + CLI live tier)
 │   │       ├── deterministic/      # committed *.spec.ts regression specs
-│   │       ├── live/               # NL intent cases + MCP runbook
+│   │       ├── live/               # NL intent cases + CLI runbook
 │   │       ├── playwright.config.ts
 │   │       └── docker-compose.yml  # `e2e` runner (profile: e2e)
 │   └── ...future IaC domains
@@ -231,7 +231,7 @@ Phase 1 and Phase 2 foundations in this repo mean:
 
 ## 9. End-to-End Agent Harness
 
-Browser-level e2e lives in `infra/local-dev/agent-harnesses/` and always runs against the **real artifact** — the nginx-served static build from `infra/local-dev`, not the Vite dev server. It is a hybrid two-tier design and is deliberately **not** an npm workspace (root `npm`/`turbo`/`npm run validate` ignore it), mirroring `infra/local-dev` itself.
+Browser-level e2e lives in `infra/local-dev/agent-harnesses/` and always runs against the **real artifact** — the nginx-served static build from `infra/local-dev`, not the Vite dev server. It is a hybrid two-tier design and is deliberately **not** an npm workspace, mirroring `infra/local-dev` itself. Root `turbo` and `npm run validate` exclude it; root `browser` and `qa:live` scripts explicitly invoke live tooling. The deterministic tier is the intended CI gate, but currently runs on demand and is not wired into CI.
 
 - **Tier 1 — deterministic:** committed `@playwright/test` specs in `deterministic/*.spec.ts` (health/fallback, resume landmarks + sections + theme toggle, spyfall load/mount). They use semantic role/title locators and run headless via a Docker `e2e` runner that `include:`s the `web` module and waits on its `/healthz` healthcheck:
 
@@ -240,8 +240,8 @@ Browser-level e2e lives in `infra/local-dev/agent-harnesses/` and always runs ag
     --profile e2e run --rm e2e
   ```
 
-- **Tier 2 — live exploratory:** an LLM coding agent drives a browser through `@playwright/mcp` (registered in `.agent/mcp.json`) to execute natural-language intent cases in `live/cases/*.md`, then feeds durable findings back as PRs that tighten Tier-1 specs.
+- **Tier 2 — live exploratory:** Microsoft Playwright CLI (`@playwright/cli` pinned to `0.1.21`) + repository skills execute natural-language intent cases in `live/cases/*.md`. `github-copilot/gpt-6-astra` plans and orchestrates in normal mode, delegating sequential whole cases to the named `browser-operator` on `github-copilot/gpt-6-luna`. Only Luna performs browser actions; Astra consumes structured evidence. Start the host with `docker compose up --build`, install with `npm ci --prefix infra/local-dev/agent-harnesses`, inspect commands with `npm run browser -- --help`, then launch `npm run qa:live` (or `npm run qa:live -- --print` for non-interactive/headless omp usage). Durable findings inform deterministic regressions; PR creation still requires explicit instruction. Stitch remains optional in `.agent/mcp.json`; live browser QA does not use MCP.
 
-- **Evidence:** every run writes screenshots, screen recordings (video), traces, an HTML report, and `results.json` to the repo-root `temp/e2e-evidence/` scratch folder (git-ignored) for human review; override with `E2E_EVIDENCE_DIR`.
+- **Evidence:** both tiers create a run `index.html`/`manifest.json` and self-contained per-case `index.html`/`result.json` packages with screenshot previews, playable recordings and complete trace artifacts. Deterministic defaults use unique `temp/e2e-evidence/deterministic/<run>/` directories; `E2E_EVIDENCE_ROOT` changes the root (Docker uses `/evidence`), while `E2E_EVIDENCE_DIR` explicitly selects an exact run directory. Its reporter preserves projects/retries and explicitly exempts the HTTP-only health case from browser capture requirements. Live CLI captures remain in `temp/e2e-evidence/live/<run>/<case>`; Astra invokes `npm run qa:package -- <run-directory>` using the requested-case inventory and operator results, even after failures. Missing captures are reported separately from assertion status; cases with no result receive blocked packages. Artifacts remain git-ignored. See the [live runbook](../infra/local-dev/agent-harnesses/live/RUNBOOK.md).
 
 The harness drives `apps/web` only through the browser — it does not import application source, and application source does not import it.
